@@ -18,7 +18,7 @@
   --forex-green: #00C896;
   --stock-blue:  #2563EB;
 
-  /* Light mode (default) */
+  /* Light mode */
   --bg:          #F8F7F2;
   --bg-card:     #FFFFFF;
   --bg-secondary:#F0EDE4;
@@ -64,17 +64,6 @@
   --dn-bg:  rgba(220,38,38,0.15);
 }
 
-/* ─── Smooth theme transition ────────────────────────────── */
-*,
-*::before,
-*::after {
-  transition: 
-    background-color var(--t),
-    border-color var(--t),
-    color var(--t),
-    box-shadow var(--t);
-}
-
 /* ─── Reset & Base ───────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; font-size: 16px; }
@@ -95,8 +84,6 @@ ul { list-style: none; }
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg-secondary); }
 ::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 3px; }
-[data-theme="dark"] ::-webkit-scrollbar-track { background: var(--bg-secondary); }
-[data-theme="dark"] ::-webkit-scrollbar-thumb { background: var(--gold); }
 
 /* ─── Live Ticker ────────────────────────────────────────── */
 #ticker-bar {
@@ -151,7 +138,7 @@ ul { list-style: none; }
   padding: 0 24px;
   gap: 32px;
   backdrop-filter: blur(12px);
-  transition: box-shadow var(--t), background var(--t), border-color var(--t);
+  transition: box-shadow var(--t);
 }
 #navbar.scrolled { box-shadow: var(--shadow-lg); }
 
@@ -210,7 +197,7 @@ ul { list-style: none; }
   border-radius: 20px;
   padding: 6px 14px;
   width: 200px;
-  transition: width var(--t), border-color var(--t), background var(--t);
+  transition: width var(--t), border-color var(--t);
 }
 .nav-search:focus-within {
   width: 280px;
@@ -237,7 +224,7 @@ ul { list-style: none; }
   display: grid;
   place-items: center;
   font-size: 16px;
-  transition: background var(--t), transform var(--t), border-color var(--t);
+  transition: background var(--t), transform var(--t);
 }
 #theme-toggle:hover { background: var(--border); transform: rotate(20deg); }
 
@@ -376,7 +363,7 @@ ul { list-style: none; }
   border-radius: 30px;
   font-size: 14px;
   font-weight: 500;
-  transition: border-color var(--t), background var(--t), color var(--t);
+  transition: border-color var(--t), background var(--t);
 }
 .btn-secondary:hover { border-color: var(--gold); background: rgba(212,175,55,0.06); }
 
@@ -522,7 +509,7 @@ ul { list-style: none; }
   border-radius: var(--radius);
   padding: 20px;
   cursor: pointer;
-  transition: transform var(--t), box-shadow var(--t), border-color var(--t), background var(--t);
+  transition: transform var(--t), box-shadow var(--t), border-color var(--t);
   position: relative;
   overflow: hidden;
 }
@@ -650,7 +637,7 @@ ul { list-style: none; }
   border-radius: var(--radius);
   overflow: hidden;
   cursor: pointer;
-  transition: transform var(--t), box-shadow var(--t), background var(--t);
+  transition: transform var(--t), box-shadow var(--t);
 }
 .news-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
 .news-card-img {
@@ -697,9 +684,6 @@ ul { list-style: none; }
   padding: 10px 0;
   overflow: hidden;
 }
-[data-theme="dark"] .breaking-news {
-  background: var(--gold-dark);
-}
 .breaking-news-inner {
   display: flex;
   align-items: center;
@@ -714,10 +698,6 @@ ul { list-style: none; }
   padding: 4px 14px;
   flex-shrink: 0;
   margin-right: 16px;
-}
-[data-theme="dark"] .bn-label {
-  background: #000;
-  color: var(--gold);
 }
 .bn-scroll {
   overflow: hidden;
@@ -994,7 +974,7 @@ footer {
   color: var(--text-muted);
   background: var(--bg-secondary);
   border: 1px solid var(--border);
-  transition: background var(--t), color var(--t), border-color var(--t);
+  transition: background var(--t), color var(--t);
 }
 .chart-btn.active, .chart-btn:hover {
   background: var(--gold);
@@ -1035,11 +1015,6 @@ footer {
 .theme-stocks  { --card-accent: #2563EB; --page-accent: var(--stock-blue); }
 .theme-forex   { --card-accent: #00C896; --page-accent: var(--forex-green); }
 .theme-crypto  { --card-accent: #00FFA3; --page-accent: var(--crypto-neon); }
-
-/* ─── TradingView Widget Theme Synchronization ──────────── */
-.tv-theme-sync {
-  display: none;
-}
 
 /* ─── Responsive ─────────────────────────────────────────── */
 @media (max-width: 1200px) {
