@@ -572,7 +572,12 @@ ul { list-style: none; }
 }
 .card-change.up   { color: var(--up); }
 .card-change.down { color: var(--down); }
-.card-sparkline { height: 50px; margin-top: 12px; }
+.card-sparkline {
+  height: 50px;
+  margin-top: 12px;
+  width: 100%;
+  display: block;
+}
 
 /* ─── Market Overview Tabs ───────────────────────────────── */
 .tabs {
