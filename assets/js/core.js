@@ -67,7 +67,17 @@ async function fetchWithRetry(url, opts = {}, retries = 2) {
     }
   }
 }
-
+async function initBreakingNews(containerId) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  const articles = await NewsAPI.fetch('market financial breaking', 8);
+  if (!articles?.length) return;
+  const bnTrack = el.querySelector('.bn-track');
+  if (bnTrack) {
+    const text = articles.map(a => `📊 ${a.title}`).join('  ●  ');
+    bnTrack.textContent = text;
+  }
+}
 /* ─── CoinGecko (Crypto — no key needed) ─────────────────── */
 const CoinGecko = {
   BASE: 'https://api.coingecko.com/api/v3',
