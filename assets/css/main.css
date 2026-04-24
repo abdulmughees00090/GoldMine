@@ -512,6 +512,9 @@ ul { list-style: none; }
   transition: transform var(--t), box-shadow var(--t), border-color var(--t);
   position: relative;
   overflow: hidden;
+  contain: layout;  /* ADD THIS LINE */
+  content-visibility: auto;  /* ADD THIS LINE */
+  contain-intrinsic-size: 180px;  /* ADD THIS LINE */
 }
 .market-card::after {
   content: '';
@@ -1023,18 +1026,6 @@ footer {
   .footer-inner { grid-template-columns: 1fr 1fr; }
   .hero-inner   { grid-template-columns: 1fr; gap: 40px; }
   .hero-panel   { max-width: 500px; margin: 0 auto; }
-}
-/* Laptop specific fix */
-@media (min-width: 901px) and (max-width: 1400px) {
-  .market-grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
-  .market-card {
-    min-height: 190px;
-  }
-  .card-sparkline {
-    height: 45px;
-  }
 }
 @media (max-width: 900px) {
   .gl-grid { grid-template-columns: 1fr; }
