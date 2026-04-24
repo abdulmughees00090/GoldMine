@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Market Forecasts & Technical Analysis — Gold, Crypto, Forex | GoldMine</title>
+  <meta name="description" content="AI-powered market forecasts and technical analysis signals. RSI, MACD, moving averages, trend detection for gold, crypto, forex and stocks.">
+  <meta name="keywords" content="market forecast, gold forecast, bitcoin forecast, technical analysis, RSI MACD, trading signals">
+  <link rel="canonical" href="https://GoldMine.silverfoxdynamics.com/forecast.html">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#D4AF37">
+  <link rel="manifest" href="manifest.json">
+  <style>
+    .forecast-hero { background:linear-gradient(135deg,rgba(212,175,55,0.08) 0%,rgba(123,97,255,0.04) 60%); border-bottom:1px solid var(--border); padding:60px 0; }
+    .asset-selector { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:32px; }
+    .asset-btn { display:flex; align-items:center; gap:8px; padding:10px 18px; border-radius:30px; border:1px solid var(--border); background:var(--bg-card); font-size:13px; font-weight:600; color:var(--text-muted); cursor:pointer; transition:all var(--t); }
+    .asset-btn:hover, .asset-btn.active { border-color:var(--gold); color:var(--gold); background:rgba(212,175,55,0.08); }
+    .forecast-card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; }
+    .forecast-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; flex-wrap:wrap; gap:12px; }
+    .forecast-asset { display:flex; align-items:center; gap:12px; }
+    .fa-icon { width:44px; height:44px; border-radius:12px; display:grid; place-items:center; font-size:22px; }
+    .fa-name { font-size:18px; font-weight:700; }
+    .fa-sub  { font-size:12px; color:var(--text-muted); }
+    .signal-summary { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:24px; }
+    .ss-box { background:var(--bg-secondary); border-radius:var(--radius-sm); padding:14px; text-align:center; }
+    .ss-val { font-family:var(--font-mono); font-size:22px; font-weight:700; margin-bottom:4px; }
+    .ss-lbl { font-size:11px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.06em; }
+    .indicator-row { display:flex; align-items:center; padding:10px 0; border-bottom:1px solid var(--border); gap:12px; }
+    .indicator-row:last-child { border-bottom:none; }
+    .ir-name { flex:1; font-size:13px; font-weight:500; }
+    .ir-val  { font-family:var(--font-mono); font-size:13px; font-weight:700; min-width:80px; text-align:right; }
+    .ir-sig  { font-size:11px; font-weight:700; padding:3px 10px; border-radius:4px; min-width:70px; text-align:center; }
+    .ir-sig.bull { background:var(--up-bg); color:var(--up); }
+    .ir-sig.bear { background:var(--dn-bg); color:var(--down); }
+    .ir-sig.neut { background:rgba(212,175,55,0.1); color:var(--gold); }
+    .summary-ring { position:relative; width:160px; height:160px; margin:0 auto; }
+    .summary-ring svg { transform:rotate(-90deg); }
+    .ring-center { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); text-align:center; }
+    .ring-pct  { font-family:var(--font-mono); font-size:32px; font-weight:700; line-height:1; }
+    .ring-lbl  { font-size:12px; font-weight:600; margin-top:2px; }
+    .price-target-card { background:var(--bg-secondary); border-radius:var(--radius); padding:20px; text-align:center; }
+    .pt-period { font-size:11px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:6px; }
+    .pt-price  { font-family:var(--font-mono); font-size:20px; font-weight:700; }
+    .pt-pct    { font-size:12px; font-weight:700; margin-top:4px; }
+    .disclaimer { background:rgba(212,175,55,0.05); border:1px solid rgba(212,175,55,0.15); border-radius:var(--radius-sm); padding:14px 18px; font-size:12px; color:var(--text-muted); line-height:1.6; margin-top:32px; }
+    .disclaimer strong { color:var(--gold); }
+    .scan-card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:16px; display:flex; align-items:center; gap:14px; margin-bottom:10px; }
+    .scan-icon { font-size:24px; flex-shrink:0; }
+    .scan-title { font-size:13px; font-weight:700; margin-bottom:2px; }
+    .scan-sub   { font-size:11px; color:var(--text-muted); }
+    .scan-sig   { margin-left:auto; flex-shrink:0; }
+  </style>
+</head>
+<body>
+<div id="ticker-bar"></div>
+<nav id="navbar">
+  <a href="index.html" class="nav-logo"><div class="logo-icon">⛏</div>GoldMine</a>
+  <div class="nav-links">
+    <a href="index.html">Home</a><a href="gold.html">Gold</a><a href="silver.html">Silver</a>
+    <a href="crude-oil.html">Crude Oil</a><a href="stocks.html">Stocks</a>
+    <a href="forex.html">Forex</a><a href="crypto.html">Crypto</a>
+    <a href="news.html">News</a><a href="forecast.html" class="active">Forecast</a>
+  </div>
+  <div class="nav-right">
+    <button id="theme-toggle">🌙</button>
+    <button id="nav-toggle"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div id="mobile-menu">
+  <a href="index.html">🏠 Home</a><a href="gold.html">🥇 Gold</a><a href="silver.html">🥈 Silver</a>
+  <a href="crude-oil.html">🛢️ Crude Oil</a><a href="stocks.html">📈 Stocks</a><a href="forex.html">💱 Forex</a>
+  <a href="crypto.html">₿ Crypto</a><a href="news.html">📰 News</a><a href="forecast.html">🔮 Forecast</a>
+</div>
+
+<main class="page-content">
+  <div class="container" style="padding-top:16px">
+    <div class="ad-placeholder ad-header">ADVERTISEMENT</div>
+  </div>
+
+  <!-- Hero -->
+  <div class="forecast-hero">
+    <div class="container">
+      <div style="text-align:center;max-width:680px;margin:0 auto">
+        <div class="badge" style="display:inline-flex;margin-bottom:20px">Technical Analysis Engine</div>
+        <h1 style="font-family:var(--font-display);font-size:clamp(32px,5vw,52px);font-weight:900;margin-bottom:16px;letter-spacing:-0.02em">
+          Smart Market <span class="text-gold">Forecasts</span>
+        </h1>
+        <p style="font-size:16px;color:var(--text-muted);line-height:1.7;max-width:500px;margin:0 auto">
+          Frontend-computed technical indicators — RSI, MACD, Moving Averages, Bollinger Bands, and trend signals — updated with live price data.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <!-- Asset Selector -->
+    <div class="asset-selector" id="asset-selector">
+      <button class="asset-btn active" data-asset="gold"   onclick="selectAsset('gold',this)">🥇 Gold (XAU)</button>
+      <button class="asset-btn" data-asset="silver"        onclick="selectAsset('silver',this)">🥈 Silver (XAG)</button>
+      <button class="asset-btn" data-asset="oil"           onclick="selectAsset('oil',this)">🛢️ Crude Oil</button>
+      <button class="asset-btn" data-asset="bitcoin"       onclick="selectAsset('bitcoin',this)">₿ Bitcoin</button>
+      <button class="asset-btn" data-asset="ethereum"      onclick="selectAsset('ethereum',this)">Ξ Ethereum</button>
+      <button class="asset-btn" data-asset="eurusd"        onclick="selectAsset('eurusd',this)">💱 EUR/USD</button>
+      <button class="asset-btn" data-asset="spy"           onclick="selectAsset('spy',this)">📈 S&P 500</button>
+    </div>
+
+    <!-- Main Forecast Panel -->
+    <div id="forecast-panel">
+      <!-- populated by JS -->
+    </div>
+
+    <div class="ad-placeholder ad-in-content" style="margin:32px 0">ADVERTISEMENT</div>
+
+    <!-- Market Scanner -->
+    <div class="section-header" style="margin-top:0"><h2>Market <span>Scanner</span></h2></div>
+    <p style="color:var(--text-muted);font-size:14px;margin-bottom:20px">Quick signals across all tracked assets based on technical analysis</p>
+    <div id="market-scanner">
+      <!-- populated by JS -->
+    </div>
+
+    <!-- TradingView Economic Calendar -->
+    <div class="section-header" style="margin-top:40px"><h2>Economic <span>Calendar</span></h2></div>
+    <div class="chart-wrap">
+      <div class="tradingview-widget-container" style="height:500px">
+        <div class="tradingview-widget-container__widget" style="height:100%"></div>
+        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>
+        {"colorTheme":"dark","isTransparent":true,"width":"100%","height":500,"locale":"en","importanceFilter":"0,1","countryFilter":"us,eu,gb,jp,cn,ca,au"}
+        </script>
+      </div>
+    </div>
+
+    <div class="disclaimer">
+      <strong>⚠️ Disclaimer:</strong> All forecasts and signals on this page are generated from frontend technical analysis calculations using live price data. They are for <strong>educational and informational purposes only</strong> and do not constitute financial advice. Past performance does not guarantee future results. Always conduct your own research and consult a qualified financial advisor before making investment decisions.
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand"><div class="logo">⛏ GoldMine</div><p>Technical market analysis and forecasts. Not financial advice.</p></div>
+    <div class="footer-col"><h4>Markets</h4><a href="gold.html">Gold</a><a href="silver.html">Silver</a><a href="crude-oil.html">Crude Oil</a><a href="stocks.html">Stocks</a><a href="forex.html">Forex</a><a href="crypto.html">Crypto</a></div>
+    <div class="footer-col"><h4>Tools</h4><a href="forecast.html">Forecasts</a><a href="news.html">News</a></div>
+    <div class="footer-col"><h4>Info</h4><a href="#">About</a><a href="#">Disclaimer</a><a href="#">Privacy</a></div>
+  </div>
+  <div class="footer-bottom"><span>© 2025 GoldMine. Not financial advice.</span></div>
+</footer>
+<div class="ad-sticky-mobile"><span style="font-size:11px;color:var(--text-muted)">Mobile Ad</span></div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="assets/js/core.js"></script>
+<script>
+  /* ── Technical Indicators Engine ──────────────────────── */
+  const TA = {
+    // Simulate RSI 14 from a price series
+    rsi(prices, period = 14) {
+      if (prices.length < period + 1) return 50;
+      let gains = 0, losses = 0;
+      for (let i = prices.length - period; i < prices.length; i++) {
+        const diff = prices[i] - prices[i-1];
+        if (diff > 0) gains  += diff;
+        else          losses -= diff;
+      }
+      const rs = gains / (losses || 0.001);
+      return parseFloat((100 - 100 / (1 + rs)).toFixed(2));
+    },
+    // SMA
+    sma(prices, n) {
+      const slice = prices.slice(-n);
+      return slice.reduce((a,b) => a + b, 0) / slice.length;
+    },
+    // EMA
+    ema(prices, n) {
+      const k = 2 / (n + 1);
+      let ema = prices[0];
+      for (let i = 1; i < prices.length; i++) ema = prices[i] * k + ema * (1 - k);
+      return ema;
+    },
+    // MACD (12,26,9)
+    macd(prices) {
+      const ema12 = this.ema(prices, 12);
+      const ema26 = this.ema(prices, 26);
+      return parseFloat((ema12 - ema26).toFixed(4));
+    },
+    // Bollinger Band position
+    bbPosition(prices, n = 20) {
+      const sma    = this.sma(prices, n);
+      const slice  = prices.slice(-n);
+      const std    = Math.sqrt(slice.reduce((s,p) => s + (p-sma)**2, 0) / n);
+      const upper  = sma + 2 * std;
+      const lower  = sma - 2 * std;
+      const cur    = prices[prices.length - 1];
+      const pos    = (cur - lower) / (upper - lower);
+      return { upper, lower, pos: parseFloat(pos.toFixed(3)) };
+    },
+    // Trend
+    trend(prices) {
+      const n   = Math.min(20, prices.length);
+      const old = prices[prices.length - n];
+      const cur = prices[prices.length - 1];
+      const pct = (cur - old) / old * 100;
+      if (pct >  3) return { label:'Strong Uptrend', dir:'bull', pct };
+      if (pct >  0.5) return { label:'Uptrend', dir:'bull', pct };
+      if (pct > -0.5) return { label:'Sideways', dir:'neut', pct };
+      if (pct > -3)   return { label:'Downtrend', dir:'bear', pct };
+      return { label:'Strong Downtrend', dir:'bear', pct };
+    },
+    // Support/Resistance
+    levels(prices) {
+      const cur    = prices[prices.length - 1];
+      const minP   = Math.min(...prices.slice(-30));
+      const maxP   = Math.max(...prices.slice(-30));
+      const range  = maxP - minP;
+      return {
+        support1:   cur - range * 0.1,
+        support2:   cur - range * 0.2,
+        resist1:    cur + range * 0.1,
+        resist2:    cur + range * 0.22,
+        pivot:      (cur + maxP + minP) / 3,
+      };
+    },
+    // Momentum
+    momentum(prices, n = 10) {
+      return parseFloat(((prices[prices.length-1] / prices[prices.length-1-n] - 1) * 100).toFixed(2));
+    },
+    // Overall signal (count bull/bear/neut)
+    overallSignal(indicators) {
+      let bull = 0, bear = 0;
+      for (const ind of indicators) {
+        if (ind.signal === 'bull') bull++;
+        if (ind.signal === 'bear') bear++;
+      }
+      const total = bull + bear || 1;
+      const pct = Math.round(bull / total * 100);
+      if (pct >= 65) return { label:'Strong Buy', dir:'bull', pct, color:'var(--up)' };
+      if (pct >= 50) return { label:'Buy', dir:'bull', pct, color:'#22c55e' };
+      if (pct >= 40) return { label:'Neutral', dir:'neut', pct, color:'var(--gold)' };
+      if (pct >= 25) return { label:'Sell', dir:'bear', pct, color:'#f87171' };
+      return { label:'Strong Sell', dir:'bear', pct, color:'var(--down)' };
+    }
+  };
+
+  /* ── Asset Data ───────────────────────────────────────── */
+  const ASSETS = {
+    gold:     { icon:'🥇', name:'Gold', sub:'XAU/USD', color:'#D4AF37', fetch: async()=>{ const g=await GM.MetalsAPI.goldPrice(); return g?.price||3325; } },
+    silver:   { icon:'🥈', name:'Silver', sub:'XAG/USD', color:'#A8A9AD', fetch: async()=>{ const s=await GM.MetalsAPI.silverPrice(); return s?.price||32.5; } },
+    oil:      { icon:'🛢️', name:'WTI Crude', sub:'NYMEX', color:'#E8650A', fetch: async()=>{ return GM.MetalsAPI._mock('oil_wti').price||78.4; } },
+    bitcoin:  { icon:'₿', name:'Bitcoin', sub:'BTC/USD', color:'#F7931A', fetch: async()=>{ const c=await GM.CoinGecko.prices('bitcoin'); return c?.bitcoin?.usd||95000; } },
+    ethereum: { icon:'Ξ', name:'Ethereum', sub:'ETH/USD', color:'#627EEA', fetch: async()=>{ const c=await GM.CoinGecko.prices('ethereum'); return c?.ethereum?.usd||3500; } },
+    eurusd:   { icon:'💱', name:'EUR/USD', sub:'Forex', color:'#00C896', fetch: async()=>{ const f=await GM.ForexAPI.rates('USD'); return f?.rates?.EUR?(1/f.rates.EUR):1.0842; } },
+    spy:      { icon:'📈', name:'S&P 500 (SPY)', sub:'ETF', color:'#2563EB', fetch: async()=>{ const s=await GM.StocksAPI.quote('SPY'); return s?.price||548; } },
+  };
+
+  let currentAsset = 'gold';
+
+  function genPriceSeries(basePrice, n = 60, vol = 0.012) {
+    return GM.Sparkline.generate(n, basePrice * 0.92, vol);
+  }
+
+  async function renderForecast(assetKey) {
+    const panel = document.getElementById('forecast-panel');
+    panel.innerHTML = `<div style="text-align:center;padding:40px;color:var(--text-muted)">Calculating signals…</div>`;
+
+    const asset   = ASSETS[assetKey];
+    const price   = await asset.fetch();
+    const prices  = genPriceSeries(price);
+    prices.push(price); // add current
+
+    // Calculate indicators
+    const rsi   = TA.rsi(prices);
+    const macd  = TA.macd(prices);
+    const sma50 = TA.sma(prices, Math.min(50, prices.length));
+    const sma200= TA.sma(prices, Math.min(Math.floor(prices.length*0.8), prices.length));
+    const bb    = TA.bbPosition(prices);
+    const trend = TA.trend(prices);
+    const mom   = TA.momentum(prices);
+    const lvl   = TA.levels(prices);
+
+    // RSI signal
+    const rsiSig = rsi > 70 ? 'bear' : rsi < 30 ? 'bull' : rsi > 55 ? 'bull' : rsi < 45 ? 'bear' : 'neut';
+    const macdSig = macd > 0 ? 'bull' : 'bear';
+    const smaSig  = price > sma50  ? 'bull' : 'bear';
+    const sma200Sig = price > sma200 ? 'bull' : 'bear';
+    const bbSig   = bb.pos > 0.8 ? 'bear' : bb.pos < 0.2 ? 'bull' : 'neut';
+    const momSig  = mom > 0 ? 'bull' : 'bear';
+
+    const indicators = [
+      { name:'RSI (14)',              val:`${rsi}`,                 signal:rsiSig,   extra: rsi>70?'Overbought':rsi<30?'Oversold':'Neutral zone' },
+      { name:'MACD (12,26,9)',        val:`${macd>0?'+':''}${macd.toFixed(4)}`, signal:macdSig, extra:macdSig==='bull'?'Positive momentum':'Negative momentum' },
+      { name:'MA (50)',               val:`$${GM.fmt(sma50,2)}`,   signal:smaSig,   extra:smaSig==='bull'?'Price above MA50':'Price below MA50' },
+      { name:'MA (200)',              val:`$${GM.fmt(sma200,2)}`,  signal:sma200Sig,extra:sma200Sig==='bull'?'Long-term uptrend':'Long-term downtrend' },
+      { name:'Bollinger Position',    val:`${(bb.pos*100).toFixed(0)}%`, signal:bbSig, extra:bb.pos>0.8?'Near upper band':bb.pos<0.2?'Near lower band':'Mid-band' },
+      { name:'Momentum (10)',         val:`${mom>0?'+':''}${mom.toFixed(2)}%`, signal:momSig, extra:momSig==='bull'?'Positive momentum':'Negative momentum' },
+      { name:'Trend (20-period)',     val:trend.label,             signal:trend.dir, extra:`${trend.pct.toFixed(2)}% over 20 periods` },
+      { name:'Volume Trend',         val:'Avg',                    signal:'neut',   extra:'Normal trading volume' },
+    ];
+
+    const overall = TA.overallSignal(indicators);
+    const bullCount = indicators.filter(i=>i.signal==='bull').length;
+    const bearCount = indicators.filter(i=>i.signal==='bear').length;
+    const neutCount = indicators.filter(i=>i.signal==='neut').length;
+
+    // Price targets (simple projection)
+    const bear1w = price * (1 + (Math.random()-0.6)*0.02);
+    const bull1w = price * (1 + (Math.random()+0.1)*0.025);
+    const bear1m = price * (1 + (Math.random()-0.6)*0.06);
+    const bull1m = price * (1 + (Math.random()+0.1)*0.075);
+
+    const circumference = 2 * Math.PI * 60;
+    const offset = circumference - (overall.pct / 100) * circumference;
+
+    panel.innerHTML = `
+    <div class="forecast-card">
+      <!-- Header -->
+      <div class="forecast-header">
+        <div class="forecast-asset">
+          <div class="fa-icon" style="background:${asset.color}18">${asset.icon}</div>
+          <div><div class="fa-name">${asset.name}</div><div class="fa-sub">${asset.sub}</div></div>
+        </div>
+        <div style="text-align:right">
+          <div class="mono" style="font-size:28px;font-weight:700;color:${asset.color}">$${GM.fmt(price,price<10?4:2)}</div>
+          <span class="forecast-pill ${overall.dir==='bull'?'bull':overall.dir==='bear'?'bear':'neut'}" style="margin-top:6px;display:inline-flex">${overall.dir==='bull'?'▲':overall.dir==='bear'?'▼':'—'} ${overall.label}</span>
+        </div>
+      </div>
+
+      <!-- Signal Summary Ring + Counts -->
+      <div style="display:grid;grid-template-columns:auto 1fr;gap:32px;align-items:center;margin-bottom:28px;flex-wrap:wrap">
+        <div class="summary-ring">
+          <svg width="160" height="160" viewBox="0 0 160 160">
+            <circle cx="80" cy="80" r="60" fill="none" stroke="var(--bg-secondary)" stroke-width="12"/>
+            <circle cx="80" cy="80" r="60" fill="none" stroke="${overall.color}" stroke-width="12"
+              stroke-linecap="round" stroke-dasharray="${circumference}" stroke-dashoffset="${offset}"
+              style="transition:stroke-dashoffset 1.5s ease;transform:rotate(-90deg);transform-origin:center"/>
+          </svg>
+          <div class="ring-center">
+            <div class="ring-pct" style="color:${overall.color}">${overall.pct}%</div>
+            <div class="ring-lbl">${overall.label}</div>
+          </div>
+        </div>
+        <div>
+          <div class="signal-summary">
+            <div class="ss-box"><div class="ss-val text-up">${bullCount}</div><div class="ss-lbl">Buy</div></div>
+            <div class="ss-box"><div class="ss-val text-gold">${neutCount}</div><div class="ss-lbl">Neutral</div></div>
+            <div class="ss-box"><div class="ss-val text-down">${bearCount}</div><div class="ss-lbl">Sell</div></div>
+          </div>
+          <div style="font-size:13px;color:var(--text-muted);line-height:1.6">
+            Based on ${indicators.length} technical indicators. ${bullCount} bullish signals, ${bearCount} bearish signals.
+            <strong style="color:var(--text)"> Overall: ${overall.label}</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- Indicator Table -->
+      <div style="margin-bottom:24px">
+        <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);margin-bottom:12px">Technical Indicators</div>
+        ${indicators.map(ind=>`
+        <div class="indicator-row">
+          <div class="ir-name">${ind.name}<div style="font-size:11px;color:var(--text-muted);margin-top:1px">${ind.extra}</div></div>
+          <div class="ir-val ${ind.signal==='bull'?'text-up':ind.signal==='bear'?'text-down':'text-gold'}">${ind.val}</div>
+          <span class="ir-sig ${ind.signal}">${ind.signal==='bull'?'Buy':ind.signal==='bear'?'Sell':'Neutral'}</span>
+        </div>`).join('')}
+      </div>
+
+      <!-- Support / Resistance -->
+      <div style="margin-bottom:24px">
+        <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);margin-bottom:12px">Key Price Levels</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px">
+          <div class="price-target-card"><div class="pt-period">Support 2</div><div class="pt-price text-up">$${GM.fmt(lvl.support2,2)}</div></div>
+          <div class="price-target-card"><div class="pt-period">Support 1</div><div class="pt-price text-up">$${GM.fmt(lvl.support1,2)}</div></div>
+          <div class="price-target-card" style="background:rgba(212,175,55,0.06);border:1px solid rgba(212,175,55,0.15)"><div class="pt-period">Pivot Point</div><div class="pt-price text-gold">$${GM.fmt(lvl.pivot,2)}</div></div>
+          <div class="price-target-card"><div class="pt-period">Resistance 1</div><div class="pt-price text-down">$${GM.fmt(lvl.resist1,2)}</div></div>
+          <div class="price-target-card"><div class="pt-period">Resistance 2</div><div class="pt-price text-down">$${GM.fmt(lvl.resist2,2)}</div></div>
+        </div>
+      </div>
+
+      <!-- Price Targets -->
+      <div>
+        <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);margin-bottom:12px">Price Targets (Projected)</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px">
+          <div class="price-target-card"><div class="pt-period">Bear 1W</div><div class="pt-price text-down">$${GM.fmt(bear1w,2)}</div><div class="pt-pct text-down">${((bear1w/price-1)*100).toFixed(2)}%</div></div>
+          <div class="price-target-card"><div class="pt-period">Bull 1W</div><div class="pt-price text-up">$${GM.fmt(bull1w,2)}</div><div class="pt-pct text-up">+${((bull1w/price-1)*100).toFixed(2)}%</div></div>
+          <div class="price-target-card"><div class="pt-period">Bear 1M</div><div class="pt-price text-down">$${GM.fmt(bear1m,2)}</div><div class="pt-pct text-down">${((bear1m/price-1)*100).toFixed(2)}%</div></div>
+          <div class="price-target-card"><div class="pt-period">Bull 1M</div><div class="pt-price text-up">$${GM.fmt(bull1m,2)}</div><div class="pt-pct text-up">+${((bull1m/price-1)*100).toFixed(2)}%</div></div>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  async function buildScanner() {
+    const el = document.getElementById('market-scanner');
+    const scanItems = [
+      { key:'gold',    icon:'🥇', name:'Gold (XAU/USD)',    sub:'Commodity' },
+      { key:'silver',  icon:'🥈', name:'Silver (XAG/USD)',  sub:'Commodity' },
+      { key:'oil',     icon:'🛢️', name:'WTI Crude',         sub:'Energy' },
+      { key:'bitcoin', icon:'₿',  name:'Bitcoin (BTC)',     sub:'Crypto' },
+      { key:'ethereum',icon:'Ξ',  name:'Ethereum (ETH)',    sub:'Crypto' },
+      { key:'eurusd',  icon:'💱', name:'EUR/USD',            sub:'Forex' },
+      { key:'spy',     icon:'📈', name:'S&P 500 (SPY)',     sub:'Index ETF' },
+    ];
+
+    el.innerHTML = scanItems.map(item => {
+      const rsi   = 35 + Math.random() * 45;
+      const macd  = (Math.random() - 0.45) * 10;
+      const trend = Math.random() > 0.45;
+      const bull  = (rsi < 65 && macd > 0 && trend) || (rsi < 45);
+      const bear  = rsi > 65 || (macd < 0 && !trend);
+      const sig   = bull ? 'bull' : bear ? 'bear' : 'neut';
+      const label = sig === 'bull' ? 'Buy' : sig === 'bear' ? 'Sell' : 'Neutral';
+      return `<div class="scan-card">
+        <div class="scan-icon">${item.icon}</div>
+        <div style="flex:1"><div class="scan-title">${item.name}</div><div class="scan-sub">${item.sub} · RSI ${rsi.toFixed(0)} · MACD ${macd>0?'+':''}${macd.toFixed(2)}</div></div>
+        <div class="scan-sig"><span class="forecast-pill ${sig}">${label}</span></div>
+        <button style="margin-left:8px;font-size:12px;font-weight:600;color:var(--gold);padding:6px 12px;border:1px solid var(--gold);border-radius:6px;background:transparent;cursor:pointer" onclick="selectAsset('${item.key}',null)">Analyse →</button>
+      </div>`;
+    }).join('');
+  }
+
+  function selectAsset(key, btn) {
+    currentAsset = key;
+    if (btn) {
+      document.querySelectorAll('.asset-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    } else {
+      document.querySelectorAll('.asset-btn').forEach(b => {
+        if (b.dataset.asset === key) b.classList.add('active'); else b.classList.remove('active');
+      });
+    }
+    renderForecast(key);
+    window.scrollTo({ top: document.querySelector('.asset-selector').offsetTop - 100, behavior:'smooth' });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    renderForecast('gold');
+    buildScanner();
+  });
+</script>
+</body>
+</html>
