@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Crypto Prices — Bitcoin, Ethereum & Altcoins | GoldMine</title>
+  <meta name="description" content="Live cryptocurrency prices. Real-time Bitcoin, Ethereum, and altcoin charts. Fear & Greed Index, market cap data and trending coins.">
+  <meta name="keywords" content="bitcoin price live, ethereum price, crypto prices today, fear greed index, cryptocurrency market">
+  <link rel="canonical" href="https://GoldMine.silverfoxdynamics.com/crypto.html">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#00FFA3">
+  <link rel="manifest" href="manifest.json">
+  <style>
+    :root { --neon:#00FFA3; --neon2:#7B61FF; }
+    .crypto-hero { background:linear-gradient(135deg,rgba(0,255,163,0.06) 0%,rgba(123,97,255,0.04) 60%); border-bottom:1px solid var(--border); }
+    .crypto-card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; position:relative; overflow:hidden; transition:transform var(--t),box-shadow var(--t),border-color var(--t); cursor:pointer; }
+    .crypto-card:hover { transform:translateY(-3px); box-shadow:0 8px 32px rgba(0,255,163,0.1); border-color:var(--neon); }
+    .crypto-card::after { content:''; position:absolute; bottom:0;left:0;right:0; height:2px; background:linear-gradient(90deg,var(--neon),var(--neon2)); transform:scaleX(0); transition:transform var(--t); }
+    .crypto-card:hover::after { transform:scaleX(1); }
+    .c-rank { font-size:10px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px; }
+    .c-name { font-size:14px;font-weight:700;margin-bottom:2px; }
+    .c-sym  { font-size:11px;color:var(--text-muted); }
+    .c-price { font-family:var(--font-mono);font-size:20px;font-weight:700;margin:8px 0 4px; }
+    .c-cap  { font-size:11px;color:var(--text-muted); }
+    .fg-ring { position:relative; width:180px; height:180px; margin:0 auto 16px; }
+    .fg-ring svg { transform:rotate(-90deg); }
+    .fg-center { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); text-align:center; }
+    .fg-val { font-family:var(--font-mono); font-size:42px; font-weight:700; line-height:1; }
+    .fg-label { font-size:14px; font-weight:600; margin-top:2px; }
+    .crypto-stats { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:12px; }
+    .cs-item { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-sm); padding:14px; }
+    .cs-label { font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px; }
+    .cs-val   { font-family:var(--font-mono);font-size:18px;font-weight:700; }
+    .trending-item { display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border); }
+    .trending-item:last-child { border-bottom:none; }
+    .t-rank { width:24px;height:24px;border-radius:50%;background:var(--bg-secondary);display:grid;place-items:center;font-size:11px;font-weight:700;flex-shrink:0; }
+    .t-icon { width:32px;height:32px;border-radius:50%;background:var(--bg-secondary);display:grid;place-items:center;font-size:16px;flex-shrink:0; }
+    .t-name { font-size:13px;font-weight:600; }
+    .t-sub  { font-size:11px;color:var(--text-muted); }
+    .neon-text { color:var(--neon); }
+  </style>
+</head>
+<body>
+<div id="ticker-bar"></div>
+<nav id="navbar">
+  <a href="index.html" class="nav-logo"><div class="logo-icon">⛏</div>GoldMine</a>
+  <div class="nav-links">
+    <a href="index.html">Home</a><a href="gold.html">Gold</a><a href="silver.html">Silver</a>
+    <a href="crude-oil.html">Crude Oil</a><a href="stocks.html">Stocks</a>
+    <a href="forex.html">Forex</a><a href="crypto.html" class="active">Crypto</a>
+    <a href="news.html">News</a><a href="forecast.html">Forecast</a>
+  </div>
+  <div class="nav-right">
+    <button id="theme-toggle">🌙</button>
+    <button id="nav-toggle"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div id="mobile-menu">
+  <a href="index.html">🏠 Home</a><a href="gold.html">🥇 Gold</a><a href="silver.html">🥈 Silver</a>
+  <a href="crude-oil.html">🛢️ Crude Oil</a><a href="stocks.html">📈 Stocks</a><a href="forex.html">💱 Forex</a>
+  <a href="crypto.html">₿ Crypto</a><a href="news.html">📰 News</a><a href="forecast.html">🔮 Forecast</a>
+</div>
+
+<main class="page-content theme-crypto">
+  <div class="container" style="padding-top:16px">
+    <div class="ad-placeholder ad-header">ADVERTISEMENT</div>
+  </div>
+
+  <!-- Hero -->
+  <div class="crypto-hero">
+    <div class="section">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:28px">
+        <span style="font-size:38px">₿</span>
+        <div>
+          <div style="font-size:13px;color:var(--text-muted)">Cryptocurrency Markets · CoinGecko</div>
+          <div style="font-size:22px;font-weight:700;font-family:var(--font-display)">Live Crypto Prices</div>
+        </div>
+        <span class="live-dot" style="margin-left:auto">LIVE</span>
+      </div>
+
+      <!-- Global stats bar -->
+      <div class="crypto-stats" id="global-stats" style="margin-bottom:28px">
+        <div class="cs-item"><div class="cs-label">Total Market Cap</div><div class="cs-val neon-text" id="gs-mcap">—</div></div>
+        <div class="cs-item"><div class="cs-label">24h Volume</div><div class="cs-val" id="gs-vol">—</div></div>
+        <div class="cs-item"><div class="cs-label">BTC Dominance</div><div class="cs-val" id="gs-btc-dom">—</div></div>
+        <div class="cs-item"><div class="cs-label">ETH Dominance</div><div class="cs-val" id="gs-eth-dom">—</div></div>
+        <div class="cs-item"><div class="cs-label">Active Coins</div><div class="cs-val">10,000+</div></div>
+        <div class="cs-item"><div class="cs-label">Exchanges</div><div class="cs-val">600+</div></div>
+      </div>
+
+      <!-- Top coins grid -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px" id="coin-grid">
+        <div class="crypto-card"><div class="skeleton sk-card" style="height:120px"></div></div>
+        <div class="crypto-card"><div class="skeleton sk-card" style="height:120px"></div></div>
+        <div class="crypto-card"><div class="skeleton sk-card" style="height:120px"></div></div>
+        <div class="crypto-card"><div class="skeleton sk-card" style="height:120px"></div></div>
+        <div class="crypto-card"><div class="skeleton sk-card" style="height:120px"></div></div>
+        <div class="crypto-card"><div class="skeleton sk-card" style="height:120px"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BTC Chart -->
+  <div class="section">
+    <div class="section-header"><h2>Bitcoin <span>Live Chart</span></h2></div>
+    <div class="chart-wrap">
+      <div class="chart-controls" style="margin-bottom:16px">
+        <button class="chart-btn" onclick="switchCoin('BTCUSD',this)">BTC</button>
+        <button class="chart-btn" onclick="switchCoin('ETHUSD',this)">ETH</button>
+        <button class="chart-btn" onclick="switchCoin('SOLUSD',this)">SOL</button>
+        <button class="chart-btn" onclick="switchCoin('BNBUSD',this)">BNB</button>
+        <span style="flex:1"></span>
+        <button class="chart-btn">1D</button><button class="chart-btn active">1W</button>
+        <button class="chart-btn">1M</button><button class="chart-btn">1Y</button>
+      </div>
+      <div style="height:480px">
+        <div class="tradingview-widget-container" style="height:100%">
+          <div class="tradingview-widget-container__widget" style="height:100%"></div>
+          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+          {"autosize":true,"symbol":"BINANCE:BTCUSDT","interval":"D","timezone":"Etc/UTC","theme":"dark","style":"1","locale":"en","studies":["STD;RSI","STD;MACD","STD;Volume"]}
+          </script>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container"><div class="ad-placeholder ad-in-content">ADVERTISEMENT</div></div>
+
+  <!-- Fear & Greed + Trending -->
+  <div class="section" style="padding-top:0" id="feargreed">
+    <div class="grid-2">
+      <!-- Fear & Greed -->
+      <div class="card p-24">
+        <div class="section-header" style="margin-bottom:24px"><h2>Fear &amp; <span>Greed</span> Index</h2></div>
+        <div class="fg-ring" id="fg-ring-wrap">
+          <svg width="180" height="180" viewBox="0 0 180 180">
+            <circle cx="90" cy="90" r="70" fill="none" stroke="var(--bg-secondary)" stroke-width="14"/>
+            <circle id="fg-arc" cx="90" cy="90" r="70" fill="none" stroke="#00FFA3" stroke-width="14" stroke-linecap="round"
+              stroke-dasharray="439.8" stroke-dashoffset="439.8" style="transition:stroke-dashoffset 1.5s ease,stroke 0.5s"/>
+          </svg>
+          <div class="fg-center">
+            <div class="fg-val neon-text" id="fg-num">—</div>
+            <div class="fg-label" id="fg-lbl">Loading…</div>
+            <div style="font-size:10px;color:var(--text-muted);margin-top:2px">0 = Fear · 100 = Greed</div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:4px;text-align:center;font-size:10px;color:var(--text-muted);margin-top:8px">
+          <div>Extreme<br>Fear</div><div>Fear</div><div>Neutral</div><div>Greed</div><div>Extreme<br>Greed</div>
+        </div>
+        <div id="fg-note" style="text-align:center;margin-top:16px;font-size:13px;color:var(--text-muted)"></div>
+      </div>
+
+      <!-- Trending -->
+      <div class="card p-24">
+        <div class="section-header" style="margin-bottom:20px"><h2>🔥 <span>Trending</span> Coins</h2></div>
+        <div id="trending-list">
+          <div style="color:var(--text-muted);font-size:13px">Loading trending coins…</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- All Coins Table -->
+  <div class="section" style="padding-top:0">
+    <div class="section-header"><h2>All <span>Coins</span></h2></div>
+    <div class="card">
+      <div style="overflow-x:auto">
+        <table class="data-table">
+          <thead><tr><th>#</th><th>Coin</th><th>Price</th><th>24h %</th><th>7d %</th><th>Market Cap</th><th>Volume 24h</th></tr></thead>
+          <tbody id="coins-table">
+            <tr><td colspan="7" style="text-align:center;padding:20px;color:var(--text-muted)">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ETH Chart -->
+  <div class="section" style="padding-top:0">
+    <div class="section-header"><h2>Ethereum <span>Chart</span></h2></div>
+    <div class="chart-wrap">
+      <div style="height:380px">
+        <div class="tradingview-widget-container" style="height:100%">
+          <div class="tradingview-widget-container__widget" style="height:100%"></div>
+          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+          {"autosize":true,"symbol":"BINANCE:ETHUSDT","interval":"D","timezone":"Etc/UTC","theme":"dark","style":"1","locale":"en"}
+          </script>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Crypto News -->
+  <div class="section" style="padding-top:0">
+    <div class="section-header"><h2>Crypto <span>News</span></h2><a href="news.html">All News →</a></div>
+    <div class="news-grid" id="crypto-news"></div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand"><div class="logo">⛏ GoldMine</div><p>Live cryptocurrency market data powered by CoinGecko. Not financial advice.</p></div>
+    <div class="footer-col"><h4>Markets</h4><a href="gold.html">Gold</a><a href="silver.html">Silver</a><a href="crude-oil.html">Crude Oil</a><a href="stocks.html">Stocks</a><a href="forex.html">Forex</a><a href="crypto.html">Crypto</a></div>
+    <div class="footer-col"><h4>Tools</h4><a href="forecast.html">Forecasts</a><a href="news.html">News</a><a href="crypto.html#feargreed">Fear &amp; Greed</a></div>
+    <div class="footer-col"><h4>Info</h4><a href="#">About</a><a href="#">Disclaimer</a></div>
+  </div>
+  <div class="footer-bottom"><span>© 2025 GoldMine. Not financial advice. Crypto is highly volatile.</span></div>
+</footer>
+<div class="ad-sticky-mobile"><span style="font-size:11px;color:var(--text-muted)">Mobile Ad</span></div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="assets/js/core.js"></script>
+<script>
+  const COINS = [
+    {id:'bitcoin',sym:'BTC',name:'Bitcoin',icon:'₿',color:'#F7931A'},
+    {id:'ethereum',sym:'ETH',name:'Ethereum',icon:'Ξ',color:'#627EEA'},
+    {id:'binancecoin',sym:'BNB',name:'BNB',icon:'🔶',color:'#F0B90B'},
+    {id:'solana',sym:'SOL',name:'Solana',icon:'◎',color:'#9945FF'},
+    {id:'ripple',sym:'XRP',name:'XRP',icon:'✕',color:'#346AA9'},
+    {id:'cardano',sym:'ADA',name:'Cardano',icon:'₳',color:'#0033AD'},
+  ];
+
+  async function initCryptoPage() {
+    // Global stats
+    const global = await GM.CoinGecko.global();
+    if (global?.data) {
+      const d = global.data;
+      document.getElementById('gs-mcap').textContent    = GM.fmtLarge(d.total_market_cap?.usd);
+      document.getElementById('gs-vol').textContent     = GM.fmtLarge(d.total_volume?.usd);
+      document.getElementById('gs-btc-dom').textContent = (d.market_cap_percentage?.btc||0).toFixed(1)+'%';
+      document.getElementById('gs-eth-dom').textContent = (d.market_cap_percentage?.eth||0).toFixed(1)+'%';
+    }
+
+    // Coin prices
+    const ids = COINS.map(c=>c.id).join(',');
+    const prices = await GM.CoinGecko.prices(ids);
+
+    if (prices) {
+      document.getElementById('coin-grid').innerHTML = COINS.map(c => {
+        const d = prices[c.id] || {};
+        const chg = d.usd_24h_change || 0;
+        return `<div class="crypto-card">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+            <div style="width:38px;height:38px;border-radius:50%;background:${c.color}22;display:grid;place-items:center;font-size:18px;font-weight:700;color:${c.color}">${c.icon}</div>
+            <div><div class="c-name">${c.name}</div><div class="c-sym">${c.sym}</div></div>
+            <span class="card-badge ${chg>=0?'up':'down'}" style="margin-left:auto">${chg>=0?'▲':'▼'} ${Math.abs(chg).toFixed(2)}%</span>
+          </div>
+          <div class="c-price" style="color:${c.color}">${d.usd!=null?'$'+GM.fmt(d.usd,d.usd>=1?2:6):'—'}</div>
+          <div class="c-cap">Mkt Cap: ${GM.fmtLarge(d.usd_market_cap)}</div>
+        </div>`;
+      }).join('');
+    }
+
+    // Fear & Greed
+    const fg = await GM.CoinGecko.fearGreed();
+    if (fg?.data?.[0]) {
+      const val = parseInt(fg.data[0].value);
+      const lbl = fg.data[0].value_classification;
+      document.getElementById('fg-num').textContent = val;
+      document.getElementById('fg-lbl').textContent = lbl;
+      document.getElementById('fg-note').textContent = `Yesterday: ${fg.data[0].value} — ${lbl}`;
+      const arc = document.getElementById('fg-arc');
+      const circumference = 2 * Math.PI * 70;
+      const offset = circumference - (val / 100) * circumference;
+      arc.style.strokeDashoffset = offset;
+      // Color based on value
+      const clr = val <= 25 ? '#DC2626' : val <= 45 ? '#F59E0B' : val <= 55 ? '#EAB308' : val <= 75 ? '#22C55E' : '#00FFA3';
+      arc.style.stroke = clr;
+      document.getElementById('fg-num').style.color = clr;
+    }
+
+    // Trending
+    const trending = await GM.CoinGecko.trending();
+    if (trending?.coins) {
+      document.getElementById('trending-list').innerHTML = trending.coins.slice(0,7).map((c,i)=>{
+        const coin = c.item;
+        return `<div class="trending-item">
+          <div class="t-rank">${i+1}</div>
+          <div class="t-icon">${coin.small?`<img src="${coin.small}" width="24" height="24" style="border-radius:50%">`:'🪙'}</div>
+          <div style="flex:1"><div class="t-name">${coin.name}</div><div class="t-sub">${coin.symbol} · Rank #${coin.market_cap_rank||'?'}</div></div>
+          <div style="text-align:right"><div style="font-size:11px;color:var(--text-muted)">${coin.data?.price_change_percentage_24h?.usd!=null?(coin.data.price_change_percentage_24h.usd>=0?'▲':'▼')+' '+Math.abs(coin.data.price_change_percentage_24h.usd).toFixed(2)+'%':''}</div></div>
+        </div>`;
+      }).join('');
+    }
+
+    // Coins table (extended list)
+    const extPrices = await GM.CoinGecko.prices('bitcoin,ethereum,binancecoin,solana,ripple,cardano,dogecoin,polkadot,avalanche-2,chainlink');
+    const tableCoins = [
+      {id:'bitcoin',name:'Bitcoin',sym:'BTC',rank:1},{id:'ethereum',name:'Ethereum',sym:'ETH',rank:2},
+      {id:'binancecoin',name:'BNB',sym:'BNB',rank:3},{id:'solana',name:'Solana',sym:'SOL',rank:4},
+      {id:'ripple',name:'XRP',sym:'XRP',rank:5},{id:'cardano',name:'Cardano',sym:'ADA',rank:6},
+      {id:'dogecoin',name:'Dogecoin',sym:'DOGE',rank:7},{id:'polkadot',name:'Polkadot',sym:'DOT',rank:8},
+      {id:'avalanche-2',name:'Avalanche',sym:'AVAX',rank:9},{id:'chainlink',name:'Chainlink',sym:'LINK',rank:10},
+    ];
+    if (extPrices) {
+      document.getElementById('coins-table').innerHTML = tableCoins.map(c=>{
+        const d = extPrices[c.id]||{};
+        const chg = d.usd_24h_change||0;
+        return `<tr>
+          <td style="color:var(--text-muted)">${c.rank}</td>
+          <td><span style="font-weight:700">${c.name}</span> <span style="color:var(--text-muted);font-size:11px">${c.sym}</span></td>
+          <td class="mono">${d.usd!=null?'$'+GM.fmt(d.usd,d.usd>=1?2:6):'—'}</td>
+          <td class="${chg>=0?'up':'down'}">${chg>=0?'▲':'▼'} ${Math.abs(chg).toFixed(2)}%</td>
+          <td class="text-muted">—</td>
+          <td class="mono">${GM.fmtLarge(d.usd_market_cap)}</td>
+          <td class="mono text-muted">${d.usd_market_cap?GM.fmtLarge(d.usd_market_cap*0.04):'—'}</td>
+        </tr>`;
+      }).join('');
+    }
+
+    // News
+    const news = await GM.NewsAPI.fetch('bitcoin ethereum crypto blockchain', 3);
+    const nc = document.getElementById('crypto-news');
+    if (nc && news) nc.innerHTML = news.map(a=>`<a href="${a.url}" target="_blank" class="news-card fade-in"><div class="news-card-img"><span class="nc-category" style="background:var(--neon);color:#000">Crypto</span></div><div class="news-card-body"><h3>${a.title}</h3><div class="news-card-meta"><span>${a.source?.name||''}</span><span>${GM.timeAgo(a.publishedAt)}</span></div></div></a>`).join('');
+  }
+
+  document.addEventListener('DOMContentLoaded', initCryptoPage);
+</script>
+</body>
+</html>
