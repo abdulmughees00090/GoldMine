@@ -512,9 +512,6 @@ ul { list-style: none; }
   transition: transform var(--t), box-shadow var(--t), border-color var(--t);
   position: relative;
   overflow: hidden;
-  contain: layout;  /* ADD THIS LINE */
-  content-visibility: auto;  /* ADD THIS LINE */
-  contain-intrinsic-size: 180px;  /* ADD THIS LINE */
 }
 .market-card::after {
   content: '';
@@ -935,7 +932,7 @@ footer {
 .sk-line  { height: 14px; margin-bottom: 8px; }
 .sk-price { height: 32px; margin-bottom: 12px; width: 60%; }
 .sk-chart { height: 200px; }
-.sk-card  { height: 120px; border-radius: var(--radius); }
+.sk-card  { height: 180px; border-radius: var(--radius); width: 100%;}
 
 /* ─── Utilities ──────────────────────────────────────────── */
 .container   { max-width: var(--max-w); margin: 0 auto; padding: 0 24px; }
