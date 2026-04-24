@@ -117,7 +117,7 @@
   <div class="section">
     <div class="chart-wrap">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:12px">
-        <div style="font-size:16px;font-weight:600">XAU/USD — Live Chart</div>
+        <div style="font-size:16px;font-weight:600">Gold — Live Chart</div>
         <div class="chart-controls">
           <button class="chart-btn" onclick="changeInterval('1')">1D</button>
           <button class="chart-btn" onclick="changeInterval('W')">1W</button>
@@ -131,19 +131,9 @@
       <div style="height:500px">
         <div class="tradingview-widget-container" style="height:100%">
           <div id="tv-gold-chart" style="height:100%"></div>
-          <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px)"></div>
+         <!-- <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px)"></div>-->
           <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
-          {
-            "autosize": true,
-            "symbol": "TVC:GOLD",
-            "interval": "D",
-            "timezone": "Etc/UTC",
-            "theme": "dark",
-            "style": "1",
-            "locale": "en",
-            "studies": ["STD;RSI","STD;MACD","STD;BB"],
-            "container_id": "tv-gold-chart"
-          }
+          {"autosize": true,"symbol": "TVC:GOLD","interval": "D","timezone": "Etc/UTC","theme": "dark","style": "1","locale": "en","studies": ["STD;RSI","STD;MACD","STD;BB"]} //,"container_id": "tv-gold-chart"}
           </script>
         </div>
       </div>
