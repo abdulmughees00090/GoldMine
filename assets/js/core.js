@@ -10,7 +10,7 @@ const KEYS = {
   FINNHUB:         "d7lfiv9r01qm7o0blpj0d7lfiv9r01qm7o0blpjg",          // finnhub.io
   NEWS_API:        "c05ddd94c6e24efdbd8d5fa3df1007ee",          // newsapi.org
   METALS_API:      "ok_fee87e4c567a669c8e62eb2b754d0e0a",        // metals-api.com
-  GNEWS:           "5e2bc6ef87c0a373ce0125a3e7efe52b",             // gnews.io
+  //GNEWS:           "5e2bc6ef87c0a373ce0125a3e7efe52b",             // gnews.io
 };
 
 /* ─── Cache ───────────────────────────────────────────────── */
@@ -200,24 +200,21 @@ const NewsAPI = {
     const cached = CACHE.get(ckey);
     if (cached) return cached;
 
-    // Use NewsAPI only
     if (KEYS.NEWS_API && KEYS.NEWS_API !== 'YOUR_NEWS_API_KEY') {
       try {
         const url = `https://newsapi.org/v2/everything?q=${encodeURIComponent(query)}&language=en&pageSize=${limit}&apiKey=${KEYS.NEWS_API}`;
         const data = await fetchWithRetry(url);
-        
         if (data.articles && data.articles.length) {
           CACHE.set(ckey, data.articles, CACHE.TTL.NEWS);
           return data.articles;
         }
       } catch (e) {
-        console.warn('NewsAPI failed:', e);
+        console.warn('NewsAPI error, using mock data', e);
       }
     }
-
-    // Fallback to mock if NewsAPI fails
     return this._mockNews(query);
   },
+
   _mockNews(q) {
     const headlines = [
       { title: "Gold Surges to Record Highs Amid Global Uncertainty", source: { name: "Reuters" }, publishedAt: new Date().toISOString(), url: "#", description: "Gold prices climbed to their highest level this year as investors sought safe-haven assets." },
@@ -227,7 +224,7 @@ const NewsAPI = {
       { title: "S&P 500 Reaches New All-Time High Driven by Tech Sector", source: { name: "CNBC" }, publishedAt: new Date(Date.now() - 14400000).toISOString(), url: "#", description: "The benchmark index powered higher, led by gains in mega-cap technology stocks." },
       { title: "EUR/USD Tests Critical Resistance Zone", source: { name: "FX Street" }, publishedAt: new Date(Date.now() - 18000000).toISOString(), url: "#", description: "The euro gained ground against the dollar as European economic data exceeded forecasts." },
     ];
-    return headlines;
+    return headlines.slice(0, limit);
   }
 };
 
