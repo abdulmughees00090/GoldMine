@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Stock Market — S&P 500, Nasdaq, Dow Jones | GoldMine</title>
+  <meta name="description" content="Live stock market prices. Real-time S&P 500, Nasdaq, Dow Jones data. Top global stocks, trending equities and market analysis.">
+  <meta name="keywords" content="stock market today, S&P 500 live, Nasdaq live, Dow Jones, stock prices, AAPL MSFT NVDA stock">
+  <link rel="canonical" href="https://GoldMine.silverfoxdynamics.com/stocks.html">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#2563EB">
+  <link rel="manifest" href="manifest.json">
+  <style>
+    .stocks-accent { color:#2563EB; }
+    .index-card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:22px; position:relative; overflow:hidden; }
+    .index-card::before { content:''; position:absolute;top:0;left:0;right:0;height:3px; background:linear-gradient(90deg,#1d4ed8,#60a5fa); }
+    .index-name { font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:6px; }
+    .index-price { font-family:var(--font-mono);font-size:28px;font-weight:700;line-height:1;margin-bottom:6px; }
+    .search-bar { display:flex;gap:10px;margin-bottom:28px; }
+    .search-bar input { flex:1;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:10px 16px;font-size:14px;font-family:var(--font-body);color:var(--text);outline:none;transition:border-color var(--t); }
+    .search-bar input:focus { border-color:#2563EB; }
+    .search-bar button { background:#2563EB;color:#fff;padding:10px 20px;border-radius:var(--radius);font-size:14px;font-weight:600;transition:background var(--t); }
+    .search-bar button:hover { background:#1d4ed8; }
+    .stock-row { display:flex;align-items:center;justify-content:space-between;padding:12px 20px;border-bottom:1px solid var(--border);cursor:pointer;transition:background var(--t); }
+    .stock-row:last-child { border-bottom:none; }
+    .stock-row:hover { background:var(--bg-secondary); }
+    .stock-logo { width:36px;height:36px;border-radius:8px;background:var(--bg-secondary);display:grid;place-items:center;font-size:14px;font-weight:700;margin-right:12px;flex-shrink:0; }
+    .stock-info { flex:1; }
+    .stock-sym  { font-size:14px;font-weight:700; }
+    .stock-name { font-size:11px;color:var(--text-muted);margin-top:1px; }
+    .stock-price-col { text-align:right; }
+    .stock-price { font-family:var(--font-mono);font-size:15px;font-weight:700; }
+    .stock-change { font-size:12px;font-weight:700;margin-top:2px; }
+    .sparkline-col canvas { width:80px!important;height:32px!important; }
+  </style>
+</head>
+<body>
+<div id="ticker-bar"></div>
+<nav id="navbar">
+  <a href="index.html" class="nav-logo"><div class="logo-icon">⛏</div>GoldMine</a>
+  <div class="nav-links">
+    <a href="index.html">Home</a><a href="gold.html">Gold</a><a href="silver.html">Silver</a>
+    <a href="crude-oil.html">Crude Oil</a><a href="stocks.html" class="active">Stocks</a>
+    <a href="forex.html">Forex</a><a href="crypto.html">Crypto</a>
+    <a href="news.html">News</a><a href="forecast.html">Forecast</a>
+  </div>
+  <div class="nav-right">
+    <button id="theme-toggle">🌙</button>
+    <button id="nav-toggle"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div id="mobile-menu">
+  <a href="index.html">🏠 Home</a><a href="gold.html">🥇 Gold</a><a href="silver.html">🥈 Silver</a>
+  <a href="crude-oil.html">🛢️ Crude Oil</a><a href="stocks.html">📈 Stocks</a><a href="forex.html">💱 Forex</a>
+  <a href="crypto.html">₿ Crypto</a><a href="news.html">📰 News</a><a href="forecast.html">🔮 Forecast</a>
+</div>
+
+<main class="page-content theme-stocks">
+  <div class="container" style="padding-top:16px">
+    <div class="ad-placeholder ad-header">ADVERTISEMENT</div>
+  </div>
+
+  <div class="section">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:28px">
+      <span style="font-size:36px">📈</span>
+      <div>
+        <div style="font-size:13px;color:var(--text-muted)">Global Equities · Live Data</div>
+        <div style="font-size:22px;font-weight:700;font-family:var(--font-display)">Stock Market Today</div>
+      </div>
+      <span class="live-dot" style="margin-left:auto">LIVE</span>
+    </div>
+
+    <!-- Major Indices -->
+    <div class="section-header"><h2>Major <span>Indices</span></h2></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin-bottom:40px" id="indices-grid">
+      <div class="index-card"><div class="index-name">S&amp;P 500</div><div class="index-price" id="idx-spx">—</div><div id="idx-spx-chg" class="price-change up">—</div></div>
+      <div class="index-card"><div class="index-name">Nasdaq 100</div><div class="index-price" id="idx-ndx">—</div><div id="idx-ndx-chg" class="price-change up">—</div></div>
+      <div class="index-card"><div class="index-name">Dow Jones</div><div class="index-price" id="idx-dji">—</div><div id="idx-dji-chg" class="price-change up">—</div></div>
+      <div class="index-card"><div class="index-name">Russell 2000</div><div class="index-price">2,145.30</div><div class="price-change up">▲ 0.64%</div></div>
+      <div class="index-card"><div class="index-name">VIX Index</div><div class="index-price" id="idx-vix">18.42</div><div class="price-change down">▼ 2.1%</div></div>
+      <div class="index-card"><div class="index-name">FTSE 100</div><div class="index-price">8,315.20</div><div class="price-change up">▲ 0.32%</div></div>
+    </div>
+
+    <!-- Index Chart -->
+    <div class="chart-wrap" style="margin-bottom:40px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:12px">
+        <div style="font-size:16px;font-weight:600">S&amp;P 500 — Live Chart</div>
+        <div class="chart-controls">
+          <button class="chart-btn">1D</button><button class="chart-btn">1W</button>
+          <button class="chart-btn active">1M</button><button class="chart-btn">3M</button>
+          <button class="chart-btn">1Y</button><button class="chart-btn">MAX</button>
+        </div>
+      </div>
+      <div style="height:460px">
+        <div class="tradingview-widget-container" style="height:100%">
+          <div class="tradingview-widget-container__widget" style="height:100%"></div>
+          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+          {"autosize":true,"symbol":"CAPITALCOM:US500","interval":"D","timezone":"Etc/UTC","theme":"dark","style":"1","locale":"en","studies":["STD;RSI","STD;MACD"]}
+          </script>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stock Search -->
+    <div class="section-header"><h2>Search <span>Stocks</span></h2></div>
+    <div class="search-bar">
+      <input type="text" id="stock-search-input" placeholder="Search by symbol or company name (e.g. AAPL, Tesla)…">
+      <button onclick="searchStock()">Search</button>
+    </div>
+    <div id="search-result" style="margin-bottom:28px"></div>
+  </div>
+
+  <div class="container"><div class="ad-placeholder ad-in-content">ADVERTISEMENT</div></div>
+
+  <!-- Top Stocks Table -->
+  <div class="section" style="padding-top:0">
+    <div style="display:grid;grid-template-columns:1fr 320px;gap:24px" class="main-sidebar-grid">
+      <div>
+        <div class="tabs" style="margin-bottom:20px">
+          <button class="tab-btn active" onclick="switchTab('top',this)">Top Stocks</button>
+          <button class="tab-btn" onclick="switchTab('tech',this)">Tech</button>
+          <button class="tab-btn" onclick="switchTab('finance',this)">Finance</button>
+          <button class="tab-btn" onclick="switchTab('energy',this)">Energy</button>
+        </div>
+        <div class="card" id="stocks-table-card">
+          <div id="stocks-list">
+            <div style="padding:20px;text-align:center;color:var(--text-muted)">Loading…</div>
+          </div>
+        </div>
+      </div>
+      <!-- Sidebar -->
+      <div>
+        <div class="ad-placeholder ad-sidebar" style="margin-bottom:20px">AD 300×250</div>
+        <div class="card p-20">
+          <div style="font-size:13px;font-weight:600;margin-bottom:14px">Market Breadth</div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div class="flex-between"><span style="font-size:13px">Advancing</span><span class="text-up mono" style="font-weight:700">2,841</span></div>
+            <div class="flex-between"><span style="font-size:13px">Declining</span><span class="text-down mono" style="font-weight:700">1,654</span></div>
+            <div class="flex-between"><span style="font-size:13px">Unchanged</span><span class="mono" style="font-weight:700">312</span></div>
+            <div class="flex-between"><span style="font-size:13px">New Highs</span><span class="text-up mono" style="font-weight:700">184</span></div>
+            <div class="flex-between"><span style="font-size:13px">New Lows</span><span class="text-down mono" style="font-weight:700">42</span></div>
+          </div>
+          <div style="margin-top:16px">
+            <div class="flex-between" style="margin-bottom:8px"><span style="font-size:13px;font-weight:600">Advance/Decline</span><span class="text-up mono">63.2%</span></div>
+            <div class="signal-bar"><div class="signal-fill" style="width:63%;background:var(--up)"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Heatmap -->
+  <div class="section" style="padding-top:0">
+    <div class="section-header"><h2>Sector <span>Heatmap</span></h2></div>
+    <div class="card p-20" id="sector-heatmap"></div>
+  </div>
+
+  <!-- News -->
+  <div class="section" style="padding-top:0">
+    <div class="section-header"><h2>Stock <span>News</span></h2><a href="news.html">All News →</a></div>
+    <div class="news-grid" id="stocks-news"></div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand"><div class="logo">⛏ GoldMine</div><p>Live stock market data and global equity analysis. Not financial advice.</p></div>
+    <div class="footer-col"><h4>Markets</h4><a href="gold.html">Gold</a><a href="silver.html">Silver</a><a href="crude-oil.html">Crude Oil</a><a href="stocks.html">Stocks</a><a href="forex.html">Forex</a><a href="crypto.html">Crypto</a></div>
+    <div class="footer-col"><h4>Tools</h4><a href="forecast.html">Forecasts</a><a href="news.html">News</a></div>
+    <div class="footer-col"><h4>Info</h4><a href="#">About</a><a href="#">Disclaimer</a></div>
+  </div>
+  <div class="footer-bottom"><span>© 2025 GoldMine. Not financial advice.</span></div>
+</footer>
+<div class="ad-sticky-mobile"><span style="font-size:11px;color:var(--text-muted)">Mobile Ad</span></div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="assets/js/core.js"></script>
+<script>
+  const STOCK_SETS = {
+    top:     [{sym:'AAPL',name:'Apple Inc.'},{sym:'MSFT',name:'Microsoft'},{sym:'NVDA',name:'NVIDIA'},{sym:'AMZN',name:'Amazon'},{sym:'META',name:'Meta Platforms'},{sym:'GOOGL',name:'Alphabet'},{sym:'TSLA',name:'Tesla'},{sym:'JPM',name:'JPMorgan Chase'}],
+    tech:    [{sym:'AAPL',name:'Apple'},{sym:'MSFT',name:'Microsoft'},{sym:'NVDA',name:'NVIDIA'},{sym:'AMD',name:'AMD'},{sym:'INTC',name:'Intel'},{sym:'AVGO',name:'Broadcom'},{sym:'QCOM',name:'Qualcomm'},{sym:'MU',name:'Micron'}],
+    finance: [{sym:'JPM',name:'JPMorgan'},{sym:'BAC',name:'Bank of America'},{sym:'WFC',name:'Wells Fargo'},{sym:'GS',name:'Goldman Sachs'},{sym:'MS',name:'Morgan Stanley'},{sym:'BLK',name:'BlackRock'},{sym:'V',name:'Visa'},{sym:'MA',name:'Mastercard'}],
+    energy:  [{sym:'XOM',name:'ExxonMobil'},{sym:'CVX',name:'Chevron'},{sym:'COP',name:'ConocoPhillips'},{sym:'SLB',name:'Schlumberger'},{sym:'OXY',name:'Occidental'},{sym:'BP',name:'BP plc'},{sym:'SHEL',name:'Shell'},{sym:'TTE',name:'TotalEnergies'}],
+  };
+  const EMOJIS = {AAPL:'🍎',MSFT:'🪟',NVDA:'💚',AMZN:'📦',META:'👤',GOOGL:'🔍',TSLA:'⚡',JPM:'🏦',AMD:'🔴',INTC:'🔵',AVGO:'📡',QCOM:'📶',MU:'💾',BAC:'🏛',WFC:'🏛',GS:'💰',MS:'📊',BLK:'⚫',V:'💳',MA:'🔶',XOM:'⛽',CVX:'🔵',COP:'🟠',SLB:'🔧',OXY:'🟤',BP:'🟡',SHEL:'🐚',TTE:'🌍'};
+  let currentTab = 'top';
+
+  async function loadStocks(set) {
+    const list = document.getElementById('stocks-list');
+    list.innerHTML = set.map(s=>`<div class="stock-row"><div class="stock-logo">${EMOJIS[s.sym]||s.sym[0]}</div><div class="stock-info"><div class="stock-sym">${s.sym}</div><div class="stock-name">${s.name}</div></div><div class="sparkline-col"><canvas id="spk-${s.sym}" width="80" height="32"></canvas></div><div class="stock-price-col"><div class="stock-price" id="sp-${s.sym}">—</div><div class="stock-change" id="sc-${s.sym}">—</div></div></div>`).join('');
+
+    for (const s of set) {
+      const q = await GM.StocksAPI.quote(s.sym);
+      if (!q) continue;
+      const pe = document.getElementById('sp-'+s.sym);
+      const ce = document.getElementById('sc-'+s.sym);
+      if (pe) pe.textContent = `$${GM.fmt(q.price,2)}`;
+      if (ce) { ce.textContent = `${q.pct>=0?'▲':'▼'} ${Math.abs(q.pct).toFixed(2)}%`; ce.className = `stock-change ${q.pct>=0?'up':'down'}`; }
+      const data = GM.Sparkline.generate(20, q.price*0.97, 0.015);
+      GM.Sparkline.draw(`spk-${s.sym}`, data, q.pct>=0);
+    }
+  }
+
+  function switchTab(key, btn) {
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    currentTab = key;
+    loadStocks(STOCK_SETS[key]);
+  }
+
+  async function loadIndices() {
+    const indices = [{sym:'SPY',id:'idx-spx',chgId:'idx-spx-chg',label:'S&P 500'},{sym:'QQQ',id:'idx-ndx',chgId:'idx-ndx-chg',label:'Nasdaq'},{sym:'DIA',id:'idx-dji',chgId:'idx-dji-chg',label:'Dow Jones'}];
+    for (const idx of indices) {
+      const q = await GM.StocksAPI.quote(idx.sym);
+      if (!q) continue;
+      const pe = document.getElementById(idx.id); const ce = document.getElementById(idx.chgId);
+      if (pe) pe.textContent = `$${GM.fmt(q.price,2)}`;
+      if (ce) { ce.textContent = `${q.pct>=0?'▲':'▼'} ${Math.abs(q.pct).toFixed(2)}%`; ce.className=`price-change ${q.pct>=0?'up':'down'}`; }
+    }
+  }
+
+  async function searchStock() {
+    const sym = document.getElementById('stock-search-input').value.trim().toUpperCase();
+    if (!sym) return;
+    const res = document.getElementById('search-result');
+    res.innerHTML = `<div class="card p-20"><div style="color:var(--text-muted)">Searching ${sym}…</div></div>`;
+    const q = await GM.StocksAPI.quote(sym);
+    if (!q) { res.innerHTML=`<div class="card p-20"><div style="color:var(--down)">Symbol not found. Try a valid ticker like AAPL, TSLA, MSFT.</div></div>`; return; }
+    res.innerHTML = `<div class="card p-24">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+        <div><div style="font-size:22px;font-weight:700">${q.symbol}</div><div style="color:var(--text-muted);font-size:13px;margin-top:2px">Equity · USD</div></div>
+        <div style="text-align:right"><div class="mono" style="font-size:32px;font-weight:700">$${GM.fmt(q.price,2)}</div><div class="${q.pct>=0?'text-up':'text-down'} mono" style="font-size:16px;font-weight:700">${q.pct>=0?'▲':'▼'} ${Math.abs(q.pct).toFixed(2)}%</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:12px;margin-top:16px">
+        <div><div class="text-muted" style="font-size:11px;text-transform:uppercase;letter-spacing:0.06em">Change</div><div class="mono ${q.change>=0?'text-up':'text-down'}" style="font-size:15px;font-weight:700">${q.change>=0?'+':''}$${GM.fmt(q.change,2)}</div></div>
+        ${q.open?`<div><div class="text-muted" style="font-size:11px;text-transform:uppercase;letter-spacing:0.06em">Open</div><div class="mono" style="font-size:15px;font-weight:700">$${GM.fmt(q.open,2)}</div></div>`:''}
+        ${q.high?`<div><div class="text-muted" style="font-size:11px;text-transform:uppercase;letter-spacing:0.06em">Day High</div><div class="mono text-up" style="font-size:15px;font-weight:700">$${GM.fmt(q.high,2)}</div></div>`:''}
+        ${q.low?`<div><div class="text-muted" style="font-size:11px;text-transform:uppercase;letter-spacing:0.06em">Day Low</div><div class="mono text-down" style="font-size:15px;font-weight:700">$${GM.fmt(q.low,2)}</div></div>`:''}
+      </div>
+    </div>`;
+  }
+
+  function buildSectorHeatmap() {
+    const sectors = [
+      {name:'Technology',chg:2.40},{name:'Healthcare',chg:0.85},{name:'Financials',chg:1.20},{name:'Energy',chg:-1.50},
+      {name:'Consumer Disc.',chg:0.60},{name:'Industrials',chg:0.35},{name:'Utilities',chg:-0.80},{name:'Real Estate',chg:-0.45},
+      {name:'Materials',chg:1.80},{name:'Comm. Services',chg:1.10},{name:'Consumer Staples',chg:0.25}
+    ];
+    const el = document.getElementById('sector-heatmap');
+    if (!el) return;
+    const cls = c => c>2?'big-up':c>0.5?'up':c>0?'small-up':c===0?'neutral':c>-0.5?'small-dn':c>-2?'down':'big-dn';
+    el.innerHTML = `<div class="heatmap-grid">`+sectors.map(s=>`<div class="hm-cell ${cls(s.chg)}"><div class="hm-name">${s.name}</div><div class="hm-chg">${s.chg>=0?'+':''}${s.chg.toFixed(2)}%</div></div>`).join('')+`</div>`;
+  }
+
+  document.getElementById('stock-search-input')?.addEventListener('keydown', e => { if(e.key==='Enter') searchStock(); });
+
+  document.addEventListener('DOMContentLoaded', async () => {
+    await loadIndices();
+    await loadStocks(STOCK_SETS.top);
+    buildSectorHeatmap();
+    const news = await GM.NewsAPI.fetch('stock market equities Wall Street', 3);
+    const nc = document.getElementById('stocks-news');
+    if (nc && news) nc.innerHTML = news.map(a=>`<a href="${a.url}" target="_blank" class="news-card fade-in"><div class="news-card-img"><span class="nc-category" style="background:#2563EB">Stocks</span></div><div class="news-card-body"><h3>${a.title}</h3><div class="news-card-meta"><span>${a.source?.name||''}</span><span>${GM.timeAgo(a.publishedAt)}</span></div></div></a>`).join('');
+  });
+</script>
+</body>
+</html>
