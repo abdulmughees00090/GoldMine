@@ -23,6 +23,22 @@
     .stat-item .sv { font-family:var(--font-mono); font-size:18px; font-weight:600; }
     .stat-item .sl { font-size:11px; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-muted); }
     .spread-card { background:rgba(232,101,10,0.06); border:1px solid rgba(232,101,10,0.2); border-radius:var(--radius); padding:20px; text-align:center; }
+        /* Add color classes for stat values to match Gold/Silver pages */
+    .stat-item .sv.text-up { color: var(--up); }
+    .stat-item .sv.text-down { color: var(--down); }
+    .stat-item .sv.text-gold { color: var(--gold); }
+    
+    /* Make sure the price change colors work */
+    .price-change.up { color: var(--up); }
+    .price-change.down { color: var(--down); }
+    
+    /* For the spread card values */
+    .spread-card .up { color: var(--up); }
+    .spread-card .down { color: var(--down); }
+    
+    /* Highlight colors for stats */
+    .stat-item .sv.text-up { font-weight: 600; }
+    .stat-item .sv.text-down { font-weight: 600; }
   </style>
 </head>
 <body>
@@ -69,9 +85,9 @@
           <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:8px;font-weight:700">WTI Crude · NYMEX</div>
           <div class="price-big-oil" id="wti-price">$—</div>
           <div id="wti-change" class="price-change down" style="margin-top:8px;font-size:14px">Loading…</div>
-          <div class="stat-row" style="margin-top:12px">
-            <div class="stat-item"><div class="sv" id="wti-high">—</div><div class="sl">High</div></div>
-            <div class="stat-item"><div class="sv" id="wti-low">—</div><div class="sl">Low</div></div>
+           <div class="stat-row" style="margin-top:12px">
+            <div class="stat-item"><div class="sv text-up" id="wti-high">—</div><div class="sl">High</div></div>
+            <div class="stat-item"><div class="sv text-down" id="wti-low">—</div><div class="sl">Low</div></div>
             <div class="stat-item"><div class="sv" id="wti-prev">—</div><div class="sl">Prev</div></div>
           </div>
         </div>
@@ -80,10 +96,10 @@
           <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:8px;font-weight:700">Brent Crude · ICE</div>
           <div class="price-big-oil" id="brent-price">$—</div>
           <div id="brent-change" class="price-change down" style="margin-top:8px;font-size:14px">Loading…</div>
-          <div class="stat-row" style="margin-top:12px">
-            <div class="stat-item"><div class="sv" id="brent-high">—</div><div class="sl">High</div></div>
-            <div class="stat-item"><div class="sv" id="brent-low">—</div><div class="sl">Low</div></div>
-            <div class="stat-item"><div class="sv" id="brent-spread">—</div><div class="sl">Brent Spread</div></div>
+           <div class="stat-row" style="margin-top:12px">
+            <div class="stat-item"><div class="sv text-up" id="brent-high">—</div><div class="sl">High</div></div>
+            <div class="stat-item"><div class="sv text-down" id="brent-low">—</div><div class="sl">Low</div></div>
+            <div class="stat-item"><div class="sv text-up" id="brent-spread">—</div><div class="sl">Brent Spread</div></div>
           </div>
         </div>
       </div>
@@ -178,7 +194,7 @@
       <div class="spread-card"><div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px">Brent-WTI Spread</div><div class="oil-accent mono" style="font-size:22px;font-weight:700" id="brent-wti-spread">$3.70</div></div>
       <div class="spread-card"><div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px">52-Week High</div><div class="oil-accent mono" style="font-size:22px;font-weight:700">$95.40</div></div>
       <div class="spread-card"><div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px">52-Week Low</div><div class="mono" style="font-size:22px;font-weight:700;color:var(--down)">$65.20</div></div>
-      <div class="spread-card"><div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px">EIA Inventory</div><div class="mono" style="font-size:22px;font-weight:700">-2.4M</div><div style="font-size:11px;color:var(--up)">Drawdown</div></div>
+      <div class="spread-card"><div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px">EIA Inventory</div><div class="mono text-up" style="font-size:22px;font-weight:700">-2.4M</div><div style="font-size:11px;color:var(--up)">Drawdown</div></div>
       <div class="spread-card"><div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px">OPEC Quota</div><div class="oil-accent mono" style="font-size:22px;font-weight:700">-1.2M</div><div style="font-size:11px;color:var(--text-muted)">bpd cut</div></div>
       <div class="spread-card"><div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px">Signal</div><div style="font-size:22px;font-weight:700;color:var(--down)">SELL</div><div class="forecast-pill bear" style="font-size:10px;padding:2px 8px;margin-top:4px;display:inline-flex">Bearish</div></div>
     </div>
@@ -204,7 +220,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script src="assets/js/core.js"></script>
 <script>
-  async function initOilPage() {
+    async function initOilPage() {
     const wti   = GM.MetalsAPI._mock('oil_wti');
     const brent = GM.MetalsAPI._mock('oil_brent');
 
@@ -217,16 +233,44 @@
     };
 
     setPrice('wti-price','wti-change', wti, 'WTI Today');
-    document.getElementById('wti-high').textContent  = `$${GM.fmt(wti.price*1.009,2)}`;
-    document.getElementById('wti-low').textContent   = `$${GM.fmt(wti.price*0.993,2)}`;
-    document.getElementById('wti-prev').textContent  = `$${GM.fmt(wti.price*1.006,2)}`;
+    
+    // WTI stats with colors
+    const wtiHigh = wti.price * 1.009;
+    const wtiLow = wti.price * 0.993;
+    const wtiPrev = wti.price * 1.006;
+    
+    document.getElementById('wti-high').textContent = `$${GM.fmt(wtiHigh,2)}`;
+    document.getElementById('wti-low').textContent = `$${GM.fmt(wtiLow,2)}`;
+    document.getElementById('wti-prev').textContent = `$${GM.fmt(wtiPrev,2)}`;
+    
+    // Apply colors based on percentage changes from previous close
+    const wtiHighChg = ((wtiHigh - wtiPrev) / wtiPrev) * 100;
+    const wtiLowChg = ((wtiLow - wtiPrev) / wtiPrev) * 100;
+    
+    document.getElementById('wti-high').className = `sv ${wtiHighChg >= 0 ? 'text-up' : 'text-down'}`;
+    document.getElementById('wti-low').className = `sv ${wtiLowChg >= 0 ? 'text-up' : 'text-down'}`;
 
     setPrice('brent-price','brent-change', brent, 'Brent Today');
-    document.getElementById('brent-high').textContent = `$${GM.fmt(brent.price*1.008,2)}`;
-    document.getElementById('brent-low').textContent  = `$${GM.fmt(brent.price*0.992,2)}`;
+    
+    // Brent stats with colors
+    const brentHigh = brent.price * 1.008;
+    const brentLow = brent.price * 0.992;
     const spread = (brent.price - wti.price).toFixed(2);
-    document.getElementById('brent-spread').textContent     = `+$${spread}`;
+    
+    document.getElementById('brent-high').textContent = `$${GM.fmt(brentHigh,2)}`;
+    document.getElementById('brent-low').textContent = `$${GM.fmt(brentLow,2)}`;
+    document.getElementById('brent-spread').textContent = `+$${spread}`;
     document.getElementById('brent-wti-spread').textContent = `$${spread}`;
+    
+    // Apply colors for Brent stats
+    const brentHighChg = ((brentHigh - brent.price) / brent.price) * 100;
+    const brentLowChg = ((brentLow - brent.price) / brent.price) * 100;
+    
+    document.getElementById('brent-high').className = `sv ${brentHighChg >= 0 ? 'text-up' : 'text-down'}`;
+    document.getElementById('brent-low').className = `sv ${brentLowChg >= 0 ? 'text-up' : 'text-down'}`;
+    
+    // Spread is positive (brent > wti), so it gets text-up class
+    document.getElementById('brent-spread').className = `sv text-up`;
 
     const news = await GM.NewsAPI.fetch('crude oil OPEC energy market', 3);
     const nc = document.getElementById('oil-news');
