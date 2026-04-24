@@ -1,0 +1,8 @@
+{
+  "name": "GoldMine",
+  "short_name": "GoldMine",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#D4AF37",
+  "background_color": "#0D0C0A"
+}
