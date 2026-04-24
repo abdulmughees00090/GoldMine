@@ -512,9 +512,6 @@ ul { list-style: none; }
   transition: transform var(--t), box-shadow var(--t), border-color var(--t);
   position: relative;
   overflow: hidden;
-  min-height: 180px;  /* ADD THIS LINE */
-  display: flex;
-  flex-direction: column;
 }
 .market-card::after {
   content: '';
