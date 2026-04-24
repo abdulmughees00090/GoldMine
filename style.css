@@ -512,6 +512,9 @@ ul { list-style: none; }
   transition: transform var(--t), box-shadow var(--t), border-color var(--t);
   position: relative;
   overflow: hidden;
+  min-height: 180px;  /* ADD THIS LINE */
+  display: flex;
+  flex-direction: column;
 }
 .market-card::after {
   content: '';
@@ -572,12 +575,7 @@ ul { list-style: none; }
 }
 .card-change.up   { color: var(--up); }
 .card-change.down { color: var(--down); }
-.card-sparkline {
-  height: 50px;
-  margin-top: 12px;
-  width: 100%;
-  display: block;
-}
+.card-sparkline { height: 50px;  margin-top: 12px;}
 
 /* ─── Market Overview Tabs ───────────────────────────────── */
 .tabs {
