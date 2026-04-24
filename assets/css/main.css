@@ -932,7 +932,7 @@ footer {
 .sk-line  { height: 14px; margin-bottom: 8px; }
 .sk-price { height: 32px; margin-bottom: 12px; width: 60%; }
 .sk-chart { height: 200px; }
-.sk-card  { height: 180px; border-radius: var(--radius); width: 100%;}
+.sk-card  { height: 120px; border-radius: var(--radius);}
 
 /* ─── Utilities ──────────────────────────────────────────── */
 .container   { max-width: var(--max-w); margin: 0 auto; padding: 0 24px; }
