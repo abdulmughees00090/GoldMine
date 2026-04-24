@@ -303,11 +303,6 @@ const Sparkline = {
   draw(canvasId, data, isUp = true) {
     const el = document.getElementById(canvasId) || document.querySelector(canvasId);
     if (!el) return;
-    // SOLUTION 3: Force fixed canvas dimensions before Chart.js initialization
-  el.style.width = '100%';
-  el.style.height = '50px';
-  el.width = el.offsetWidth;
-  el.height = 50;
     const ctx = el.getContext('2d');
     const color = isUp ? '#16A34A' : '#DC2626';
     const gradient = ctx.createLinearGradient(0, 0, 0, el.height);
