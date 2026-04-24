@@ -32,6 +32,49 @@
     .stock-price { font-family:var(--font-mono);font-size:15px;font-weight:700; }
     .stock-change { font-size:12px;font-weight:700;margin-top:2px; }
     .sparkline-col canvas { width:80px!important;height:32px!important; }
+        /* Make index cards show dynamic colors based on performance */
+    .index-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px;
+      position: relative;
+      overflow: hidden;
+    }
+    .index-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      transition: background 0.3s ease;
+    }
+    .index-card.positive::before {
+      background: linear-gradient(90deg, var(--up), #4ade80);
+    }
+    .index-card.negative::before {
+      background: linear-gradient(90deg, var(--down), #f87171);
+    }
+    
+    /* Color classes for index values */
+    .index-price.positive {
+      color: var(--up);
+    }
+    .index-price.negative {
+      color: var(--down);
+    }
+    .index-price.neutral {
+      color: var(--gold);
+    }
+    
+    /* Make the price-change class work */
+    .price-change.up {
+      color: var(--up);
+    }
+    .price-change.down {
+      color: var(--down);
+    }
   </style>
 </head>
 <body>
@@ -70,15 +113,39 @@
       <span class="live-dot" style="margin-left:auto">LIVE</span>
     </div>
 
-    <!-- Major Indices -->
+        <!-- Major Indices -->
     <div class="section-header"><h2>Major <span>Indices</span></h2></div>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin-bottom:40px" id="indices-grid">
-      <div class="index-card"><div class="index-name">S&amp;P 500</div><div class="index-price" id="idx-spx">—</div><div id="idx-spx-chg" class="price-change up">—</div></div>
-      <div class="index-card"><div class="index-name">Nasdaq 100</div><div class="index-price" id="idx-ndx">—</div><div id="idx-ndx-chg" class="price-change up">—</div></div>
-      <div class="index-card"><div class="index-name">Dow Jones</div><div class="index-price" id="idx-dji">—</div><div id="idx-dji-chg" class="price-change up">—</div></div>
-      <div class="index-card"><div class="index-name">Russell 2000</div><div class="index-price">2,145.30</div><div class="price-change up">▲ 0.64%</div></div>
-      <div class="index-card"><div class="index-name">VIX Index</div><div class="index-price" id="idx-vix">18.42</div><div class="price-change down">▼ 2.1%</div></div>
-      <div class="index-card"><div class="index-name">FTSE 100</div><div class="index-price">8,315.20</div><div class="price-change up">▲ 0.32%</div></div>
+      <div class="index-card" id="idx-spx-card">
+        <div class="index-name">S&amp;P 500</div>
+        <div class="index-price" id="idx-spx">—</div>
+        <div id="idx-spx-chg" class="price-change up">—</div>
+      </div>
+      <div class="index-card" id="idx-ndx-card">
+        <div class="index-name">Nasdaq 100</div>
+        <div class="index-price" id="idx-ndx">—</div>
+        <div id="idx-ndx-chg" class="price-change up">—</div>
+      </div>
+      <div class="index-card" id="idx-dji-card">
+        <div class="index-name">Dow Jones</div>
+        <div class="index-price" id="idx-dji">—</div>
+        <div id="idx-dji-chg" class="price-change up">—</div>
+      </div>
+      <div class="index-card" id="idx-rut-card">
+        <div class="index-name">Russell 2000</div>
+        <div class="index-price" id="idx-rut">2,145.30</div>
+        <div id="idx-rut-chg" class="price-change up">▲ 0.64%</div>
+      </div>
+      <div class="index-card" id="idx-vix-card">
+        <div class="index-name">VIX Index</div>
+        <div class="index-price" id="idx-vix">18.42</div>
+        <div id="idx-vix-chg" class="price-change down">▼ 2.1%</div>
+      </div>
+      <div class="index-card" id="idx-ftse-card">
+        <div class="index-name">FTSE 100</div>
+        <div class="index-price" id="idx-ftse">8,315.20</div>
+        <div id="idx-ftse-chg" class="price-change up">▲ 0.32%</div>
+      </div>
     </div>
 
     <!-- Index Chart -->
@@ -208,15 +275,96 @@
     loadStocks(STOCK_SETS[key]);
   }
 
-  async function loadIndices() {
-    const indices = [{sym:'SPY',id:'idx-spx',chgId:'idx-spx-chg',label:'S&P 500'},{sym:'QQQ',id:'idx-ndx',chgId:'idx-ndx-chg',label:'Nasdaq'},{sym:'DIA',id:'idx-dji',chgId:'idx-dji-chg',label:'Dow Jones'}];
+    async function loadIndices() {
+    const indices = [
+      {sym:'SPY', id:'idx-spx', chgId:'idx-spx-chg', cardId:'idx-spx-card', priceId:'idx-spx', label:'S&P 500', isInverse: false},
+      {sym:'QQQ', id:'idx-ndx', chgId:'idx-ndx-chg', cardId:'idx-ndx-card', priceId:'idx-ndx', label:'Nasdaq', isInverse: false},
+      {sym:'DIA', id:'idx-dji', chgId:'idx-dji-chg', cardId:'idx-dji-card', priceId:'idx-dji', label:'Dow Jones', isInverse: false},
+      {sym:'IWM', id:'idx-rut', chgId:'idx-rut-chg', cardId:'idx-rut-card', priceId:'idx-rut', label:'Russell 2000', isInverse: false, staticPrice: 2145.30, staticChg: 0.64, staticDir: 'up'},
+      {sym:'VIX', id:'idx-vix', chgId:'idx-vix-chg', cardId:'idx-vix-card', priceId:'idx-vix', label:'VIX', isInverse: true, staticPrice: 18.42, staticChg: -2.1, staticDir: 'down'},
+      {sym:'UKX', id:'idx-ftse', chgId:'idx-ftse-chg', cardId:'idx-ftse-card', priceId:'idx-ftse', label:'FTSE 100', isInverse: false, staticPrice: 8315.20, staticChg: 0.32, staticDir: 'up'}
+    ];
+    
     for (const idx of indices) {
-      const q = await GM.StocksAPI.quote(idx.sym);
-      if (!q) continue;
-      const pe = document.getElementById(idx.id); const ce = document.getElementById(idx.chgId);
-      if (pe) pe.textContent = `$${GM.fmt(q.price,2)}`;
-      if (ce) { ce.textContent = `${q.pct>=0?'▲':'▼'} ${Math.abs(q.pct).toFixed(2)}%`; ce.className=`price-change ${q.pct>=0?'up':'down'}`; }
+      let price, pct;
+      
+      // Handle static indices (those without API or using mock)
+      if (idx.staticPrice) {
+        price = idx.staticPrice;
+        pct = idx.staticChg;
+      } else {
+        const q = await GM.StocksAPI.quote(idx.sym);
+        if (!q) continue;
+        price = q.price;
+        pct = q.pct;
+      }
+      
+      // Update price display
+      const pe = document.getElementById(idx.id);
+      const ce = document.getElementById(idx.chgId);
+      const card = document.getElementById(idx.cardId);
+      
+      if (pe) {
+        pe.textContent = idx.sym === 'VIX' ? GM.fmt(price, 2) : `$${GM.fmt(price, 2)}`;
+      }
+      
+      // For VIX: if VIX goes down, that's bullish for stocks (inverse relationship)
+      const isPositive = idx.isInverse ? pct <= 0 : pct >= 0;
+      const displayPct = idx.isInverse ? Math.abs(pct) : Math.abs(pct);
+      const arrow = isPositive ? '▲' : '▼';
+      
+      if (ce) {
+        ce.textContent = `${arrow} ${displayPct.toFixed(2)}%`;
+        ce.className = `price-change ${isPositive ? 'up' : 'down'}`;
+      }
+      
+      // Update card border color and price color
+      if (card) {
+        card.classList.remove('positive', 'negative');
+        card.classList.add(isPositive ? 'positive' : 'negative');
+      }
+      
+      if (pe) {
+        pe.classList.remove('positive', 'negative', 'neutral');
+        pe.classList.add(isPositive ? 'positive' : 'negative');
+      }
     }
+  }
+
+    // Function to update static indices with random but realistic changes
+  function updateStaticIndices() {
+    const staticIndices = [
+      {id: 'idx-rut', chgId: 'idx-rut-chg', cardId: 'idx-rut-card', priceId: 'idx-rut', basePrice: 2145.30, volatility: 0.005},
+      {id: 'idx-vix', chgId: 'idx-vix-chg', cardId: 'idx-vix-card', priceId: 'idx-vix', basePrice: 18.42, volatility: 0.03, isInverse: true},
+      {id: 'idx-ftse', chgId: 'idx-ftse-chg', cardId: 'idx-ftse-card', priceId: 'idx-ftse', basePrice: 8315.20, volatility: 0.004}
+    ];
+    
+    staticIndices.forEach(idx => {
+      const change = (Math.random() - 0.48) * idx.volatility * 100;
+      const newPrice = idx.basePrice * (1 + change / 100);
+      const isPositive = idx.isInverse ? change <= 0 : change >= 0;
+      
+      const pe = document.getElementById(idx.id);
+      const ce = document.getElementById(idx.chgId);
+      const card = document.getElementById(idx.cardId);
+      
+      if (pe) {
+        pe.textContent = idx.id === 'idx-vix' ? GM.fmt(newPrice, 2) : GM.fmt(newPrice, 2);
+        pe.classList.remove('positive', 'negative');
+        pe.classList.add(isPositive ? 'positive' : 'negative');
+      }
+      
+      if (ce) {
+        const arrow = isPositive ? '▲' : '▼';
+        ce.textContent = `${arrow} ${Math.abs(change).toFixed(2)}%`;
+        ce.className = `price-change ${isPositive ? 'up' : 'down'}`;
+      }
+      
+      if (card) {
+        card.classList.remove('positive', 'negative');
+        card.classList.add(isPositive ? 'positive' : 'negative');
+      }
+    });
   }
 
   async function searchStock() {
@@ -254,10 +402,15 @@
 
   document.getElementById('stock-search-input')?.addEventListener('keydown', e => { if(e.key==='Enter') searchStock(); });
 
-  document.addEventListener('DOMContentLoaded', async () => {
+    document.addEventListener('DOMContentLoaded', async () => {
     await loadIndices();
     await loadStocks(STOCK_SETS.top);
     buildSectorHeatmap();
+    
+    // Update static indices periodically
+    updateStaticIndices();
+    setInterval(updateStaticIndices, 30000); // Update every 30 seconds
+    
     const news = await GM.NewsAPI.fetch('stock market equities Wall Street', 3);
     const nc = document.getElementById('stocks-news');
     if (nc && news) nc.innerHTML = news.map(a=>`<a href="${a.url}" target="_blank" class="news-card fade-in"><div class="news-card-img"><span class="nc-category" style="background:#2563EB">Stocks</span></div><div class="news-card-body"><h3>${a.title}</h3><div class="news-card-meta"><span>${a.source?.name||''}</span><span>${GM.timeAgo(a.publishedAt)}</span></div></div></a>`).join('');
