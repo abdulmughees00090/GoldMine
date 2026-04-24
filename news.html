@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Financial Market News — Gold, Crypto, Forex & Stocks | GoldMine</title>
+  <meta name="description" content="Latest financial market news. Breaking gold, silver, crypto, forex and stock market news updated in real-time.">
+  <meta name="keywords" content="financial news today, gold news, crypto news, forex news, stock market news, market analysis">
+  <link rel="canonical" href="https://GoldMine.silverfoxdynamics.com/news.html">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#D4AF37">
+  <link rel="manifest" href="manifest.json">
+  <style>
+    .news-filter-bar { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:28px; }
+    .filter-btn { padding:7px 16px; border-radius:20px; font-size:13px; font-weight:600; border:1px solid var(--border); color:var(--text-muted); background:var(--bg-card); transition:all var(--t); cursor:pointer; }
+    .filter-btn:hover, .filter-btn.active { background:var(--gold); color:#000; border-color:var(--gold); }
+    .news-list { display:flex; flex-direction:column; gap:16px; }
+    .news-list-item { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); display:flex; gap:16px; padding:16px; cursor:pointer; transition:transform var(--t),box-shadow var(--t); overflow:hidden; }
+    .news-list-item:hover { transform:translateX(4px); box-shadow:var(--shadow); border-left-color:var(--gold); border-left-width:3px; }
+    .nli-img { width:100px; height:80px; border-radius:var(--radius-sm); object-fit:cover; background:var(--bg-secondary); flex-shrink:0; display:flex;align-items:center;justify-content:center;font-size:28px; }
+    .nli-body { flex:1; min-width:0; }
+    .nli-cat  { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--gold); margin-bottom:4px; }
+    .nli-title { font-size:15px; font-weight:600; line-height:1.4; margin-bottom:6px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+    .nli-desc  { font-size:12px; color:var(--text-muted); line-height:1.5; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; margin-bottom:8px; }
+    .nli-meta  { display:flex; gap:12px; font-size:11px; color:var(--text-muted); }
+    .news-modal { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:2000; padding:20px; align-items:center; justify-content:center; backdrop-filter:blur(4px); }
+    .news-modal.open { display:flex; }
+    .modal-box { background:var(--bg-card); border:1px solid var(--border); border-radius:20px; max-width:640px; width:100%; max-height:80vh; overflow-y:auto; padding:32px; position:relative; }
+    .modal-close { position:absolute; top:16px; right:16px; width:32px; height:32px; border-radius:50%; background:var(--bg-secondary); border:1px solid var(--border); display:grid; place-items:center; font-size:18px; cursor:pointer; }
+    .modal-cat { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--gold); margin-bottom:12px; }
+    .modal-title { font-family:var(--font-display); font-size:22px; font-weight:700; line-height:1.3; margin-bottom:12px; }
+    .modal-meta  { font-size:12px; color:var(--text-muted); margin-bottom:16px; }
+    .modal-body  { font-size:14px; line-height:1.8; color:var(--text-muted); }
+    .modal-link  { display:inline-flex; align-items:center; gap:6px; margin-top:20px; background:var(--gold); color:#000; padding:10px 20px; border-radius:20px; font-size:13px; font-weight:700; }
+    .featured-news { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; margin-bottom:32px; }
+    .fn-img { height:240px; background:linear-gradient(135deg,rgba(212,175,55,0.1),rgba(212,175,55,0.02)); display:flex;align-items:center;justify-content:center;font-size:64px; }
+    .fn-body { padding:24px; }
+    .fn-cat  { font-size:11px; font-weight:700; color:var(--gold); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px; }
+    .fn-title { font-family:var(--font-display); font-size:22px; font-weight:700; line-height:1.3; margin-bottom:10px; }
+    .fn-desc  { font-size:14px; color:var(--text-muted); line-height:1.6; margin-bottom:14px; }
+  </style>
+</head>
+<body>
+<div id="ticker-bar"></div>
+<nav id="navbar">
+  <a href="index.html" class="nav-logo"><div class="logo-icon">⛏</div>GoldMine</a>
+  <div class="nav-links">
+    <a href="index.html">Home</a><a href="gold.html">Gold</a><a href="silver.html">Silver</a>
+    <a href="crude-oil.html">Crude Oil</a><a href="stocks.html">Stocks</a>
+    <a href="forex.html">Forex</a><a href="crypto.html">Crypto</a>
+    <a href="news.html" class="active">News</a><a href="forecast.html">Forecast</a>
+  </div>
+  <div class="nav-right">
+    <button id="theme-toggle">🌙</button>
+    <button id="nav-toggle"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div id="mobile-menu">
+  <a href="index.html">🏠 Home</a><a href="gold.html">🥇 Gold</a><a href="silver.html">🥈 Silver</a>
+  <a href="crude-oil.html">🛢️ Crude Oil</a><a href="stocks.html">📈 Stocks</a><a href="forex.html">💱 Forex</a>
+  <a href="crypto.html">₿ Crypto</a><a href="news.html">📰 News</a><a href="forecast.html">🔮 Forecast</a>
+</div>
+
+<main class="page-content">
+  <!-- Breaking news ticker -->
+  <div class="breaking-news" id="breaking-news-bar">
+    <div class="breaking-news-inner container">
+      <span class="bn-label">Breaking</span>
+      <div class="bn-scroll"><div class="bn-track">Loading latest financial news…</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="ad-placeholder ad-header" style="margin-bottom:28px">ADVERTISEMENT</div>
+
+    <!-- Header -->
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:28px">
+      <span style="font-size:36px">📰</span>
+      <div>
+        <div style="font-size:13px;color:var(--text-muted)">Real-time · Global Markets</div>
+        <div style="font-size:22px;font-weight:700;font-family:var(--font-display)">Financial Market News</div>
+      </div>
+    </div>
+
+    <!-- Filter Tabs -->
+    <div class="news-filter-bar" id="filter-bar">
+      <button class="filter-btn active" data-cat="all" onclick="filterNews('all',this)">🌐 All</button>
+      <button class="filter-btn" data-cat="gold" onclick="filterNews('gold',this)">🥇 Gold</button>
+      <button class="filter-btn" data-cat="silver" onclick="filterNews('silver',this)">🥈 Silver</button>
+      <button class="filter-btn" data-cat="oil" onclick="filterNews('oil',this)">🛢️ Oil</button>
+      <button class="filter-btn" data-cat="crypto" onclick="filterNews('crypto',this)">₿ Crypto</button>
+      <button class="filter-btn" data-cat="forex" onclick="filterNews('forex',this)">💱 Forex</button>
+      <button class="filter-btn" data-cat="stocks" onclick="filterNews('stocks',this)">📈 Stocks</button>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 320px;gap:28px" class="main-sidebar-grid">
+      <!-- Main news feed -->
+      <div>
+        <!-- Featured -->
+        <div id="featured-news-wrap"></div>
+        <!-- List -->
+        <div class="news-list" id="news-feed">
+          <div style="color:var(--text-muted);padding:20px;text-align:center">Loading news…</div>
+        </div>
+        <div style="text-align:center;margin-top:28px">
+          <button class="btn-secondary" id="load-more-btn" onclick="loadMoreNews()">Load More News</button>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div>
+        <div class="ad-placeholder ad-sidebar" style="margin-bottom:20px">AD 300×250</div>
+        <!-- Market Snapshot -->
+        <div class="card p-20" style="margin-bottom:20px">
+          <div style="font-size:13px;font-weight:600;margin-bottom:14px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em">Market Snapshot</div>
+          <div id="news-sidebar-prices">
+            <div style="color:var(--text-muted);font-size:12px">Loading…</div>
+          </div>
+        </div>
+        <!-- Most Read -->
+        <div class="card p-20">
+          <div style="font-size:13px;font-weight:600;margin-bottom:14px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em">Most Read</div>
+          <div id="most-read-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- News Modal -->
+<div class="news-modal" id="news-modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-cat" id="m-cat">Markets</div>
+    <div class="modal-title" id="m-title"></div>
+    <div class="modal-meta" id="m-meta"></div>
+    <div class="modal-body" id="m-body"></div>
+    <a href="#" target="_blank" rel="noopener" id="m-link" class="modal-link">Read Full Article →</a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand"><div class="logo">⛏ GoldMine</div><p>Real-time financial market news and analysis. Not financial advice.</p></div>
+    <div class="footer-col"><h4>Markets</h4><a href="gold.html">Gold</a><a href="silver.html">Silver</a><a href="crude-oil.html">Crude Oil</a><a href="stocks.html">Stocks</a><a href="forex.html">Forex</a><a href="crypto.html">Crypto</a></div>
+    <div class="footer-col"><h4>News</h4><a href="news.html">All News</a><a href="news.html">Gold News</a><a href="news.html">Crypto News</a><a href="news.html">Forex News</a></div>
+    <div class="footer-col"><h4>Info</h4><a href="#">About</a><a href="#">Disclaimer</a></div>
+  </div>
+  <div class="footer-bottom"><span>© 2025 GoldMine. Not financial advice.</span></div>
+</footer>
+<div class="ad-sticky-mobile"><span style="font-size:11px;color:var(--text-muted)">Mobile Ad</span></div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="assets/js/core.js"></script>
+<script>
+  const CAT_QUERIES = {
+    all: 'financial market gold silver crypto forex stocks',
+    gold: 'gold price XAU precious metals',
+    silver: 'silver price XAG precious metals',
+    oil: 'crude oil OPEC energy WTI Brent',
+    crypto: 'bitcoin ethereum cryptocurrency blockchain',
+    forex: 'forex currency exchange dollar euro',
+    stocks: 'stock market equities S&P 500 earnings',
+  };
+  const CAT_ICONS = { gold:'🥇', silver:'🥈', oil:'🛢️', crypto:'₿', forex:'💱', stocks:'📈', all:'🌐' };
+  const CAT_COLORS = { gold:'#D4AF37', silver:'#A8A9AD', oil:'#E8650A', crypto:'#00FFA3', forex:'#00C896', stocks:'#2563EB', all:'#D4AF37' };
+
+  let allArticles = [];
+  let currentCat  = 'all';
+  let page = 0;
+
+  async function loadNews(cat='all', reset=true) {
+    if (reset) { page = 0; allArticles = []; }
+    const query = CAT_QUERIES[cat] || CAT_QUERIES.all;
+    const articles = await GM.NewsAPI.fetch(query, 8);
+    if (!articles?.length) return;
+    allArticles = reset ? articles : [...allArticles, ...articles];
+    renderFeatured(allArticles[0], cat);
+    renderNewsList(allArticles.slice(1), cat);
+    renderMostRead(allArticles);
+  }
+
+  function renderFeatured(a, cat) {
+    const el = document.getElementById('featured-news-wrap');
+    if (!a || !el) return;
+    el.innerHTML = `<div class="featured-news">
+      <div class="fn-img">${CAT_ICONS[cat]||'📰'}</div>
+      <div class="fn-body">
+        <div class="fn-cat" style="color:${CAT_COLORS[cat]}">${a.source?.name||'Markets'}</div>
+        <div class="fn-title">${a.title}</div>
+        <div class="fn-desc">${a.description||''}</div>
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+          <span style="font-size:12px;color:var(--text-muted)">${GM.timeAgo(a.publishedAt)}</span>
+          <button class="btn-primary" style="font-size:13px;padding:8px 18px" onclick="openModal(${JSON.stringify(a).split('"').join('&quot;')})">Read Article →</button>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  function renderNewsList(articles, cat) {
+    const el = document.getElementById('news-feed');
+    if (!el) return;
+    el.innerHTML = articles.map(a => `
+      <div class="news-list-item" onclick='openModal(${JSON.stringify(a).split("'").join("&#39;")})'>
+        <div class="nli-img">${CAT_ICONS[cat]||'📰'}</div>
+        <div class="nli-body">
+          <div class="nli-cat" style="color:${CAT_COLORS[cat]}">${a.source?.name||'Markets'}</div>
+          <div class="nli-title">${a.title}</div>
+          <div class="nli-desc">${a.description||''}</div>
+          <div class="nli-meta"><span>${GM.timeAgo(a.publishedAt)}</span></div>
+        </div>
+      </div>`).join('');
+  }
+
+  function renderMostRead(articles) {
+    const el = document.getElementById('most-read-list');
+    if (!el) return;
+    el.innerHTML = articles.slice(0,5).map((a,i) => `
+      <div style="display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);cursor:pointer" onclick='openModal(${JSON.stringify(a).split("'").join("&#39;")})'>
+        <div style="font-size:20px;font-weight:800;color:var(--text-muted);flex-shrink:0;width:24px;line-height:1.2">${i+1}</div>
+        <div style="font-size:12px;font-weight:600;line-height:1.4">${a.title}</div>
+      </div>`).join('');
+  }
+
+  function openModal(article) {
+    if (typeof article === 'string') { try { article = JSON.parse(article); } catch { return; } }
+    document.getElementById('m-cat').textContent   = article.source?.name || 'Markets';
+    document.getElementById('m-title').textContent = article.title;
+    document.getElementById('m-meta').textContent  = `${GM.timeAgo(article.publishedAt)} · ${article.source?.name||''}`;
+    document.getElementById('m-body').textContent  = article.description || article.content || 'Read the full article for more details.';
+    document.getElementById('m-link').href = article.url || '#';
+    document.getElementById('news-modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    document.getElementById('news-modal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
+
+  async function filterNews(cat, btn) {
+    currentCat = cat;
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('news-feed').innerHTML = `<div style="text-align:center;padding:20px;color:var(--text-muted)">Loading…</div>`;
+    await loadNews(cat, true);
+  }
+
+  async function loadMoreNews() {
+    page++;
+    const btn = document.getElementById('load-more-btn');
+    btn.textContent = 'Loading…'; btn.disabled = true;
+    await loadNews(currentCat, false);
+    btn.textContent = 'Load More News'; btn.disabled = false;
+  }
+
+  async function loadSidebarPrices() {
+    const gold   = await GM.MetalsAPI.goldPrice();
+    const crypto = await GM.CoinGecko.prices('bitcoin,ethereum');
+    const el = document.getElementById('news-sidebar-prices');
+    if (!el) return;
+    const items = [
+      { name:'Gold', val: gold?`$${GM.fmt(gold.price,2)}`:'—', chg: gold?.pct||0.42 },
+      { name:'Bitcoin', val: crypto?.bitcoin?`$${GM.fmt(crypto.bitcoin.usd,0)}`:'—', chg: crypto?.bitcoin?.usd_24h_change||0 },
+      { name:'Ethereum', val: crypto?.ethereum?`$${GM.fmt(crypto.ethereum.usd,2)}`:'—', chg: crypto?.ethereum?.usd_24h_change||0 },
+    ];
+    el.innerHTML = items.map(i=>`<div class="flex-between" style="padding:8px 0;border-bottom:1px solid var(--border)">
+      <span style="font-size:13px">${i.name}</span>
+      <div style="text-align:right"><div class="mono" style="font-size:13px;font-weight:700">${i.val}</div>
+      <div class="${i.chg>=0?'text-up':'text-down'}" style="font-size:11px">${i.chg>=0?'▲':'▼'} ${Math.abs(i.chg).toFixed(2)}%</div></div>
+    </div>`).join('');
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    GM.initBreakingNews('breaking-news-bar');
+    loadNews('all', true);
+    loadSidebarPrices();
+  });
+</script>
+</body>
+</html>
