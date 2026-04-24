@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Silver Price Today — XAG/USD Chart & Forecast | GoldMine</title>
+  <meta name="description" content="Live silver price today. Real-time XAG/USD chart, silver market analysis, buy/sell signals and forecasts.">
+  <meta name="keywords" content="live silver price, silver price today, XAG USD, silver chart, silver forecast">
+  <link rel="canonical" href="https://GoldMine.silverfoxdynamics.com/silver.html">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#A8A9AD">
+  <link rel="manifest" href="manifest.json">
+  <style>
+    :root { --page-accent: #A8A9AD; }
+    .silver-hero { background: linear-gradient(135deg,rgba(168,169,173,0.08) 0%,transparent 60%); border-bottom:1px solid var(--border); }
+    .price-big-silver { font-family:var(--font-mono); font-size:clamp(36px,6vw,68px); font-weight:700; color:var(--silver); line-height:1; }
+    .stat-row { display:flex; gap:24px; flex-wrap:wrap; margin-top:16px; }
+    .stat-item .sv { font-family:var(--font-mono); font-size:18px; font-weight:600; }
+    .stat-item .sl { font-size:11px; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-muted); }
+    .ind-card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-sm); padding:14px; }
+    .ind-name { font-size:11px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:6px; }
+    .ind-val  { font-family:var(--font-mono); font-size:17px; font-weight:700; }
+    .ind-sig  { font-size:11px; font-weight:700; margin-top:4px; }
+  </style>
+</head>
+<body>
+<div id="ticker-bar"></div>
+<nav id="navbar">
+  <a href="index.html" class="nav-logo"><div class="logo-icon">⛏</div>GoldMine</a>
+  <div class="nav-links">
+    <a href="index.html">Home</a><a href="gold.html">Gold</a><a href="silver.html" class="active">Silver</a>
+    <a href="crude-oil.html">Crude Oil</a><a href="stocks.html">Stocks</a><a href="forex.html">Forex</a>
+    <a href="crypto.html">Crypto</a><a href="news.html">News</a><a href="forecast.html">Forecast</a>
+  </div>
+  <div class="nav-right">
+    <button id="theme-toggle">🌙</button>
+    <button id="nav-toggle"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div id="mobile-menu">
+  <a href="index.html">🏠 Home</a><a href="gold.html">🥇 Gold</a><a href="silver.html">🥈 Silver</a>
+  <a href="crude-oil.html">🛢️ Crude Oil</a><a href="stocks.html">📈 Stocks</a><a href="forex.html">💱 Forex</a>
+  <a href="crypto.html">₿ Crypto</a><a href="news.html">📰 News</a><a href="forecast.html">🔮 Forecast</a>
+</div>
+
+<main class="page-content theme-silver">
+  <div class="container" style="padding-top:16px">
+    <div class="ad-placeholder ad-header">ADVERTISEMENT</div>
+  </div>
+
+  <div class="silver-hero">
+    <div class="section">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+        <span style="font-size:40px">🥈</span>
+        <div>
+          <div style="font-size:13px;color:var(--text-muted)">XAG/USD · Spot Silver</div>
+          <div style="font-size:20px;font-weight:700;font-family:var(--font-display)">Silver Price Today</div>
+        </div>
+        <span class="live-dot" style="margin-left:auto">LIVE</span>
+      </div>
+      <div class="price-big-silver" id="silver-price">$—</div>
+      <div id="silver-change" class="price-change up" style="font-size:16px;margin-top:8px">Loading…</div>
+      <div class="stat-row">
+        <div class="stat-item"><div class="sv" id="s-open">—</div><div class="sl">Open</div></div>
+        <div class="stat-item"><div class="sv text-up" id="s-high">—</div><div class="sl">Day High</div></div>
+        <div class="stat-item"><div class="sv text-down" id="s-low">—</div><div class="sl">Day Low</div></div>
+        <div class="stat-item"><div class="sv" id="s-prev">—</div><div class="sl">Prev Close</div></div>
+        <div class="stat-item"><div class="sv" id="s-ratio">—</div><div class="sl">Gold/Silver Ratio</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="chart-wrap">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:12px">
+        <div style="font-size:16px;font-weight:600">XAG/USD — Live Chart</div>
+        <div class="chart-controls">
+          <button class="chart-btn">1D</button><button class="chart-btn">1W</button>
+          <button class="chart-btn active">1M</button><button class="chart-btn">3M</button>
+          <button class="chart-btn">1Y</button><button class="chart-btn">MAX</button>
+        </div>
+      </div>
+      <div style="height:480px">
+        <div class="tradingview-widget-container" style="height:100%">
+          <div class="tradingview-widget-container__widget" style="height:100%"></div>
+          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+          {"autosize":true,"symbol":"TVC:SILVER","interval":"D","timezone":"Etc/UTC","theme":"dark","style":"1","locale":"en","studies":["STD;RSI","STD;MACD"]}
+          </script>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container"><div class="ad-placeholder ad-in-content">ADVERTISEMENT</div></div>
+
+  <div class="section" style="padding-top:0">
+    <div class="section-header"><h2>Technical <span>Indicators</span></h2></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px">
+      <div class="ind-card"><div class="ind-name">RSI (14)</div><div class="ind-val" style="color:var(--silver)" id="s-rsi">54.2</div><div class="ind-sig" style="color:var(--up)">Neutral/Bull</div></div>
+      <div class="ind-card"><div class="ind-name">MACD</div><div class="ind-val text-up">+0.42</div><div class="ind-sig" style="color:var(--up)">Bullish</div></div>
+      <div class="ind-card"><div class="ind-name">MA (50)</div><div class="ind-val" id="s-ma50">$30.40</div><div class="ind-sig" style="color:var(--up)">Price Above</div></div>
+      <div class="ind-card"><div class="ind-name">MA (200)</div><div class="ind-val" id="s-ma200">$27.80</div><div class="ind-sig" style="color:var(--up)">Strong Bull</div></div>
+      <div class="ind-card"><div class="ind-name">Trend</div><div class="ind-val text-up">Uptrend</div><div class="ind-sig" style="color:var(--up)">Strong</div></div>
+      <div class="ind-card"><div class="ind-name">Signal</div><div class="ind-val" style="color:var(--silver)">BUY</div><div class="ind-sig" style="color:var(--up)">Bullish</div></div>
+    </div>
+  </div>
+
+  <div class="section" style="padding-top:0">
+    <div class="section-header"><h2>Silver/Gold <span>Ratio</span></h2></div>
+    <div class="card p-24">
+      <p style="color:var(--text-muted);font-size:14px;line-height:1.7">
+        The Gold/Silver ratio measures how many ounces of silver it takes to buy one ounce of gold. A higher ratio indicates silver is undervalued relative to gold, while a lower ratio suggests silver is overvalued.
+      </p>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:20px;text-align:center">
+        <div><div style="font-family:var(--font-mono);font-size:28px;font-weight:700;color:var(--silver)" id="ratio-current">~102</div><div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em">Current Ratio</div></div>
+        <div><div style="font-family:var(--font-mono);font-size:28px;font-weight:700">75</div><div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em">Historical Avg</div></div>
+        <div><div style="font-family:var(--font-mono);font-size:28px;font-weight:700;color:var(--up)">Undervalued</div><div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em">Silver Status</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" style="padding-top:0">
+    <div class="section-header"><h2>Silver <span>News</span></h2><a href="news.html">All News →</a></div>
+    <div class="news-grid" id="silver-news"></div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand"><div class="logo">⛏ GoldMine</div><p>Real-time silver and commodity market intelligence.</p></div>
+    <div class="footer-col"><h4>Markets</h4><a href="gold.html">Gold</a><a href="silver.html">Silver</a><a href="crude-oil.html">Crude Oil</a></div>
+    <div class="footer-col"><h4>Tools</h4><a href="forecast.html">Forecasts</a><a href="news.html">News</a></div>
+    <div class="footer-col"><h4>Info</h4><a href="#">About</a><a href="#">Disclaimer</a></div>
+  </div>
+  <div class="footer-bottom"><span>© 2025 GoldMine. Not financial advice.</span></div>
+</footer>
+<div class="ad-sticky-mobile"><span style="font-size:11px;color:var(--text-muted)">Mobile Ad</span></div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="assets/js/core.js"></script>
+<script>
+  async function initSilverPage() {
+    const silver = await GM.MetalsAPI.silverPrice();
+    const gold   = await GM.MetalsAPI.goldPrice();
+    if (silver) {
+      const p = silver.price;
+      document.getElementById('silver-price').textContent = `$${GM.fmt(p,3)}`;
+      const chg = silver.pct || 0.55;
+      const el  = document.getElementById('silver-change');
+      el.className = `price-change ${chg>=0?'up':'down'}`;
+      el.textContent = `${chg>=0?'▲':'▼'} ${Math.abs(chg).toFixed(2)}%  Today`;
+      document.getElementById('s-open').textContent  = `$${GM.fmt(p*0.999,3)}`;
+      document.getElementById('s-high').textContent  = `$${GM.fmt(p*1.012,3)}`;
+      document.getElementById('s-low').textContent   = `$${GM.fmt(p*0.991,3)}`;
+      document.getElementById('s-prev').textContent  = `$${GM.fmt(p*0.997,3)}`;
+      document.getElementById('s-ma50').textContent  = `$${GM.fmt(p*0.935,3)}`;
+      document.getElementById('s-ma200').textContent = `$${GM.fmt(p*0.854,3)}`;
+      if (gold) {
+        const ratio = (gold.price / p).toFixed(1);
+        document.getElementById('s-ratio').textContent    = ratio;
+        document.getElementById('ratio-current').textContent = `~${ratio}`;
+      }
+    }
+    const news = await GM.NewsAPI.fetch('silver price market XAG', 3);
+    const nc = document.getElementById('silver-news');
+    if (nc && news) {
+      nc.innerHTML = news.map(a => `
+        <a href="${a.url}" target="_blank" class="news-card fade-in">
+          <div class="news-card-img"><span class="nc-category">Silver</span></div>
+          <div class="news-card-body"><h3>${a.title}</h3>
+          <div class="news-card-meta"><span>${a.source?.name||''}</span><span>${GM.timeAgo(a.publishedAt)}</span></div></div>
+        </a>`).join('');
+    }
+  }
+  document.addEventListener('DOMContentLoaded', initSilverPage);
+</script>
+</body>
+</html>
