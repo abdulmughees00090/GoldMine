@@ -625,7 +625,9 @@ async function loadMarketCards() {
       </div>
       <div class="card-name">${c.name}${c.unit ? ' (' + c.unit.trim() + ')' : ''}</div>
       <div class="card-price">${price != null ? (c.id === 'btc' || c.id === 'eth' ? '$' + fmt(price, 2) : '$' + fmt(price, 2)) : '—'}</div>
-      <canvas class="card-sparkline" id="spark-${c.id}" height="50"></canvas>
+      <div style="height:50px; width:100%; overflow:hidden;">
+   <canvas class="card-sparkline" id="spark-${c.id}" style="height:50px; width:100%;"></canvas>
+ </div>
     </a>
   `).join('');
 
