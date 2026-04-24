@@ -1,0 +1,5 @@
+# Custom 404 error page
+ErrorDocument 404 /404.html
+
+# Enable custom error pages
+Options +FollowSymLinks
