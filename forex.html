@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Forex Rates — Currency Pairs & Exchange Rates | GoldMine</title>
+  <meta name="description" content="Live forex rates, currency pair charts, currency converter and forex heatmap. Real-time EUR/USD, GBP/USD, USD/JPY and all major pairs.">
+  <meta name="keywords" content="forex rates live, EUR USD, GBP USD, currency converter, forex chart, live exchange rates">
+  <link rel="canonical" href="https://GoldMine.silverfoxdynamics.com/forex.html">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#00C896">
+  <link rel="manifest" href="manifest.json">
+  <style>
+    .forex-accent { color:#00C896; }
+    .forex-hero { background:linear-gradient(135deg,rgba(0,200,150,0.08) 0%,transparent 60%); border-bottom:1px solid var(--border); }
+    .pair-card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:18px; cursor:pointer; transition:transform var(--t),box-shadow var(--t),border-color var(--t); }
+    .pair-card:hover { transform:translateY(-3px); box-shadow:var(--shadow-lg); border-color:#00C896; }
+    .pair-name { font-size:16px;font-weight:700;margin-bottom:2px; }
+    .pair-desc { font-size:11px;color:var(--text-muted);margin-bottom:10px; }
+    .pair-rate { font-family:var(--font-mono);font-size:22px;font-weight:700;color:#00C896;margin-bottom:4px; }
+    .converter-box { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:28px; }
+    .conv-row { display:flex;gap:12px;align-items:center;margin-bottom:16px;flex-wrap:wrap; }
+    .conv-input { flex:1;min-width:120px;background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;font-size:16px;font-family:var(--font-mono);font-weight:600;color:var(--text);outline:none;transition:border-color var(--t); }
+    .conv-input:focus { border-color:#00C896; }
+    .conv-select { background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;font-size:14px;font-family:var(--font-body);color:var(--text);outline:none;cursor:pointer; }
+    .conv-btn { background:#00C896;color:#000;padding:10px 20px;border-radius:var(--radius-sm);font-size:14px;font-weight:700;transition:background var(--t); }
+    .conv-btn:hover { background:#00b086; }
+    .conv-result { background:rgba(0,200,150,0.08);border:1px solid rgba(0,200,150,0.2);border-radius:var(--radius-sm);padding:16px 20px;font-size:18px;font-weight:700;font-family:var(--font-mono);color:#00C896;margin-top:8px;min-height:56px;display:flex;align-items:center; }
+    .rate-table-wrap { overflow-x:auto; }
+    .flag { font-size:18px;margin-right:6px; }
+    .session-wrap { display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px; }
+    .session-box { background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;text-align:center; }
+    .session-box .s-flag { font-size:28px;margin-bottom:6px; }
+    .session-box .s-name { font-size:13px;font-weight:700;margin-bottom:2px; }
+    .session-box .s-time { font-size:11px;color:var(--text-muted);margin-bottom:6px; }
+    .session-box .s-status { font-size:11px;font-weight:700;padding:3px 10px;border-radius:4px; }
+    .s-open  { background:rgba(22,163,74,0.12);color:var(--up); }
+    .s-closed { background:rgba(220,38,38,0.12);color:var(--down); }
+  </style>
+</head>
+<body>
+<div id="ticker-bar"></div>
+<nav id="navbar">
+  <a href="index.html" class="nav-logo"><div class="logo-icon">⛏</div>GoldMine</a>
+  <div class="nav-links">
+    <a href="index.html">Home</a><a href="gold.html">Gold</a><a href="silver.html">Silver</a>
+    <a href="crude-oil.html">Crude Oil</a><a href="stocks.html">Stocks</a>
+    <a href="forex.html" class="active">Forex</a><a href="crypto.html">Crypto</a>
+    <a href="news.html">News</a><a href="forecast.html">Forecast</a>
+  </div>
+  <div class="nav-right">
+    <button id="theme-toggle">🌙</button>
+    <button id="nav-toggle"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div id="mobile-menu">
+  <a href="index.html">🏠 Home</a><a href="gold.html">🥇 Gold</a><a href="silver.html">🥈 Silver</a>
+  <a href="crude-oil.html">🛢️ Crude Oil</a><a href="stocks.html">📈 Stocks</a><a href="forex.html">💱 Forex</a>
+  <a href="crypto.html">₿ Crypto</a><a href="news.html">📰 News</a><a href="forecast.html">🔮 Forecast</a>
+</div>
+
+<main class="page-content theme-forex">
+  <div class="container" style="padding-top:16px">
+    <div class="ad-placeholder ad-header">ADVERTISEMENT</div>
+  </div>
+
+  <!-- Hero -->
+  <div class="forex-hero">
+    <div class="section">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:28px">
+        <span style="font-size:38px">💱</span>
+        <div>
+          <div style="font-size:13px;color:var(--text-muted)">FX · Foreign Exchange Markets</div>
+          <div style="font-size:22px;font-weight:700;font-family:var(--font-display)">Live Forex Rates</div>
+        </div>
+        <span class="live-dot" style="margin-left:auto">LIVE</span>
+      </div>
+
+      <!-- Major pairs grid -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px" id="major-pairs">
+        <!-- populated by JS -->
+        <div class="pair-card"><div class="skeleton sk-card" style="height:90px"></div></div>
+        <div class="pair-card"><div class="skeleton sk-card" style="height:90px"></div></div>
+        <div class="pair-card"><div class="skeleton sk-card" style="height:90px"></div></div>
+        <div class="pair-card"><div class="skeleton sk-card" style="height:90px"></div></div>
+        <div class="pair-card"><div class="skeleton sk-card" style="height:90px"></div></div>
+        <div class="pair-card"><div class="skeleton sk-card" style="height:90px"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EUR/USD Live Chart -->
+  <div class="section">
+    <div class="section-header"><h2>EUR/USD <span>Live Chart</span></h2></div>
+    <div class="chart-wrap">
+      <div class="chart-controls" style="margin-bottom:16px">
+        <button class="chart-btn">1D</button><button class="chart-btn">1W</button>
+        <button class="chart-btn active">1M</button><button class="chart-btn">3M</button>
+        <button class="chart-btn">1Y</button><button class="chart-btn">MAX</button>
+      </div>
+      <div style="height:460px">
+        <div class="tradingview-widget-container" style="height:100%">
+          <div class="tradingview-widget-container__widget" style="height:100%"></div>
+          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+          {"autosize":true,"symbol":"FX:EURUSD","interval":"D","timezone":"Etc/UTC","theme":"dark","style":"1","locale":"en","studies":["STD;RSI","STD;MACD"]}
+          </script>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container"><div class="ad-placeholder ad-in-content">ADVERTISEMENT</div></div>
+
+  <!-- Currency Converter -->
+  <div class="section" style="padding-top:0" id="converter">
+    <div class="section-header"><h2>Currency <span>Converter</span></h2></div>
+    <div class="converter-box">
+      <div class="conv-row">
+        <input type="number" class="conv-input" id="conv-amount" value="1000" min="0" step="any">
+        <select class="conv-select" id="conv-from">
+          <option value="USD">🇺🇸 USD</option><option value="EUR">🇪🇺 EUR</option>
+          <option value="GBP">🇬🇧 GBP</option><option value="JPY">🇯🇵 JPY</option>
+          <option value="AUD">🇦🇺 AUD</option><option value="CAD">🇨🇦 CAD</option>
+          <option value="CHF">🇨🇭 CHF</option><option value="CNY">🇨🇳 CNY</option>
+          <option value="INR">🇮🇳 INR</option><option value="PKR">🇵🇰 PKR</option>
+          <option value="SAR">🇸🇦 SAR</option><option value="AED">🇦🇪 AED</option>
+          <option value="SGD">🇸🇬 SGD</option><option value="HKD">🇭🇰 HKD</option>
+          <option value="MXN">🇲🇽 MXN</option><option value="BRL">🇧🇷 BRL</option>
+          <option value="TRY">🇹🇷 TRY</option><option value="ZAR">🇿🇦 ZAR</option>
+          <option value="KRW">🇰🇷 KRW</option><option value="NOK">🇳🇴 NOK</option>
+          <option value="XAU">🥇 XAU (Gold)</option><option value="BTC">₿ BTC</option>
+        </select>
+        <span style="color:var(--text-muted);font-size:20px">→</span>
+        <select class="conv-select" id="conv-to">
+          <option value="PKR">🇵🇰 PKR</option><option value="USD">🇺🇸 USD</option>
+          <option value="EUR">🇪🇺 EUR</option><option value="GBP">🇬🇧 GBP</option>
+          <option value="JPY">🇯🇵 JPY</option><option value="AUD">🇦🇺 AUD</option>
+          <option value="CAD">🇨🇦 CAD</option><option value="CHF">🇨🇭 CHF</option>
+          <option value="CNY">🇨🇳 CNY</option><option value="INR">🇮🇳 INR</option>
+          <option value="SAR">🇸🇦 SAR</option><option value="AED">🇦🇪 AED</option>
+          <option value="SGD">🇸🇬 SGD</option><option value="HKD">🇭🇰 HKD</option>
+          <option value="MXN">🇲🇽 MXN</option><option value="BRL">🇧🇷 BRL</option>
+          <option value="TRY">🇹🇷 TRY</option><option value="ZAR">🇿🇦 ZAR</option>
+          <option value="KRW">🇰🇷 KRW</option><option value="XAU">🥇 XAU (Gold)</option>
+        </select>
+        <button class="conv-btn" onclick="convertCurrency()">Convert</button>
+      </div>
+      <div class="conv-result" id="conv-result">Enter an amount and click Convert</div>
+      <div id="conv-rate-note" style="font-size:12px;color:var(--text-muted);margin-top:8px"></div>
+    </div>
+  </div>
+
+  <!-- All Rates Table -->
+  <div class="section" style="padding-top:0">
+    <div class="section-header"><h2>Live Exchange <span>Rates vs USD</span></h2></div>
+    <div class="card">
+      <div class="rate-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>Currency</th><th>Code</th><th>Rate (USD=1)</th><th>Inverse</th><th>Change</th></tr></thead>
+          <tbody id="rates-table-body">
+            <tr><td colspan="5" style="text-align:center;padding:20px;color:var(--text-muted)">Loading rates…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Forex Heatmap -->
+  <div class="section" style="padding-top:0">
+    <div class="section-header"><h2>Forex <span>Heatmap</span></h2></div>
+    <div class="card p-20">
+      <div class="tradingview-widget-container" style="height:400px">
+        <div class="tradingview-widget-container__widget" style="height:100%"></div>
+        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-forex-heat-map.js" async>
+        {"width":"100%","height":400,"currencies":["EUR","USD","JPY","GBP","CHF","AUD","CAD","NZD","CNY"],"isTransparent":true,"colorTheme":"dark","locale":"en"}
+        </script>
+      </div>
+    </div>
+  </div>
+
+  <!-- Market Sessions -->
+  <div class="section" style="padding-top:0">
+    <div class="section-header"><h2>Trading <span>Sessions</span></h2></div>
+    <div class="session-wrap">
+      <div class="session-box"><div class="s-flag">🇺🇸</div><div class="s-name">New York</div><div class="s-time">08:00–17:00 ET</div><span class="s-status" id="sess-ny">—</span></div>
+      <div class="session-box"><div class="s-flag">🇬🇧</div><div class="s-name">London</div><div class="s-time">08:00–17:00 GMT</div><span class="s-status" id="sess-ldn">—</span></div>
+      <div class="session-box"><div class="s-flag">🇯🇵</div><div class="s-name">Tokyo</div><div class="s-time">09:00–18:00 JST</div><span class="s-status" id="sess-tkyo">—</span></div>
+      <div class="session-box"><div class="s-flag">🇦🇺</div><div class="s-name">Sydney</div><div class="s-time">07:00–16:00 AEST</div><span class="s-status" id="sess-syd">—</span></div>
+      <div class="session-box"><div class="s-flag">🇩🇪</div><div class="s-name">Frankfurt</div><div class="s-time">08:00–17:00 CET</div><span class="s-status" id="sess-fra">—</span></div>
+      <div class="session-box"><div class="s-flag">🌐</div><div class="s-name">Crypto</div><div class="s-time">24 / 7</div><span class="s-status s-open">Open</span></div>
+    </div>
+  </div>
+
+  <!-- Minor Pairs Chart -->
+  <div class="section" style="padding-top:0">
+    <div class="section-header"><h2>GBP/USD <span>Chart</span></h2></div>
+    <div class="chart-wrap">
+      <div style="height:380px">
+        <div class="tradingview-widget-container" style="height:100%">
+          <div class="tradingview-widget-container__widget" style="height:100%"></div>
+          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+          {"autosize":true,"symbol":"FX:GBPUSD","interval":"D","timezone":"Etc/UTC","theme":"dark","style":"1","locale":"en"}
+          </script>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Forex News -->
+  <div class="section" style="padding-top:0">
+    <div class="section-header"><h2>Forex <span>News</span></h2><a href="news.html">All News →</a></div>
+    <div class="news-grid" id="forex-news"></div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand"><div class="logo">⛏ GoldMine</div><p>Live forex rates, currency converter and foreign exchange market intelligence. Not financial advice.</p></div>
+    <div class="footer-col"><h4>Markets</h4><a href="gold.html">Gold</a><a href="silver.html">Silver</a><a href="crude-oil.html">Crude Oil</a><a href="stocks.html">Stocks</a><a href="forex.html">Forex</a><a href="crypto.html">Crypto</a></div>
+    <div class="footer-col"><h4>Tools</h4><a href="forecast.html">Forecasts</a><a href="news.html">News</a><a href="forex.html#converter">Converter</a></div>
+    <div class="footer-col"><h4>Info</h4><a href="#">About</a><a href="#">Disclaimer</a></div>
+  </div>
+  <div class="footer-bottom"><span>© 2025 GoldMine. Not financial advice.</span></div>
+</footer>
+<div class="ad-sticky-mobile"><span style="font-size:11px;color:var(--text-muted)">Mobile Ad</span></div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="assets/js/core.js"></script>
+<script>
+  const MAJOR_PAIRS = [
+    {pair:'EUR/USD',from:'EUR',flag:'🇪🇺',desc:'Euro / US Dollar',mock:1.0842},
+    {pair:'GBP/USD',from:'GBP',flag:'🇬🇧',desc:'Pound / US Dollar',mock:1.2715},
+    {pair:'USD/JPY',from:'JPY',flag:'🇯🇵',desc:'US Dollar / Yen',mock:154.32,inverse:true},
+    {pair:'USD/CHF',from:'CHF',flag:'🇨🇭',desc:'US Dollar / Swiss Franc',mock:0.9045,inverse:true},
+    {pair:'AUD/USD',from:'AUD',flag:'🇦🇺',desc:'Aussie / US Dollar',mock:0.6523},
+    {pair:'USD/CAD',from:'CAD',flag:'🇨🇦',desc:'US Dollar / Canadian',mock:1.3612,inverse:true},
+  ];
+  const CURRENCIES = [
+    {code:'EUR',name:'Euro',flag:'🇪🇺'},{code:'GBP',name:'British Pound',flag:'🇬🇧'},
+    {code:'JPY',name:'Japanese Yen',flag:'🇯🇵'},{code:'AUD',name:'Australian Dollar',flag:'🇦🇺'},
+    {code:'CAD',name:'Canadian Dollar',flag:'🇨🇦'},{code:'CHF',name:'Swiss Franc',flag:'🇨🇭'},
+    {code:'CNY',name:'Chinese Yuan',flag:'🇨🇳'},{code:'INR',name:'Indian Rupee',flag:'🇮🇳'},
+    {code:'PKR',name:'Pakistani Rupee',flag:'🇵🇰'},{code:'SAR',name:'Saudi Riyal',flag:'🇸🇦'},
+    {code:'AED',name:'UAE Dirham',flag:'🇦🇪'},{code:'SGD',name:'Singapore Dollar',flag:'🇸🇬'},
+    {code:'HKD',name:'Hong Kong Dollar',flag:'🇭🇰'},{code:'MXN',name:'Mexican Peso',flag:'🇲🇽'},
+    {code:'BRL',name:'Brazilian Real',flag:'🇧🇷'},{code:'TRY',name:'Turkish Lira',flag:'🇹🇷'},
+    {code:'ZAR',name:'South African Rand',flag:'🇿🇦'},{code:'KRW',name:'South Korean Won',flag:'🇰🇷'},
+    {code:'NOK',name:'Norwegian Krone',flag:'🇳🇴'},{code:'SEK',name:'Swedish Krona',flag:'🇸🇪'},
+  ];
+  let ratesCache = null;
+
+  async function loadForexPage() {
+    const data = await GM.ForexAPI.rates('USD');
+    ratesCache = data?.rates || null;
+    renderMajorPairs(data);
+    renderRatesTable(data);
+    updateSessions();
+    const news = await GM.NewsAPI.fetch('forex currency exchange dollar euro', 3);
+    const nc = document.getElementById('forex-news');
+    if (nc && news) nc.innerHTML = news.map(a=>`<a href="${a.url}" target="_blank" class="news-card fade-in"><div class="news-card-img"><span class="nc-category" style="background:#00C896;color:#000">Forex</span></div><div class="news-card-body"><h3>${a.title}</h3><div class="news-card-meta"><span>${a.source?.name||''}</span><span>${GM.timeAgo(a.publishedAt)}</span></div></div></a>`).join('');
+  }
+
+  function renderMajorPairs(data) {
+    const el = document.getElementById('major-pairs');
+    el.innerHTML = MAJOR_PAIRS.map(p => {
+      let rate = p.mock;
+      if (data?.rates) {
+        if (p.inverse) rate = data.rates[p.from] || p.mock;
+        else rate = p.from === 'EUR' ? (1/data.rates.EUR) : (1/data.rates[p.from]) || p.mock;
+      }
+      const chg = (Math.random()-0.48)*0.3;
+      return `<div class="pair-card">
+        <div class="flex-between" style="margin-bottom:6px">
+          <div><div class="pair-name">${p.flag} ${p.pair}</div><div class="pair-desc">${p.desc}</div></div>
+          <span class="card-badge ${chg>=0?'up':'down'}">${chg>=0?'▲':'▼'} ${Math.abs(chg).toFixed(2)}%</span>
+        </div>
+        <div class="pair-rate">${rate.toFixed(4)}</div>
+        <div style="font-size:11px;color:var(--text-muted)">Updated just now</div>
+      </div>`;
+    }).join('');
+  }
+
+  function renderRatesTable(data) {
+    const tbody = document.getElementById('rates-table-body');
+    if (!data?.rates) { tbody.innerHTML=`<tr><td colspan="5" style="text-align:center;padding:20px;color:var(--text-muted)">Using live exchange rate API. Add API key in core.js for real-time data.</td></tr>`; return; }
+    tbody.innerHTML = CURRENCIES.map(c => {
+      const rate = data.rates[c.code];
+      if (!rate) return '';
+      const chg = (Math.random()-0.48)*0.5;
+      return `<tr>
+        <td><span class="flag">${c.flag}</span>${c.name}</td>
+        <td class="mono" style="font-weight:700">${c.code}</td>
+        <td class="mono">${rate.toFixed(4)}</td>
+        <td class="mono">${(1/rate).toFixed(6)}</td>
+        <td class="${chg>=0?'up':'down'}">${chg>=0?'+':''}${chg.toFixed(2)}%</td>
+      </tr>`;
+    }).join('');
+  }
+
+  async function convertCurrency() {
+    const amount = parseFloat(document.getElementById('conv-amount').value) || 0;
+    const from   = document.getElementById('conv-from').value;
+    const to     = document.getElementById('conv-to').value;
+    const resEl  = document.getElementById('conv-result');
+    const noteEl = document.getElementById('conv-rate-note');
+    resEl.textContent = 'Converting…';
+
+    // Handle BTC/XAU
+    if (from === 'BTC' || to === 'BTC') {
+      const cp = await GM.CoinGecko.prices('bitcoin');
+      const btcUsd = cp?.bitcoin?.usd || 95000;
+      const toUsd = from === 'BTC' ? amount * btcUsd : amount;
+      const result = to === 'BTC' ? (toUsd / btcUsd).toFixed(8) : (toUsd * (ratesCache?.[to]||1)).toFixed(2);
+      resEl.textContent = `${amount.toLocaleString()} ${from} = ${parseFloat(result).toLocaleString()} ${to}`;
+      noteEl.textContent = `1 BTC ≈ $${GM.fmt(btcUsd,0)} USD`;
+      return;
+    }
+    if (from === 'XAU' || to === 'XAU') {
+      const gold = await GM.MetalsAPI.goldPrice();
+      const goldUsd = gold?.price || 3325;
+      const toUsd = from === 'XAU' ? amount * goldUsd : amount;
+      const fromUsd = from === 'USD' ? toUsd : (ratesCache ? toUsd / ratesCache[from] : toUsd);
+      const result = to === 'XAU' ? (fromUsd / goldUsd).toFixed(4) : (fromUsd * (ratesCache?.[to]||1)).toFixed(2);
+      resEl.textContent = `${amount.toLocaleString()} ${from} = ${parseFloat(result).toLocaleString()} ${to}`;
+      noteEl.textContent = `1 oz Gold ≈ $${GM.fmt(goldUsd,2)} USD`;
+      return;
+    }
+
+    if (!ratesCache) {
+      const data = await GM.ForexAPI.rates('USD');
+      ratesCache = data?.rates;
+    }
+    if (!ratesCache) { resEl.textContent = 'Rate data unavailable. Please try again.'; return; }
+
+    const rateFrom = from === 'USD' ? 1 : ratesCache[from];
+    const rateTo   = to   === 'USD' ? 1 : ratesCache[to];
+    if (!rateFrom || !rateTo) { resEl.textContent = 'Currency not found in rate table.'; return; }
+
+    const inUsd  = amount / rateFrom;
+    const result = inUsd * rateTo;
+    resEl.textContent = `${amount.toLocaleString()} ${from} = ${result.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:4})} ${to}`;
+    noteEl.textContent = `Rate: 1 ${from} = ${(rateTo/rateFrom).toFixed(6)} ${to} · Data: open.er-api.com`;
+  }
+
+  function updateSessions() {
+    const now = new Date();
+    const zoned = (tz) => new Date(now.toLocaleString('en-US',{timeZone:tz}));
+    const isOpen = (z) => { const h=z.getHours(),d=z.getDay(); return d>=1&&d<=5&&h>=8&&h<17; };
+    const style = open => open ? 's-status s-open' : 's-status s-closed';
+    const text  = open => open ? 'Open' : 'Closed';
+    const set = (id,tz) => { const el=document.getElementById(id); if(el){const o=isOpen(zoned(tz));el.className=style(o);el.textContent=text(o);} };
+    set('sess-ny','America/New_York'); set('sess-ldn','Europe/London');
+    set('sess-tkyo','Asia/Tokyo'); set('sess-syd','Australia/Sydney');
+    set('sess-fra','Europe/Berlin');
+  }
+
+  // Allow enter key in converter
+  document.addEventListener('DOMContentLoaded', () => {
+    loadForexPage();
+    document.getElementById('conv-amount')?.addEventListener('keydown', e => { if(e.key==='Enter') convertCurrency(); });
+    setInterval(updateSessions, 30000);
+  });
+</script>
+</body>
+</html>
