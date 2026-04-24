@@ -11,7 +11,7 @@
   <meta property="og:description" content="Real-time gold prices, charts and market analysis.">
   <meta name="theme-color" content="#D4AF37">
   <link rel="manifest" href="manifest.json">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="assets/css/main.css">
   <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
   <style>
     .gold-hero { background: linear-gradient(135deg,rgba(212,175,55,0.08) 0%,transparent 60%); border-bottom: 1px solid var(--border); }
@@ -248,7 +248,7 @@
 <div class="ad-sticky-mobile"><span style="font-size:11px;color:var(--text-muted)">Mobile Ad</span></div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<script src="script.js"></script>
+<script src="assets/js/core.js"></script>
 <script>
   async function initGoldPage() {
     const gold = await GM.MetalsAPI.goldPrice();
