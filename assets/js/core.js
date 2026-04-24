@@ -5,12 +5,12 @@
 
 /* ─── API Keys (replace with your own) ───────────────────── */
 const KEYS = {
-  ALPHA_VANTAGE:   "YOUR_ALPHA_VANTAGE_KEY",   // alphavantage.co
-  TWELVE_DATA:     "YOUR_TWELVE_DATA_KEY",      // twelvedata.com
-  FINNHUB:         "YOUR_FINNHUB_KEY",          // finnhub.io
-  NEWS_API:        "YOUR_NEWS_API_KEY",          // newsapi.org
-  METALS_API:      "YOUR_METALS_API_KEY",        // metals-api.com
-  GNEWS:           "YOUR_GNEWS_KEY",             // gnews.io
+  ALPHA_VANTAGE:   "ZMID8TMZWFN6DPH3",   // alphavantage.co
+  TWELVE_DATA:     "c7a8054b0a26428b861b338a7ca53297",      // twelvedata.com
+  FINNHUB:         "d7lfiv9r01qm7o0blpj0d7lfiv9r01qm7o0blpjg",          // finnhub.io
+  NEWS_API:        "c05ddd94c6e24efdbd8d5fa3df1007ee",          // newsapi.org
+  METALS_API:      "ok_fee87e4c567a669c8e62eb2b754d0e0a",        // metals-api.com
+  GNEWS:           "5e2bc6ef87c0a373ce0125a3e7efe52b",             // gnews.io
 };
 
 /* ─── Cache ───────────────────────────────────────────────── */
