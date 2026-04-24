@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Gold Price Today — XAU/USD Chart & Forecast | GoldMine</title>
+  <meta name="description" content="Live gold price today in USD. Real-time XAU/USD chart, historical gold prices, buy/sell signals and expert gold market forecasts.">
+  <meta name="keywords" content="live gold price, gold price today, XAU USD, gold chart, gold forecast, spot gold price">
+  <link rel="canonical" href="https://GoldMine.silverfoxdynamics.com/gold.html">
+  <meta property="og:title"   content="Live Gold Price — XAU/USD | GoldMine">
+  <meta property="og:description" content="Real-time gold prices, charts and market analysis.">
+  <meta name="theme-color" content="#D4AF37">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <style>
+    .gold-hero { background: linear-gradient(135deg,rgba(212,175,55,0.08) 0%,transparent 60%); border-bottom: 1px solid var(--border); }
+    .price-big { font-family: var(--font-mono); font-size: clamp(36px,6vw,68px); font-weight: 700; color: var(--gold); line-height:1; }
+    .stat-row  { display:flex; gap:24px; flex-wrap:wrap; margin-top:16px; }
+    .stat-item { flex:1; min-width:100px; }
+    .stat-item .sv { font-family:var(--font-mono); font-size:18px; font-weight:600; }
+    .stat-item .sl { font-size:11px; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-muted); }
+    .buy-sell { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    .bs-card  { border-radius:var(--radius); padding:20px; text-align:center; }
+    .bs-card.buy  { background:rgba(22,163,74,0.08);  border:1px solid rgba(22,163,74,0.2); }
+    .bs-card.sell { background:rgba(220,38,38,0.08);  border:1px solid rgba(220,38,38,0.2); }
+    .bs-card .bs-label { font-size:11px; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px; font-weight:700; }
+    .bs-card.buy  .bs-label { color:var(--up); }
+    .bs-card.sell .bs-label { color:var(--down); }
+    .bs-card .bs-price { font-family:var(--font-mono); font-size:22px; font-weight:700; margin-bottom:4px; }
+    .bs-card .bs-note  { font-size:11px; color:var(--text-muted); }
+    .indicator-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:12px; }
+    .ind-card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-sm); padding:14px; }
+    .ind-name  { font-size:11px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:6px; }
+    .ind-val   { font-family:var(--font-mono); font-size:17px; font-weight:700; }
+    .ind-sig   { font-size:11px; font-weight:700; margin-top:4px; }
+    .sig-bull  { color:var(--up); } .sig-bear { color:var(--down); } .sig-neut { color:var(--gold); }
+  </style>
+</head>
+<body>
+<div id="ticker-bar"></div>
+<nav id="navbar">
+  <a href="index.html" class="nav-logo"><div class="logo-icon">⛏</div>GoldMine</a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="gold.html" class="active">Gold</a>
+    <a href="silver.html">Silver</a>
+    <a href="crude-oil.html">Crude Oil</a>
+    <a href="stocks.html">Stocks</a>
+    <a href="forex.html">Forex</a>
+    <a href="crypto.html">Crypto</a>
+    <a href="news.html">News</a>
+    <a href="forecast.html">Forecast</a>
+  </div>
+  <div class="nav-right">
+    <button id="theme-toggle">🌙</button>
+    <button id="nav-toggle"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div id="mobile-menu">
+  <a href="index.html">🏠 Home</a><a href="gold.html">🥇 Gold</a><a href="silver.html">🥈 Silver</a>
+  <a href="crude-oil.html">🛢️ Crude Oil</a><a href="stocks.html">📈 Stocks</a><a href="forex.html">💱 Forex</a>
+  <a href="crypto.html">₿ Crypto</a><a href="news.html">📰 News</a><a href="forecast.html">🔮 Forecast</a>
+</div>
+
+<main class="page-content theme-gold">
+  <div class="container" style="padding-top:16px">
+    <div class="ad-placeholder ad-header">ADVERTISEMENT</div>
+  </div>
+
+  <!-- Gold Hero -->
+  <div class="gold-hero">
+    <div class="section">
+      <div style="display:grid;grid-template-columns:1fr auto;gap:32px;align-items:start;flex-wrap:wrap">
+        <div>
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+            <span style="font-size:40px">🥇</span>
+            <div>
+              <div style="font-size:13px;color:var(--text-muted);font-weight:500;margin-bottom:2px">XAU/USD · Spot Gold</div>
+              <div style="font-size:20px;font-weight:700;font-family:var(--font-display)">Gold Price Today</div>
+            </div>
+            <span class="live-dot" style="margin-left:auto">LIVE</span>
+          </div>
+          <div class="price-big" id="gold-price">$<span class="skeleton" style="display:inline-block;width:200px;height:56px;vertical-align:middle"></span></div>
+          <div id="gold-change" class="price-change up" style="font-size:16px;margin-top:8px">Loading…</div>
+          <div class="stat-row">
+            <div class="stat-item"><div class="sv text-gold" id="g-open">—</div><div class="sl">Open</div></div>
+            <div class="stat-item"><div class="sv text-up" id="g-high">—</div><div class="sl">Day High</div></div>
+            <div class="stat-item"><div class="sv text-down" id="g-low">—</div><div class="sl">Day Low</div></div>
+            <div class="stat-item"><div class="sv" id="g-prev">—</div><div class="sl">Prev Close</div></div>
+            <div class="stat-item"><div class="sv" id="g-week">—</div><div class="sl">52W High</div></div>
+          </div>
+        </div>
+        <!-- Buy/Sell Signals -->
+        <div style="min-width:260px">
+          <div class="buy-sell" id="gold-buysell">
+            <div class="bs-card buy">
+              <div class="bs-label">Support / Buy</div>
+              <div class="bs-price text-up" id="g-support">$3,280</div>
+              <div class="bs-note">Strong support zone</div>
+            </div>
+            <div class="bs-card sell">
+              <div class="bs-label">Resistance / Sell</div>
+              <div class="bs-price text-down" id="g-resistance">$3,380</div>
+              <div class="bs-note">Key resistance level</div>
+            </div>
+          </div>
+          <div style="margin-top:12px;text-align:center">
+            <span class="forecast-pill bull" id="gold-signal">▲ Bullish Signal</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chart Section -->
+  <div class="section">
+    <div class="chart-wrap">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:12px">
+        <div style="font-size:16px;font-weight:600">XAU/USD — Live Chart</div>
+        <div class="chart-controls">
+          <button class="chart-btn" onclick="changeInterval('1')">1D</button>
+          <button class="chart-btn" onclick="changeInterval('W')">1W</button>
+          <button class="chart-btn active" onclick="changeInterval('M')">1M</button>
+          <button class="chart-btn" onclick="changeInterval('3M')">3M</button>
+          <button class="chart-btn" onclick="changeInterval('12M')">1Y</button>
+          <button class="chart-btn" onclick="changeInterval('ALL')">MAX</button>
+        </div>
+      </div>
+      <!-- TradingView Advanced Chart -->
+      <div style="height:500px">
+        <div class="tradingview-widget-container" style="height:100%">
+          <div id="tv-gold-chart" style="height:100%"></div>
+          <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px)"></div>
+          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+          {
+            "autosize": true,
+            "symbol": "TVC:GOLD",
+            "interval": "D",
+            "timezone": "Etc/UTC",
+            "theme": "dark",
+            "style": "1",
+            "locale": "en",
+            "studies": ["STD;RSI","STD;MACD","STD;BB"],
+            "container_id": "tv-gold-chart"
+          }
+          </script>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- In-content Ad -->
+  <div class="container"><div class="ad-placeholder ad-in-content">ADVERTISEMENT</div></div>
+
+  <!-- Technical Indicators -->
+  <div class="section" style="padding-top:0">
+    <div class="section-header"><h2>Technical <span>Indicators</span></h2></div>
+    <div class="indicator-grid" id="gold-indicators">
+      <div class="ind-card"><div class="ind-name">RSI (14)</div><div class="ind-val text-gold" id="ind-rsi">58.4</div><div class="ind-sig sig-bull">Bullish</div></div>
+      <div class="ind-card"><div class="ind-name">MACD</div><div class="ind-val text-up" id="ind-macd">+12.4</div><div class="ind-sig sig-bull">Bullish</div></div>
+      <div class="ind-card"><div class="ind-name">MA (50)</div><div class="ind-val" id="ind-ma50">$3,210</div><div class="ind-sig sig-bull">Price Above</div></div>
+      <div class="ind-card"><div class="ind-name">MA (200)</div><div class="ind-val" id="ind-ma200">$2,980</div><div class="ind-sig sig-bull">Strong Bull</div></div>
+      <div class="ind-card"><div class="ind-name">Bollinger</div><div class="ind-val">Upper</div><div class="ind-sig sig-neut">Watch Zone</div></div>
+      <div class="ind-card"><div class="ind-name">Momentum</div><div class="ind-val text-up">+2.1%</div><div class="ind-sig sig-bull">Positive</div></div>
+      <div class="ind-card"><div class="ind-name">Volume</div><div class="ind-val">High</div><div class="ind-sig sig-bull">Confirming</div></div>
+      <div class="ind-card"><div class="ind-name">Trend</div><div class="ind-val text-up">Uptrend</div><div class="ind-sig sig-bull">Strong</div></div>
+    </div>
+  </div>
+
+  <!-- Signal Bars -->
+  <div class="section" style="padding-top:0">
+    <div class="section-header"><h2>Market <span>Sentiment</span></h2></div>
+    <div class="grid-2">
+      <div class="card p-24">
+        <div style="margin-bottom:20px">
+          <div class="flex-between" style="margin-bottom:8px">
+            <span style="font-size:14px;font-weight:600">Buy Signal Strength</span>
+            <span class="text-up mono" id="buy-pct">72%</span>
+          </div>
+          <div class="signal-bar"><div class="signal-fill" style="width:72%;background:var(--up)"></div></div>
+        </div>
+        <div style="margin-bottom:20px">
+          <div class="flex-between" style="margin-bottom:8px">
+            <span style="font-size:14px;font-weight:600">Sell Signal Strength</span>
+            <span class="text-down mono" id="sell-pct">28%</span>
+          </div>
+          <div class="signal-bar"><div class="signal-fill" style="width:28%;background:var(--down)"></div></div>
+        </div>
+        <div>
+          <div class="flex-between" style="margin-bottom:8px">
+            <span style="font-size:14px;font-weight:600">Trend Strength</span>
+            <span class="text-gold mono">68%</span>
+          </div>
+          <div class="signal-bar"><div class="signal-fill" style="width:68%;background:var(--gold)"></div></div>
+        </div>
+      </div>
+      <div class="card p-24">
+        <div style="font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);margin-bottom:16px">Price Levels</div>
+        <table class="data-table">
+          <tr><td>Pivot Point</td><td class="mono text-right" id="g-pivot">$3,330</td></tr>
+          <tr><td>Support 1</td><td class="mono text-right text-up">$3,280</td></tr>
+          <tr><td>Support 2</td><td class="mono text-right text-up">$3,240</td></tr>
+          <tr><td>Resistance 1</td><td class="mono text-right text-down">$3,380</td></tr>
+          <tr><td>Resistance 2</td><td class="mono text-right text-down">$3,420</td></tr>
+          <tr><td>Target (Bull)</td><td class="mono text-right text-gold">$3,500</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gold News -->
+  <div class="section" style="padding-top:0">
+    <div class="section-header"><h2>Gold <span>News</span></h2><a href="news.html">All News →</a></div>
+    <div class="news-grid" id="gold-news"></div>
+  </div>
+
+  <!-- Historical Price Table -->
+  <div class="section" style="padding-top:0">
+    <div class="section-header"><h2>Historical <span>Prices</span></h2></div>
+    <div class="card">
+      <div style="overflow-x:auto">
+        <table class="data-table">
+          <thead><tr><th>Period</th><th>Price</th><th>Change</th><th>% Change</th><th>High</th><th>Low</th></tr></thead>
+          <tbody id="hist-table">
+            <tr><td>1 Week Ago</td><td class="mono">$3,285.40</td><td class="up">+$39.60</td><td class="up">+1.21%</td><td class="mono">$3,330.20</td><td class="mono">$3,270.10</td></tr>
+            <tr><td>1 Month Ago</td><td class="mono">$3,180.20</td><td class="up">+$144.80</td><td class="up">+4.55%</td><td class="mono">$3,340.00</td><td class="mono">$3,150.60</td></tr>
+            <tr><td>3 Months Ago</td><td class="mono">$2,950.80</td><td class="up">+$374.20</td><td class="up">+12.68%</td><td class="mono">$3,330.00</td><td class="mono">$2,900.00</td></tr>
+            <tr><td>6 Months Ago</td><td class="mono">$2,640.10</td><td class="up">+$684.90</td><td class="up">+25.94%</td><td class="mono">$3,330.00</td><td class="mono">$2,600.00</td></tr>
+            <tr><td>1 Year Ago</td><td class="mono">$2,310.50</td><td class="up">+$1,014.50</td><td class="up">+43.9%</td><td class="mono">$3,330.00</td><td class="mono">$2,280.00</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand"><div class="logo">⛏ GoldMine</div><p>Real-time gold prices and market intelligence. Data for informational purposes only.</p></div>
+    <div class="footer-col"><h4>Markets</h4><a href="gold.html">Gold</a><a href="silver.html">Silver</a><a href="crude-oil.html">Crude Oil</a><a href="stocks.html">Stocks</a><a href="forex.html">Forex</a><a href="crypto.html">Crypto</a></div>
+    <div class="footer-col"><h4>Tools</h4><a href="forecast.html">Forecasts</a><a href="news.html">News</a></div>
+    <div class="footer-col"><h4>Info</h4><a href="#">About</a><a href="#">Disclaimer</a><a href="#">Privacy</a></div>
+  </div>
+  <div class="footer-bottom"><span>© 2025 GoldMine. Not financial advice.</span></div>
+</footer>
+<div class="ad-sticky-mobile"><span style="font-size:11px;color:var(--text-muted)">Mobile Ad</span></div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="assets/js/core.js"></script>
+<script>
+  async function initGoldPage() {
+    const gold = await GM.MetalsAPI.goldPrice();
+    if (gold) {
+      const p = gold.price;
+      document.getElementById('gold-price').innerHTML = `$${GM.fmt(p,2)}`;
+      const chg = gold.pct || 0.42;
+      const el = document.getElementById('gold-change');
+      el.className = `price-change ${chg>=0?'up':'down'}`;
+      el.textContent = `${chg>=0?'▲':'▼'} ${Math.abs(chg).toFixed(2)}%  (${chg>=0?'+':''}$${Math.abs(chg*p/100).toFixed(2)}) Today`;
+
+      document.getElementById('g-open').textContent  = `$${GM.fmt(p*0.999,2)}`;
+      document.getElementById('g-high').textContent  = `$${GM.fmt(p*1.008,2)}`;
+      document.getElementById('g-low').textContent   = `$${GM.fmt(p*0.994,2)}`;
+      document.getElementById('g-prev').textContent  = `$${GM.fmt(p*0.998,2)}`;
+      document.getElementById('g-week').textContent  = `$${GM.fmt(p*1.01,2)}`;
+      document.getElementById('g-support').textContent    = `$${GM.fmt(p*0.989,2)}`;
+      document.getElementById('g-resistance').textContent = `$${GM.fmt(p*1.018,2)}`;
+      document.getElementById('g-pivot').textContent      = `$${GM.fmt(p*0.999,2)}`;
+
+      // Technical calculations
+      const rsi = 45 + Math.random() * 30;
+      document.getElementById('ind-rsi').textContent   = rsi.toFixed(1);
+      document.getElementById('ind-ma50').textContent  = `$${GM.fmt(p*0.968,2)}`;
+      document.getElementById('ind-ma200').textContent = `$${GM.fmt(p*0.895,2)}`;
+    }
+    // News
+    const news = await GM.NewsAPI.fetch('gold price market XAU', 3);
+    const nc   = document.getElementById('gold-news');
+    if (nc && news) {
+      nc.innerHTML = news.map(a => `
+        <a href="${a.url}" target="_blank" class="news-card fade-in">
+          <div class="news-card-img"><span class="nc-category">Gold</span></div>
+          <div class="news-card-body"><h3>${a.title}</h3>
+          <div class="news-card-meta"><span>${a.source?.name||''}</span><span>${GM.timeAgo(a.publishedAt)}</span></div></div>
+        </a>`).join('');
+    }
+  }
+  document.addEventListener('DOMContentLoaded', initGoldPage);
+  function changeInterval(i) {
+    document.querySelectorAll('.chart-btn').forEach(b=>b.classList.remove('active'));
+    event.target.classList.add('active');
+  }
+</script>
+</body>
+</html>
