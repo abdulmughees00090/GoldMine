@@ -128,15 +128,24 @@
         </div>
       </div>
       <!-- TradingView Advanced Chart -->
-      <div style="height:500px">
-        <div class="tradingview-widget-container" style="height:100%">
-          <div id="tv-gold-chart" style="height:100%"></div>
-          <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px)"></div>
-          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
-          {"autosize": true,"symbol": "TVC:GOLD","interval": "D","timezone": "Etc/UTC","theme": "dark","style": "1","locale": "en","studies": ["STD;RSI","STD;MACD","STD;BB"],"container_id": "tv-gold-chart"}
-          </script>
-        </div>
-      </div>
+      <div style="height:500px" id="gold-chart-container">
+  <div class="tradingview-widget-container" style="height:100%">
+    <div id="tv-gold-chart" style="height:100%"></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+    {
+      "autosize": true,
+      "symbol": "TVC:GOLD",
+      "interval": "D",
+      "timezone": "Etc/UTC",
+      "theme": "dark",
+      "style": "1",
+      "locale": "en",
+      "studies": ["STD;RSI", "STD;MACD", "STD;BB"],
+      "container_id": "tv-gold-chart"
+    }
+    </script>
+  </div>
+</div>
     </div>
   </div>
 
