@@ -200,19 +200,22 @@ const NewsAPI = {
     const cached = CACHE.get(ckey);
     if (cached) return cached;
 
-    // Try GNews
-    if (KEYS.GNEWS !== 'YOUR_GNEWS_KEY') {
+    // Use NewsAPI only
+    if (KEYS.NEWS_API && KEYS.NEWS_API !== 'YOUR_NEWS_API_KEY') {
       try {
-        const url = `https://gnews.io/api/v4/search?q=${encodeURIComponent(query)}&lang=en&max=${limit}&token=${KEYS.GNEWS}`;
+        const url = `https://newsapi.org/v2/everything?q=${encodeURIComponent(query)}&language=en&pageSize=${limit}&apiKey=${KEYS.NEWS_API}`;
         const data = await fetchWithRetry(url);
-        if (data.articles) {
+        
+        if (data.articles && data.articles.length) {
           CACHE.set(ckey, data.articles, CACHE.TTL.NEWS);
           return data.articles;
         }
-      } catch {}
+      } catch (e) {
+        console.warn('NewsAPI failed:', e);
+      }
     }
 
-    // Fallback: use mock news headlines
+    // Fallback to mock if NewsAPI fails
     return this._mockNews(query);
   },
   _mockNews(q) {
