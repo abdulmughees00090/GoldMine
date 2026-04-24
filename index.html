@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GoldMine — Live Gold, Silver, Crypto & Forex Market Intelligence</title>
+  <meta name="description" content="Real-time gold prices, silver rates, crypto market data, forex rates and stock market analysis. Your premium financial intelligence platform.">
+  <meta name="keywords" content="live gold price, live silver price, forex market today, crypto prices, stock market forecast, crude oil live chart, bitcoin price">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="GoldMine">
+  <link rel="canonical" href="https://GoldMine.silverfoxdynamics.com/">
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website">
+  <meta property="og:url"         content="https://GoldMine.silverfoxdynamics.com/">
+  <meta property="og:title"       content="GoldMine — Live Market Intelligence">
+  <meta property="og:description" content="Real-time gold, silver, crypto, forex & stocks. Premium financial intelligence platform.">
+  <meta property="og:image"       content="https://GoldMine.silverfoxdynamics.com/assets/images/og.png">
+
+  <!-- Twitter -->
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       content="GoldMine — Live Market Intelligence">
+  <meta name="twitter:description" content="Real-time gold, silver, crypto, forex & stocks.">
+  <meta name="twitter:image"       content="https://GoldMine.silverfoxdynamics.com/assets/images/og.png">
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#D4AF37">
+
+  <!-- Schema Markup -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "GoldMine",
+    "url": "https://GoldMine.silverfoxdynamics.com",
+    "description": "Real-time financial market data — Gold, Silver, Crypto, Forex & Stocks",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://GoldMine.silverfoxdynamics.com/search?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+
+<!-- ─ Live Ticker ─────────────────────────────────────────── -->
+<div id="ticker-bar"></div>
+
+<!-- ─ Navigation ─────────────────────────────────────────── -->
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">
+    <div class="logo-icon">⛏</div>
+    GoldMine
+  </a>
+  <div class="nav-links">
+    <a href="index.html" class="active">Home</a>
+    <a href="gold.html">Gold</a>
+    <a href="silver.html">Silver</a>
+    <a href="crude-oil.html">Crude Oil</a>
+    <a href="stocks.html">Stocks</a>
+    <a href="forex.html">Forex</a>
+    <a href="crypto.html">Crypto</a>
+    <a href="news.html">News</a>
+    <a href="forecast.html">Forecast</a>
+  </div>
+  <div class="nav-right">
+    <div class="nav-search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" placeholder="Search markets…" id="nav-search-input">
+    </div>
+    <button id="theme-toggle" title="Toggle dark/light mode">🌙</button>
+    <button id="nav-toggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile nav -->
+<div id="mobile-menu">
+  <a href="index.html">🏠 Home</a>
+  <a href="gold.html">🥇 Gold</a>
+  <a href="silver.html">🥈 Silver</a>
+  <a href="crude-oil.html">🛢️ Crude Oil</a>
+  <a href="stocks.html">📈 Stocks</a>
+  <a href="forex.html">💱 Forex</a>
+  <a href="crypto.html">₿ Crypto</a>
+  <a href="news.html">📰 News</a>
+  <a href="forecast.html">🔮 Forecast</a>
+</div>
+
+<!-- ─ Page Content ────────────────────────────────────────── -->
+<main class="page-content">
+
+  <!-- Header Ad -->
+  <div class="container" style="padding-top:16px">
+    <div class="ad-placeholder ad-header">ADVERTISEMENT — 728×90</div>
+  </div>
+
+  <!-- ─ Hero ─────────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid-lines"></div>
+    <div class="hero-inner">
+      <!-- Left: text -->
+      <div class="hero-text">
+        <div class="badge">Live Market Data</div>
+        <h1>
+          Trade Smarter.<br>
+          <em>Invest Boldly.</em><br>
+          Win Daily.
+        </h1>
+        <p>Real-time prices for Gold, Silver, Oil, Crypto, Forex & Stocks. Technical analysis, market forecasts, and breaking news — all in one place.</p>
+        <div class="hero-btns">
+          <a href="gold.html" class="btn-primary">Live Gold Price →</a>
+          <a href="forecast.html" class="btn-secondary">Market Forecast</a>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <span class="val" id="stat-assets">20+</span>
+            <span class="lbl">Assets Tracked</span>
+          </div>
+          <div class="hero-stat">
+            <span class="val" id="stat-updates">Live</span>
+            <span class="lbl">Data Updates</span>
+          </div>
+          <div class="hero-stat">
+            <span class="val" id="stat-status">—</span>
+            <span class="lbl">Market Status</span>
+          </div>
+        </div>
+      </div>
+      <!-- Right: price panel -->
+      <div class="hero-panel">
+        <div class="panel-header">
+          <span class="panel-title">XAU/USD — Spot Gold</span>
+          <span class="live-dot">LIVE</span>
+        </div>
+        <div class="price-display">
+          <span class="main-price" id="hero-gold-price">
+            <span class="skeleton sk-price" style="width:180px;display:inline-block"></span>
+          </span>
+          <div class="price-change up" id="hero-gold-change">Loading…</div>
+        </div>
+        <div class="mini-chart-wrap">
+          <canvas id="hero-chart"></canvas>
+        </div>
+        <div style="margin-top:16px;display:flex;gap:12px;flex-wrap:wrap">
+          <a href="gold.html" style="flex:1">
+            <button class="btn-primary" style="width:100%;text-align:center">View Gold Chart</button>
+          </a>
+          <a href="forecast.html" style="flex:1">
+            <button class="btn-secondary" style="width:100%;text-align:center">Get Forecast</button>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─ Breaking News ──────────────────────────────────────── -->
+  <div class="breaking-news" id="breaking-news-bar">
+    <div class="breaking-news-inner container">
+      <span class="bn-label">Breaking</span>
+      <div class="bn-scroll">
+        <div class="bn-track">Loading latest market news…</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─ Market Cards ───────────────────────────────────────── -->
+  <section class="section">
+    <div class="section-header">
+      <h2>Live <span>Markets</span></h2>
+      <a href="stocks.html">All Markets →</a>
+    </div>
+    <div class="market-grid" id="market-cards">
+      <!-- populated by JS -->
+    </div>
+  </section>
+
+  <!-- In-content Ad -->
+  <div class="container">
+    <div class="ad-placeholder ad-in-content">ADVERTISEMENT — 728×90</div>
+  </div>
+
+  <!-- ─ Market Summary Bar ─────────────────────────────────── -->
+  <div class="container">
+    <div class="market-summary" id="market-summary">
+      <div class="ms-item">
+        <div class="ms-label">Gold Spot</div>
+        <div class="ms-value" id="ms-gold">$—</div>
+        <div class="ms-change up" id="ms-gold-chg">—</div>
+      </div>
+      <div class="ms-item">
+        <div class="ms-label">Silver Spot</div>
+        <div class="ms-value" id="ms-silver">$—</div>
+        <div class="ms-change up" id="ms-silver-chg">—</div>
+      </div>
+      <div class="ms-item">
+        <div class="ms-label">WTI Crude</div>
+        <div class="ms-value" id="ms-oil">$—</div>
+        <div class="ms-change down" id="ms-oil-chg">—</div>
+      </div>
+      <div class="ms-item">
+        <div class="ms-label">Bitcoin</div>
+        <div class="ms-value" id="ms-btc">$—</div>
+        <div class="ms-change up" id="ms-btc-chg">—</div>
+      </div>
+      <div class="ms-item">
+        <div class="ms-label">Ethereum</div>
+        <div class="ms-value" id="ms-eth">$—</div>
+        <div class="ms-change up" id="ms-eth-chg">—</div>
+      </div>
+      <div class="ms-item">
+        <div class="ms-label">S&amp;P 500</div>
+        <div class="ms-value" id="ms-spy">$—</div>
+        <div class="ms-change up" id="ms-spy-chg">—</div>
+      </div>
+      <div class="ms-item">
+        <div class="ms-label">EUR/USD</div>
+        <div class="ms-value" id="ms-eur">—</div>
+        <div class="ms-change up" id="ms-eur-chg">—</div>
+      </div>
+      <div class="ms-item">
+        <div class="ms-label">DXY Index</div>
+        <div class="ms-value">104.25</div>
+        <div class="ms-change down">▼ 0.18%</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─ Gainers & Losers ───────────────────────────────────── -->
+  <section class="section">
+    <div class="section-header">
+      <h2>Top <span>Movers</span></h2>
+      <a href="stocks.html">All Stocks →</a>
+    </div>
+    <div class="gl-grid">
+      <div class="gl-card">
+        <div class="gl-header up-h">▲ Top Gainers Today</div>
+        <div id="top-gainers">
+          <div class="gl-row"><div class="skeleton sk-line" style="width:80%"></div></div>
+          <div class="gl-row"><div class="skeleton sk-line" style="width:80%"></div></div>
+          <div class="gl-row"><div class="skeleton sk-line" style="width:80%"></div></div>
+          <div class="gl-row"><div class="skeleton sk-line" style="width:80%"></div></div>
+        </div>
+      </div>
+      <div class="gl-card">
+        <div class="gl-header down-h">▼ Top Losers Today</div>
+        <div id="top-losers">
+          <div class="gl-row"><div class="skeleton sk-line" style="width:80%"></div></div>
+          <div class="gl-row"><div class="skeleton sk-line" style="width:80%"></div></div>
+          <div class="gl-row"><div class="skeleton sk-line" style="width:80%"></div></div>
+          <div class="gl-row"><div class="skeleton sk-line" style="width:80%"></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─ Market Heatmap ─────────────────────────────────────── -->
+  <section class="section">
+    <div class="section-header">
+      <h2>Market <span>Heatmap</span></h2>
+      <a href="stocks.html">Full View →</a>
+    </div>
+    <div class="card p-20">
+      <div class="heatmap-grid" id="heatmap"></div>
+    </div>
+  </section>
+
+  <!-- Sidebar + Main layout for quick access -->
+  <section class="section" style="padding-top:0">
+    <div style="display:grid;grid-template-columns:1fr 320px;gap:24px;" class="main-sidebar-grid">
+      <!-- Quick Access Cards -->
+      <div>
+        <div class="section-header">
+          <h2>Quick <span>Access</span></h2>
+        </div>
+        <div class="grid-2">
+          <a href="gold.html" class="market-card fade-in" style="--card-accent:var(--gold)">
+            <div style="font-size:40px;margin-bottom:12px">🥇</div>
+            <div style="font-size:17px;font-weight:700;font-family:var(--font-display)">Gold Markets</div>
+            <div class="text-muted" style="font-size:13px;margin-top:6px">Live prices, charts & forecasts</div>
+          </a>
+          <a href="silver.html" class="market-card fade-in" style="--card-accent:#A8A9AD">
+            <div style="font-size:40px;margin-bottom:12px">🥈</div>
+            <div style="font-size:17px;font-weight:700;font-family:var(--font-display)">Silver Markets</div>
+            <div class="text-muted" style="font-size:13px;margin-top:6px">XAG/USD live data & charts</div>
+          </a>
+          <a href="crude-oil.html" class="market-card fade-in" style="--card-accent:#E8650A">
+            <div style="font-size:40px;margin-bottom:12px">🛢️</div>
+            <div style="font-size:17px;font-weight:700;font-family:var(--font-display)">Crude Oil</div>
+            <div class="text-muted" style="font-size:13px;margin-top:6px">WTI & Brent live prices</div>
+          </a>
+          <a href="crypto.html" class="market-card fade-in" style="--card-accent:#F7931A">
+            <div style="font-size:40px;margin-bottom:12px">₿</div>
+            <div style="font-size:17px;font-weight:700;font-family:var(--font-display)">Crypto</div>
+            <div class="text-muted" style="font-size:13px;margin-top:6px">Bitcoin, Ethereum & altcoins</div>
+          </a>
+          <a href="forex.html" class="market-card fade-in" style="--card-accent:var(--forex-green)">
+            <div style="font-size:40px;margin-bottom:12px">💱</div>
+            <div style="font-size:17px;font-weight:700;font-family:var(--font-display)">Forex</div>
+            <div class="text-muted" style="font-size:13px;margin-top:6px">Live currency exchange rates</div>
+          </a>
+          <a href="stocks.html" class="market-card fade-in" style="--card-accent:var(--stock-blue)">
+            <div style="font-size:40px;margin-bottom:12px">📈</div>
+            <div style="font-size:17px;font-weight:700;font-family:var(--font-display)">Stocks</div>
+            <div class="text-muted" style="font-size:13px;margin-top:6px">S&P 500, Nasdaq & global stocks</div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div>
+        <!-- Sidebar Ad -->
+        <div class="ad-placeholder ad-sidebar" style="margin-bottom:20px">AD — 300×250</div>
+
+        <!-- Market Status -->
+        <div class="card p-20" style="margin-bottom:20px">
+          <div class="panel-title" style="margin-bottom:14px">Market Sessions</div>
+          <div id="market-sessions">
+            <div class="gl-row" style="padding:10px 0;border-color:var(--border)">
+              <div><div class="gl-name">New York</div><div class="gl-sub">NYSE / NASDAQ</div></div>
+              <span class="badge-live" id="ny-status">—</span>
+            </div>
+            <div class="gl-row" style="padding:10px 0;border-color:var(--border)">
+              <div><div class="gl-name">London</div><div class="gl-sub">LSE</div></div>
+              <span class="badge-live" id="ldn-status">—</span>
+            </div>
+            <div class="gl-row" style="padding:10px 0;border-color:var(--border)">
+              <div><div class="gl-name">Tokyo</div><div class="gl-sub">TSE</div></div>
+              <span class="badge-live" id="tkyo-status">—</span>
+            </div>
+            <div class="gl-row" style="padding:10px 0;border-color:var(--border);border-bottom:none">
+              <div><div class="gl-name">Crypto</div><div class="gl-sub">24/7 Trading</div></div>
+              <span class="badge-live" style="background:rgba(22,163,74,0.12);color:var(--up)">Open</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Forecast sneak peek -->
+        <div class="card p-20">
+          <div class="panel-title" style="margin-bottom:14px">Today's Signals</div>
+          <div style="display:flex;flex-direction:column;gap:10px" id="signal-preview">
+            <div class="flex-between">
+              <span style="font-size:13px">Gold (XAU/USD)</span>
+              <span class="forecast-pill bull">Bullish</span>
+            </div>
+            <div class="flex-between">
+              <span style="font-size:13px">Bitcoin</span>
+              <span class="forecast-pill bull">Bullish</span>
+            </div>
+            <div class="flex-between">
+              <span style="font-size:13px">EUR/USD</span>
+              <span class="forecast-pill neut">Neutral</span>
+            </div>
+            <div class="flex-between">
+              <span style="font-size:13px">Crude Oil</span>
+              <span class="forecast-pill bear">Bearish</span>
+            </div>
+          </div>
+          <a href="forecast.html" class="btn-primary" style="display:block;text-align:center;margin-top:14px">Full Analysis →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─ TradingView Widget ──────────────────────────────────── -->
+  <section class="section" style="padding-top:0">
+    <div class="section-header">
+      <h2>Live <span>Charts</span></h2>
+      <a href="gold.html">Gold Chart →</a>
+    </div>
+    <!-- TradingView Advanced Chart Widget -->
+    <div class="tv-widget" style="height:500px">
+      <div class="tradingview-widget-container" style="height:100%">
+        <div class="tradingview-widget-container__widget" style="height:100%"></div>
+        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+        {
+          "autosize": true,
+          "symbol": "TVC:GOLD",
+          "interval": "D",
+          "timezone": "Etc/UTC",
+          "theme": "dark",
+          "style": "1",
+          "locale": "en",
+          "hide_top_toolbar": false,
+          "hide_legend": false,
+          "save_image": false,
+          "studies": ["STD;RSI", "STD;MACD"],
+          "support_host": "https://www.tradingview.com"
+        }
+        </script>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─ Latest News ────────────────────────────────────────── -->
+  <section class="section" style="padding-top:0">
+    <div class="section-header">
+      <h2>Market <span>News</span></h2>
+      <a href="news.html">All News →</a>
+    </div>
+    <div class="news-grid" id="home-news">
+      <!-- Skeleton -->
+      <div class="news-card"><div class="skeleton sk-card" style="height:200px"></div></div>
+      <div class="news-card"><div class="skeleton sk-card" style="height:200px"></div></div>
+      <div class="news-card"><div class="skeleton sk-card" style="height:200px"></div></div>
+    </div>
+  </section>
+
+  <!-- ─ Market Forecasts Promo ─────────────────────────────── -->
+  <section class="section" style="padding-top:0">
+    <div style="background:linear-gradient(135deg,rgba(212,175,55,0.08),rgba(212,175,55,0.02));border:1px solid var(--border);border-radius:20px;padding:48px;text-align:center">
+      <div class="badge" style="display:inline-flex;margin-bottom:20px">AI-Powered Analysis</div>
+      <h2 style="font-family:var(--font-display);font-size:32px;font-weight:700;margin-bottom:12px">
+        Smart Market <span class="text-gold">Forecasts</span>
+      </h2>
+      <p class="text-muted" style="max-width:500px;margin:0 auto 28px;font-size:15px;line-height:1.7">
+        Get technical analysis signals, RSI readings, moving average crossovers and trend detection for all major assets.
+      </p>
+      <a href="forecast.html" class="btn-primary" style="display:inline-block">View All Forecasts →</a>
+    </div>
+  </section>
+
+</main>
+
+<!-- ─ Footer ─────────────────────────────────────────────── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="logo">⛏ GoldMine</div>
+      <p>Your premium financial intelligence platform for real-time gold, silver, commodity, forex, crypto and stock market data. Built for traders and investors.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Markets</h4>
+      <a href="gold.html">Gold (XAU)</a>
+      <a href="silver.html">Silver (XAG)</a>
+      <a href="crude-oil.html">Crude Oil</a>
+      <a href="stocks.html">Stocks</a>
+      <a href="forex.html">Forex</a>
+      <a href="crypto.html">Crypto</a>
+    </div>
+    <div class="footer-col">
+      <h4>Tools</h4>
+      <a href="forecast.html">Forecasts</a>
+      <a href="news.html">Market News</a>
+      <a href="forex.html#converter">Currency Converter</a>
+      <a href="crypto.html#feargreed">Fear &amp; Greed</a>
+    </div>
+    <div class="footer-col">
+      <h4>Info</h4>
+      <a href="#">About GoldMine</a>
+      <a href="#">Disclaimer</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Data Sources</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 GoldMine. All data for informational purposes only.</span>
+    <span>Not financial advice. Market data may be delayed.</span>
+  </div>
+</footer>
+
+<!-- Sticky Mobile Ad -->
+<div class="ad-sticky-mobile">
+  <span style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em">Mobile Ad — 320×50</span>
+</div>
+
+<!-- ─ Scripts ─────────────────────────────────────────────── -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="assets/js/core.js"></script>
+<script>
+  // Market summary loader
+  async function loadMarketSummary() {
+    const gold   = await GM.MetalsAPI.goldPrice();
+    const silver = await GM.MetalsAPI.silverPrice();
+    const oil    = GM.MetalsAPI._mock('oil_wti');
+    const crypto = await GM.CoinGecko.prices('bitcoin,ethereum');
+    const spy    = await GM.StocksAPI.quote('SPY');
+    const forex  = await GM.ForexAPI.rates('USD');
+
+    if (gold)   { document.getElementById('ms-gold').textContent   = `$${GM.fmt(gold.price,2)}`; document.getElementById('ms-gold-chg').textContent = `${(gold.pct||0.3)>=0?'▲':'▼'} ${Math.abs(gold.pct||0.3).toFixed(2)}%`; document.getElementById('ms-gold-chg').className = `ms-change ${(gold.pct||0.3)>=0?'up':'down'}`; }
+    if (silver) { document.getElementById('ms-silver').textContent = `$${GM.fmt(silver.price,2)}`; document.getElementById('ms-silver-chg').textContent = `${(silver.pct||0.5)>=0?'▲':'▼'} ${Math.abs(silver.pct||0.5).toFixed(2)}%`; }
+    document.getElementById('ms-oil').textContent = `$${GM.fmt(oil.price,2)}`;
+    if (crypto?.bitcoin)  { document.getElementById('ms-btc').textContent = `$${GM.fmt(crypto.bitcoin.usd,0)}`; document.getElementById('ms-btc-chg').textContent = `${crypto.bitcoin.usd_24h_change>=0?'▲':'▼'} ${Math.abs(crypto.bitcoin.usd_24h_change).toFixed(2)}%`; document.getElementById('ms-btc-chg').className = `ms-change ${crypto.bitcoin.usd_24h_change>=0?'up':'down'}`; }
+    if (crypto?.ethereum) { document.getElementById('ms-eth').textContent = `$${GM.fmt(crypto.ethereum.usd,2)}`; document.getElementById('ms-eth-chg').textContent = `${crypto.ethereum.usd_24h_change>=0?'▲':'▼'} ${Math.abs(crypto.ethereum.usd_24h_change).toFixed(2)}%`; document.getElementById('ms-eth-chg').className = `ms-change ${crypto.ethereum.usd_24h_change>=0?'up':'down'}`; }
+    if (spy)   { document.getElementById('ms-spy').textContent = `$${GM.fmt(spy.price,2)}`; document.getElementById('ms-spy-chg').textContent = `${spy.pct>=0?'▲':'▼'} ${Math.abs(spy.pct).toFixed(2)}%`; document.getElementById('ms-spy-chg').className = `ms-change ${spy.pct>=0?'up':'down'}`; }
+    if (forex?.rates) {
+      const eurUsd = (1/forex.rates.EUR).toFixed(4);
+      document.getElementById('ms-eur').textContent = eurUsd;
+    }
+  }
+
+  // Market sessions
+  function updateSessions() {
+    const now = new Date();
+    const toNY   = t => new Date(t.toLocaleString('en-US',{timeZone:'America/New_York'}));
+    const toLDN  = t => new Date(t.toLocaleString('en-US',{timeZone:'Europe/London'}));
+    const toTKYO = t => new Date(t.toLocaleString('en-US',{timeZone:'Asia/Tokyo'}));
+
+    const checkOpen = (zoned) => {
+      const h = zoned.getHours(), m = zoned.getMinutes(), d = zoned.getDay();
+      return d>=1 && d<=5 && (h>9||(h===9&&m>=30)) && h<16;
+    };
+
+    const style = open => open
+      ? 'background:rgba(22,163,74,0.12);color:var(--up)'
+      : 'background:rgba(220,38,38,0.12);color:var(--down)';
+
+    const nyOpen   = checkOpen(toNY(now));
+    const ldnOpen  = checkOpen(toLDN(now));
+    const tkyoOpen = checkOpen(toTKYO(now));
+
+    document.getElementById('ny-status').textContent   = nyOpen   ? 'Open' : 'Closed';
+    document.getElementById('ldn-status').textContent  = ldnOpen  ? 'Open' : 'Closed';
+    document.getElementById('tkyo-status').textContent = tkyoOpen ? 'Open' : 'Closed';
+    document.getElementById('ny-status').style.cssText   = style(nyOpen);
+    document.getElementById('ldn-status').style.cssText  = style(ldnOpen);
+    document.getElementById('tkyo-status').style.cssText = style(tkyoOpen);
+
+    const stat = document.getElementById('stat-status');
+    if (stat) stat.textContent = nyOpen || ldnOpen ? '🟢 Open' : '🔴 Closed';
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    loadMarketSummary();
+    updateSessions();
+    GM.initBreakingNews('breaking-news-bar');
+    setInterval(updateSessions, 30000);
+    // Adapt TradingView theme
+    const theme = localStorage.getItem('gm_theme') || 'dark';
+    if (theme === 'light') {
+      document.querySelectorAll('script[src*="tradingview"]').forEach(() => {});
+    }
+  });
+</script>
+</body>
+</html>
