@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Crude Oil Price — WTI & Brent Chart Today | GoldMine</title>
+  <meta name="description" content="Live crude oil prices for WTI and Brent. Real-time oil charts, supply/demand analysis, OPEC news and market forecasts.">
+  <meta name="keywords" content="crude oil price today, WTI oil price, Brent crude price, oil chart, crude oil forecast, OPEC">
+  <link rel="canonical" href="https://GoldMine.silverfoxdynamics.com/crude-oil.html">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#E8650A">
+  <link rel="manifest" href="manifest.json">
+  <style>
+    .oil-hero { background: linear-gradient(135deg,rgba(232,101,10,0.1) 0%,rgba(232,101,10,0.02) 60%); border-bottom:1px solid var(--border); }
+    .oil-accent { color:#E8650A; }
+    .price-big-oil { font-family:var(--font-mono); font-size:clamp(36px,6vw,64px); font-weight:700; color:#E8650A; line-height:1; }
+    .oil-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+    .oil-card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; position:relative; overflow:hidden; }
+    .oil-card::before { content:''; position:absolute; top:0;left:0;right:0;height:3px; background:linear-gradient(90deg,#E8650A,#FF9F45); }
+    .supply-bar { height:8px; background:var(--bg-secondary); border-radius:4px; overflow:hidden; margin-top:8px; }
+    .supply-fill { height:100%; border-radius:4px; background:linear-gradient(90deg,#E8650A,#FF9F45); transition:width 1.2s ease; }
+    .stat-row { display:flex; gap:24px; flex-wrap:wrap; margin-top:16px; }
+    .stat-item .sv { font-family:var(--font-mono); font-size:18px; font-weight:600; }
+    .stat-item .sl { font-size:11px; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-muted); }
+    .spread-card { background:rgba(232,101,10,0.06); border:1px solid rgba(232,101,10,0.2); border-radius:var(--radius); padding:20px; text-align:center; }
+  </style>
+</head>
+<body>
+<div id="ticker-bar"></div>
+<nav id="navbar">
+  <a href="index.html" class="nav-logo"><div class="logo-icon">⛏</div>GoldMine</a>
+  <div class="nav-links">
+    <a href="index.html">Home</a><a href="gold.html">Gold</a><a href="silver.html">Silver</a>
+    <a href="crude-oil.html" class="active">Crude Oil</a><a href="stocks.html">Stocks</a>
+    <a href="forex.html">Forex</a><a href="crypto.html">Crypto</a>
+    <a href="news.html">News</a><a href="forecast.html">Forecast</a>
+  </div>
+  <div class="nav-right">
+    <button id="theme-toggle">🌙</button>
+    <button id="nav-toggle"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div id="mobile-menu">
+  <a href="index.html">🏠 Home</a><a href="gold.html">🥇 Gold</a><a href="silver.html">🥈 Silver</a>
+  <a href="crude-oil.html">🛢️ Crude Oil</a><a href="stocks.html">📈 Stocks</a><a href="forex.html">💱 Forex</a>
+  <a href="crypto.html">₿ Crypto</a><a href="news.html">📰 News</a><a href="forecast.html">🔮 Forecast</a>
+</div>
+
+<main class="page-content theme-oil">
+  <div class="container" style="padding-top:16px">
+    <div class="ad-placeholder ad-header">ADVERTISEMENT</div>
+  </div>
+
+  <!-- Hero -->
+  <div class="oil-hero">
+    <div class="section">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px">
+        <span style="font-size:38px">🛢️</span>
+        <div>
+          <div style="font-size:13px;color:var(--text-muted)">NYMEX · Crude Oil Markets</div>
+          <div style="font-size:20px;font-weight:700;font-family:var(--font-display)">Crude Oil Prices Today</div>
+        </div>
+        <span class="live-dot" style="margin-left:auto">LIVE</span>
+      </div>
+
+      <div class="oil-grid">
+        <!-- WTI -->
+        <div class="oil-card">
+          <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:8px;font-weight:700">WTI Crude · NYMEX</div>
+          <div class="price-big-oil" id="wti-price">$—</div>
+          <div id="wti-change" class="price-change down" style="margin-top:8px;font-size:14px">Loading…</div>
+          <div class="stat-row" style="margin-top:12px">
+            <div class="stat-item"><div class="sv" id="wti-high">—</div><div class="sl">High</div></div>
+            <div class="stat-item"><div class="sv" id="wti-low">—</div><div class="sl">Low</div></div>
+            <div class="stat-item"><div class="sv" id="wti-prev">—</div><div class="sl">Prev</div></div>
+          </div>
+        </div>
+        <!-- Brent -->
+        <div class="oil-card">
+          <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:8px;font-weight:700">Brent Crude · ICE</div>
+          <div class="price-big-oil" id="brent-price">$—</div>
+          <div id="brent-change" class="price-change down" style="margin-top:8px;font-size:14px">Loading…</div>
+          <div class="stat-row" style="margin-top:12px">
+            <div class="stat-item"><div class="sv" id="brent-high">—</div><div class="sl">High</div></div>
+            <div class="stat-item"><div class="sv" id="brent-low">—</div><div class="sl">Low</div></div>
+            <div class="stat-item"><div class="sv" id="brent-spread">—</div><div class="sl">Brent Spread</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WTI Chart -->
+  <div class="section">
+    <div class="section-header"><h2>WTI <span>Live Chart</span></h2></div>
+    <div class="chart-wrap">
+      <div class="chart-controls" style="margin-bottom:16px">
+        <button class="chart-btn">1D</button><button class="chart-btn">1W</button>
+        <button class="chart-btn active">1M</button><button class="chart-btn">3M</button>
+        <button class="chart-btn">1Y</button><button class="chart-btn">MAX</button>
+      </div>
+      <div style="height:460px">
+        <div class="tradingview-widget-container" style="height:100%">
+          <div class="tradingview-widget-container__widget" style="height:100%"></div>
+          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+          {"autosize":true,"symbol":"NYMEX:CL1!","interval":"D","timezone":"Etc/UTC","theme":"dark","style":"1","locale":"en","studies":["STD;RSI","STD;MACD"],"container_id":"tv-wti-chart"}
+          </script>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container"><div class="ad-placeholder ad-in-content">ADVERTISEMENT</div></div>
+
+  <!-- Brent Chart -->
+  <div class="section" style="padding-top:0">
+    <div class="section-header"><h2>Brent <span>Live Chart</span></h2></div>
+    <div class="chart-wrap">
+      <div style="height:400px">
+        <div class="tradingview-widget-container" style="height:100%">
+          <div class="tradingview-widget-container__widget" style="height:100%"></div>
+          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+          {"autosize":true,"symbol":"TVC:UKOIL","interval":"D","timezone":"Etc/UTC","theme":"dark","style":"1","locale":"en"}
+          </script>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Supply & Demand -->
+  <div class="section" style="padding-top:0">
+    <div class="section-header"><h2>Supply & <span>Demand</span> Analysis</h2></div>
+    <div class="grid-2">
+      <div class="card p-24">
+        <div style="font-size:14px;font-weight:600;margin-bottom:18px">Global Supply Factors</div>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div>
+            <div class="flex-between" style="margin-bottom:6px"><span style="font-size:13px">OPEC+ Production</span><span class="mono" style="font-size:13px">28.4M bpd</span></div>
+            <div class="supply-bar"><div class="supply-fill" style="width:71%"></div></div>
+          </div>
+          <div>
+            <div class="flex-between" style="margin-bottom:6px"><span style="font-size:13px">US Production</span><span class="mono" style="font-size:13px">13.2M bpd</span></div>
+            <div class="supply-bar"><div class="supply-fill" style="width:66%"></div></div>
+          </div>
+          <div>
+            <div class="flex-between" style="margin-bottom:6px"><span style="font-size:13px">Global Inventories</span><span class="mono" style="font-size:13px">Normal</span></div>
+            <div class="supply-bar"><div class="supply-fill" style="width:55%;background:linear-gradient(90deg,var(--gold-dark),var(--gold))"></div></div>
+          </div>
+          <div>
+            <div class="flex-between" style="margin-bottom:6px"><span style="font-size:13px">Strategic Reserve</span><span class="mono" style="font-size:13px">Low</span></div>
+            <div class="supply-bar"><div class="supply-fill" style="width:32%;background:linear-gradient(90deg,var(--down),#ff6b6b)"></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="card p-24">
+        <div style="font-size:14px;font-weight:600;margin-bottom:18px">Demand Indicators</div>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div>
+            <div class="flex-between" style="margin-bottom:6px"><span style="font-size:13px">Global Demand</span><span class="mono" style="font-size:13px">102.5M bpd</span></div>
+            <div class="supply-bar"><div class="supply-fill" style="width:82%"></div></div>
+          </div>
+          <div>
+            <div class="flex-between" style="margin-bottom:6px"><span style="font-size:13px">China Imports</span><span class="mono" style="font-size:13px">11.8M bpd</span></div>
+            <div class="supply-bar"><div class="supply-fill" style="width:59%"></div></div>
+          </div>
+          <div>
+            <div class="flex-between" style="margin-bottom:6px"><span style="font-size:13px">US Consumption</span><span class="mono" style="font-size:13px">20.4M bpd</span></div>
+            <div class="supply-bar"><div class="supply-fill" style="width:76%"></div></div>
+          </div>
+          <div>
+            <div class="flex-between" style="margin-bottom:6px"><span style="font-size:13px">Refinery Utilisation</span><span class="mono" style="font-size:13px">89%</span></div>
+            <div class="supply-bar"><div class="supply-fill" style="width:89%;background:linear-gradient(90deg,var(--up),#4ade80)"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Key Stats -->
+  <div class="section" style="padding-top:0">
+    <div class="section-header"><h2>Key <span>Statistics</span></h2></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px">
+      <div class="spread-card"><div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px">Brent-WTI Spread</div><div class="oil-accent mono" style="font-size:22px;font-weight:700" id="brent-wti-spread">$3.70</div></div>
+      <div class="spread-card"><div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px">52-Week High</div><div class="oil-accent mono" style="font-size:22px;font-weight:700">$95.40</div></div>
+      <div class="spread-card"><div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px">52-Week Low</div><div class="mono" style="font-size:22px;font-weight:700;color:var(--down)">$65.20</div></div>
+      <div class="spread-card"><div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px">EIA Inventory</div><div class="mono" style="font-size:22px;font-weight:700">-2.4M</div><div style="font-size:11px;color:var(--up)">Drawdown</div></div>
+      <div class="spread-card"><div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px">OPEC Quota</div><div class="oil-accent mono" style="font-size:22px;font-weight:700">-1.2M</div><div style="font-size:11px;color:var(--text-muted)">bpd cut</div></div>
+      <div class="spread-card"><div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px">Signal</div><div style="font-size:22px;font-weight:700;color:var(--down)">SELL</div><div class="forecast-pill bear" style="font-size:10px;padding:2px 8px;margin-top:4px;display:inline-flex">Bearish</div></div>
+    </div>
+  </div>
+
+  <!-- Oil News -->
+  <div class="section" style="padding-top:0">
+    <div class="section-header"><h2>Oil <span>News</span></h2><a href="news.html">All News →</a></div>
+    <div class="news-grid" id="oil-news"></div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand"><div class="logo">⛏ GoldMine</div><p>Live crude oil prices and energy market data. Not financial advice.</p></div>
+    <div class="footer-col"><h4>Markets</h4><a href="gold.html">Gold</a><a href="silver.html">Silver</a><a href="crude-oil.html">Crude Oil</a><a href="stocks.html">Stocks</a></div>
+    <div class="footer-col"><h4>Tools</h4><a href="forecast.html">Forecasts</a><a href="news.html">News</a></div>
+    <div class="footer-col"><h4>Info</h4><a href="#">About</a><a href="#">Disclaimer</a></div>
+  </div>
+  <div class="footer-bottom"><span>© 2025 GoldMine. Not financial advice.</span></div>
+</footer>
+<div class="ad-sticky-mobile"><span style="font-size:11px;color:var(--text-muted)">Mobile Ad</span></div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="assets/js/core.js"></script>
+<script>
+  async function initOilPage() {
+    const wti   = GM.MetalsAPI._mock('oil_wti');
+    const brent = GM.MetalsAPI._mock('oil_brent');
+
+    const setPrice = (idPrice, idChange, data, label) => {
+      document.getElementById(idPrice).textContent = `$${GM.fmt(data.price, 2)}`;
+      const el = document.getElementById(idChange);
+      const chg = data.pct || -0.85;
+      el.className = `price-change ${chg>=0?'up':'down'}`;
+      el.textContent = `${chg>=0?'▲':'▼'} ${Math.abs(chg).toFixed(2)}%  ${label}`;
+    };
+
+    setPrice('wti-price','wti-change', wti, 'WTI Today');
+    document.getElementById('wti-high').textContent  = `$${GM.fmt(wti.price*1.009,2)}`;
+    document.getElementById('wti-low').textContent   = `$${GM.fmt(wti.price*0.993,2)}`;
+    document.getElementById('wti-prev').textContent  = `$${GM.fmt(wti.price*1.006,2)}`;
+
+    setPrice('brent-price','brent-change', brent, 'Brent Today');
+    document.getElementById('brent-high').textContent = `$${GM.fmt(brent.price*1.008,2)}`;
+    document.getElementById('brent-low').textContent  = `$${GM.fmt(brent.price*0.992,2)}`;
+    const spread = (brent.price - wti.price).toFixed(2);
+    document.getElementById('brent-spread').textContent     = `+$${spread}`;
+    document.getElementById('brent-wti-spread').textContent = `$${spread}`;
+
+    const news = await GM.NewsAPI.fetch('crude oil OPEC energy market', 3);
+    const nc = document.getElementById('oil-news');
+    if (nc && news) {
+      nc.innerHTML = news.map(a => `
+        <a href="${a.url}" target="_blank" class="news-card fade-in">
+          <div class="news-card-img"><span class="nc-category" style="background:#E8650A">Oil</span></div>
+          <div class="news-card-body"><h3>${a.title}</h3>
+          <div class="news-card-meta"><span>${a.source?.name||''}</span><span>${GM.timeAgo(a.publishedAt)}</span></div></div>
+        </a>`).join('');
+    }
+  }
+  document.addEventListener('DOMContentLoaded', initOilPage);
+</script>
+</body>
+</html>
