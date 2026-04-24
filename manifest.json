@@ -1,8 +1,28 @@
 {
-  "name": "GoldMine",
+  "name": "GoldMine — Financial Intelligence",
   "short_name": "GoldMine",
+  "description": "Live gold, silver, crypto, forex and stock market data",
   "start_url": "/",
   "display": "standalone",
+  "background_color": "#0D0C0A",
   "theme_color": "#D4AF37",
-  "background_color": "#0D0C0A"
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "assets/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["finance", "news"],
+  "lang": "en",
+  "scope": "/",
+  "screenshots": []
 }
