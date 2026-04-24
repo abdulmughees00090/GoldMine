@@ -801,5 +801,5 @@ window.GM = {
   CoinGecko, ForexAPI, MetalsAPI, NewsAPI, StocksAPI,
   Sparkline, Ticker, Theme, TV,
   fmt, fmtLarge, timeAgo, drawMiniChart,
-  loadHomeNews, buildHeatmap, marketStatus, KEYS
+  loadHomeNews, buildHeatmap, marketStatus, KEYS, initBreakingNews: initBreakingNews,
 };
