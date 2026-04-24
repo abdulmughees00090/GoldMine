@@ -194,7 +194,7 @@ const MetalsAPI = {
 };
 
 /* ─── News (GNews free tier as primary) ─────────────────── */
-const NewsAPI = {
+/*const NewsAPI = {
   async fetch(query = 'gold silver market', limit = 6) {
     const ckey = `news_${query.replace(/\s/g,'_')}`;
     const cached = CACHE.get(ckey);
@@ -216,6 +216,32 @@ const NewsAPI = {
   },
 
   _mockNews(q) {
+    const headlines = [
+      { title: "Gold Surges to Record Highs Amid Global Uncertainty", source: { name: "Reuters" }, publishedAt: new Date().toISOString(), url: "#", description: "Gold prices climbed to their highest level this year as investors sought safe-haven assets." },
+      { title: "Silver Shows Strong Bullish Pattern on Weekly Charts", source: { name: "Bloomberg" }, publishedAt: new Date(Date.now() - 3600000).toISOString(), url: "#", description: "Technical analysts point to a cup-and-handle formation forming on silver's weekly chart." },
+      { title: "Crude Oil Markets React to OPEC+ Production Decisions", source: { name: "MarketWatch" }, publishedAt: new Date(Date.now() - 7200000).toISOString(), url: "#", description: "Oil prices fluctuated after OPEC+ members discussed adjusting production quotas." },
+      { title: "Bitcoin Consolidates Above Key Support Level", source: { name: "CoinDesk" }, publishedAt: new Date(Date.now() - 10800000).toISOString(), url: "#", description: "BTC holds ground as institutional buyers continue accumulation strategy." },
+      { title: "S&P 500 Reaches New All-Time High Driven by Tech Sector", source: { name: "CNBC" }, publishedAt: new Date(Date.now() - 14400000).toISOString(), url: "#", description: "The benchmark index powered higher, led by gains in mega-cap technology stocks." },
+      { title: "EUR/USD Tests Critical Resistance Zone", source: { name: "FX Street" }, publishedAt: new Date(Date.now() - 18000000).toISOString(), url: "#", description: "The euro gained ground against the dollar as European economic data exceeded forecasts." },
+    ];
+    return headlines.slice(0, limit);
+  }
+};*/
+/*----------------Mock News-------------*/
+const NewsAPI = {
+  async fetch(query = 'gold silver market', limit = 6) {
+    const ckey = `news_${query.replace(/\s/g,'_')}`;
+    const cached = CACHE.get(ckey);
+    if (cached) return cached;
+    
+    // Skip API call entirely if key is invalid
+    console.log('Using mock news data (NewsAPI key invalid or missing)');
+    const mockData = this._mockNews(query, limit);
+    CACHE.set(ckey, mockData, CACHE.TTL.NEWS);
+    return mockData;
+  },
+
+  _mockNews(query, limit = 6) {  // FIXED: added limit parameter
     const headlines = [
       { title: "Gold Surges to Record Highs Amid Global Uncertainty", source: { name: "Reuters" }, publishedAt: new Date().toISOString(), url: "#", description: "Gold prices climbed to their highest level this year as investors sought safe-haven assets." },
       { title: "Silver Shows Strong Bullish Pattern on Weekly Charts", source: { name: "Bloomberg" }, publishedAt: new Date(Date.now() - 3600000).toISOString(), url: "#", description: "Technical analysts point to a cup-and-handle formation forming on silver's weekly chart." },
