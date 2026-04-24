@@ -287,10 +287,28 @@
     }
   }
   document.addEventListener('DOMContentLoaded', initGoldPage);
-  function changeInterval(i) {
-    document.querySelectorAll('.chart-btn').forEach(b=>b.classList.remove('active'));
-    event.target.classList.add('active');
+  function changeInterval(interval) {
+  document.querySelectorAll('.chart-btn').forEach(b => b.classList.remove('active'));
+  if (event && event.target) event.target.classList.add('active');
+  // Reload TradingView widget with new interval
+  const container = document.getElementById('gold-chart-container');
+  if (container) {
+    const oldWidget = container.querySelector('.tradingview-widget-container');
+    if (oldWidget) {
+      const newWidget = oldWidget.cloneNode(true);
+      oldWidget.parentNode.replaceChild(newWidget, oldWidget);
+      // Re-execute script
+      const script = newWidget.querySelector('script');
+      if (script) {
+        const newScript = document.createElement('script');
+        newScript.type = 'text/javascript';
+        newScript.src = script.src;
+        newScript.async = true;
+        script.parentNode.replaceChild(newScript, script);
+      }
+    }
   }
+}
 </script>
 </body>
 </html>
